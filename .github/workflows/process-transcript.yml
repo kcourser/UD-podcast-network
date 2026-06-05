@@ -1,1 +1,51 @@
+name: Process Podcast Transcript
 
+on:
+  push:
+    paths:
+      - 'transcripts/**/*.docx'
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic python-docx
+
+      - name: Find new transcript
+        id: find
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD -- 'transcripts/**/*.docx' 2>/dev/null || git show --name-only HEAD | grep 'transcripts/.*\.docx')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          echo "Found: $FILES"
+
+      - name: Process transcript(s)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          for FILE in ${{ steps.find.outputs.files }}; do
+            if [ -f "$FILE" ]; then
+              SHOW=$(echo "$FILE" | cut -d'/' -f2)
+              python process_transcript.py "$FILE" "$SHOW"
+            fi
+          done
+
+      - name: Commit updated episodes.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add episodes.json
+          git diff --staged --quiet || git commit -m "Update episodes.json [automated]"
+          git push
