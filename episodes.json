@@ -68,12 +68,18 @@
       "role": "Business Development & Strategic Partnerships, Engine No. 1",
       "date": "2026-06-05",
       "file": "Lindsey Merrill Feinberg.docx",
-      "url": "",
+      "url": "https://www.youtube.com/watch?v=0ZKGSIX_YY8",
       "topics": [
         "ESG & Finance",
         "Energy Geopolitics",
         "Energy Policy"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {
+        "ESG & Finance": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=22",
+        "Energy Geopolitics": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=115",
+        "Energy Policy": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=91"
+      }
     },
     {
       "id": "ep_pn___marshall_dodson",

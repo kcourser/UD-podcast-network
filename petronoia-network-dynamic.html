@@ -1,0 +1,435 @@
+<!-- ============================================================
+     Upright Digital — Podcast Episode Network Graph
+     Dynamic embed for Webflow — paste into an Embed element
+     ============================================================ -->
+
+<style>
+#ud-network, #ud-network * { box-sizing: border-box; margin: 0; padding: 0; }
+
+#ud-network {
+  background: #0f1117;
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+  width: 100%;
+}
+
+#ud-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid #1e2330;
+  background: #0d1020;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#ud-header h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f97316;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#ud-header p { font-size: 11px; color: #64748b; }
+
+#ud-show-tabs { margin-left: auto; display: flex; gap: 6px; }
+
+.ud-show-tab {
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #2d3748;
+  background: transparent;
+  color: #64748b;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.ud-show-tab:hover { border-color: #4b5563; color: #94a3b8; }
+.ud-show-tab.active { color: #fff; border-color: transparent; font-weight: 600; }
+
+#ud-layout { display: flex; flex: 1; overflow: hidden; }
+
+#ud-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: #0d1020;
+  border-right: 1px solid #1e2330;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#ud-sidebar-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #475569;
+  padding: 12px 14px 6px;
+  flex-shrink: 0;
+}
+
+#ud-match-count {
+  font-size: 12px;
+  color: #60a5fa;
+  padding: 4px 14px 0;
+  font-weight: 600;
+  flex-shrink: 0;
+  display: none;
+}
+
+#ud-topic-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 4px 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #1e2330 transparent;
+}
+
+.ud-topic-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.ud-topic-btn:hover { background: #1e2330; color: #e2e8f0; }
+.ud-topic-btn.active { background: #1e2d45; color: #60a5fa; font-weight: 600; }
+.ud-topic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ud-topic-count {
+  margin-left: auto; font-size: 9px; color: #475569;
+  background: #1e2330; padding: 1px 5px; border-radius: 10px;
+}
+.ud-topic-btn.active .ud-topic-count { background: #1e3a5f; color: #93c5fd; }
+
+#ud-clear-btn {
+  margin: 6px; padding: 6px;
+  border: 1px solid #1e2330; background: transparent;
+  color: #64748b; font-size: 10px; cursor: pointer;
+  border-radius: 5px; transition: all 0.15s;
+  flex-shrink: 0; font-family: inherit;
+}
+#ud-clear-btn:hover { background: #1e2330; color: #94a3b8; }
+
+#ud-graph-wrap { flex: 1; position: relative; overflow: hidden; }
+#ud-graph-wrap svg { width: 100%; height: 100%; display: block; }
+
+#ud-tooltip {
+  position: absolute;
+  background: #1a2035; border: 1px solid #2d3748; border-radius: 8px;
+  padding: 9px 12px; font-size: 11px; pointer-events: none;
+  opacity: 0; transition: opacity 0.15s; max-width: 240px; z-index: 10;
+}
+#ud-tooltip .t-name { font-weight: 700; color: #f1f5f9; font-size: 12px; margin-bottom: 2px; }
+#ud-tooltip .t-show { font-size: 10px; color: #64748b; margin-bottom: 3px; }
+#ud-tooltip .t-role { color: #94a3b8; font-size: 10px; margin-bottom: 6px; }
+#ud-tooltip .t-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+#ud-tooltip .t-link { display: block; margin-top: 6px; font-size: 10px; color: #60a5fa; }
+
+#ud-loading {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 10px; color: #475569; font-size: 13px;
+}
+#ud-spinner {
+  width: 28px; height: 28px;
+  border: 3px solid #1e2330; border-top-color: #f97316;
+  border-radius: 50%; animation: ud-spin 0.8s linear infinite;
+}
+@keyframes ud-spin { to { transform: rotate(360deg); } }
+</style>
+
+<div id="ud-network">
+  <div id="ud-header">
+    <div>
+      <h2 id="ud-title">Episode Network</h2>
+      <p>Filter by topic &middot; click nodes &middot; drag to explore</p>
+    </div>
+    <div id="ud-show-tabs"></div>
+  </div>
+  <div id="ud-layout">
+    <div id="ud-sidebar">
+      <div id="ud-sidebar-title">Topics</div>
+      <div id="ud-match-count"></div>
+      <div id="ud-topic-list"></div>
+      <button id="ud-clear-btn">Show all episodes</button>
+    </div>
+    <div id="ud-graph-wrap">
+      <svg id="ud-graph"></svg>
+      <div id="ud-tooltip"></div>
+      <div id="ud-loading">
+        <div id="ud-spinner"></div>
+        <span>Loading episodes&hellip;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function () {
+
+  const DATA_URL = "https://raw.githubusercontent.com/kcourser/UD-podcast-network/main/episodes.json";
+
+  function waitForD3(cb) {
+    if (typeof d3 !== 'undefined') cb();
+    else setTimeout(() => waitForD3(cb), 80);
+  }
+
+  waitForD3(() => {
+    fetch(DATA_URL)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(data => buildGraph(data))
+      .catch(err => {
+        document.getElementById('ud-loading').innerHTML =
+          '<span style="color:#ef4444">Could not load episodes: ' + err.message + '</span>';
+      });
+  });
+
+  function buildGraph(data) {
+    const { meta, episodes } = data;
+    const TOPIC_COLORS = meta.topic_colors || {};
+    const SHOW_COLORS  = Object.assign({
+      "PetroNoia":             "#f97316",
+      "Oil Field 360":         "#f59e0b",
+      "Energy Espresso":       "#a16207",
+      "The IT Crowd":          "#06b6d4",
+      "The Energy Pipeline":   "#3b82f6",
+      "In Basin Observations": "#10b981",
+    }, meta.show_colors || {});
+    const allShows = [...new Set(episodes.map(e => e.show))];
+
+    document.getElementById('ud-loading').style.display = 'none';
+
+    let activeShow   = null;
+    let activeTopics = new Set();
+
+    // Show tabs
+    const tabsEl = document.getElementById('ud-show-tabs');
+    if (allShows.length > 1) {
+      allShows.forEach(show => {
+        const btn = document.createElement('button');
+        btn.className = 'ud-show-tab';
+        btn.textContent = show;
+        btn.addEventListener('click', () => {
+          activeShow = activeShow === show ? null : show;
+          tabsEl.querySelectorAll('.ud-show-tab').forEach(b => {
+            b.classList.toggle('active', b.textContent === activeShow);
+            b.style.background = b.classList.contains('active') ? (SHOW_COLORS[b.textContent] || '#f97316') : '';
+          });
+          rebuildGraph();
+        });
+        tabsEl.appendChild(btn);
+      });
+    }
+
+    const wrap = document.getElementById('ud-graph-wrap');
+    const svg  = d3.select('#ud-graph');
+    const W = () => wrap.clientWidth;
+    const H = () => wrap.clientHeight;
+
+    const g = svg.append('g');
+    const zoom = d3.zoom().scaleExtent([0.15, 4])
+      .on('zoom', e => g.attr('transform', e.transform));
+    svg.call(zoom);
+    svg.call(zoom.transform, d3.zoomIdentity.translate(W()/2, H()/2).scale(0.72).translate(-W()/2, -H()/2));
+
+    let linkSel, nodeSel, sim;
+
+    function rebuildGraph() {
+      const visEps = activeShow ? episodes.filter(e => e.show === activeShow) : episodes;
+      const usedTopics = [...new Set(visEps.flatMap(e => e.topics))].sort();
+      const topicCounts = {};
+      usedTopics.forEach(t => { topicCounts[t] = visEps.filter(e => e.topics.includes(t)).length; });
+
+      buildSidebar(usedTopics, topicCounts);
+
+      const nodes = [
+        ...visEps.map(ep => ({ id: ep.id, type: 'episode', data: ep })),
+        ...usedTopics.map(t => ({ id: 'topic_' + t, type: 'topic', label: t })),
+      ];
+      const links = visEps.flatMap(ep =>
+        ep.topics.map(t => ({ source: ep.id, target: 'topic_' + t, topic: t }))
+      );
+
+      g.selectAll('*').remove();
+      if (sim) sim.stop();
+
+      svg.attr('viewBox', `0 0 ${W()} ${H()}`);
+      svg.call(zoom.transform, d3.zoomIdentity.translate(W()/2, H()/2).scale(0.72).translate(-W()/2, -H()/2));
+
+      sim = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(105).strength(0.4))
+        .force('charge', d3.forceManyBody().strength(d => d.type === 'topic' ? -400 : -170))
+        .force('center', d3.forceCenter(W()/2, H()/2))
+        .force('collision', d3.forceCollide(d => d.type === 'topic' ? 46 : 26));
+
+      linkSel = g.append('g').selectAll('line').data(links).join('line')
+        .attr('stroke', d => TOPIC_COLORS[d.topic] || '#0ea5e9')
+        .attr('stroke-width', 1.2).attr('stroke-opacity', 0.35);
+
+      nodeSel = g.append('g').selectAll('g').data(nodes).join('g')
+        .call(d3.drag()
+          .on('start', (e,d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+          .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
+          .on('end',   (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+      nodeSel.filter(d => d.type==='episode').append('circle')
+        .attr('r', 15).attr('fill', '#1a2035')
+        .attr('stroke', d => SHOW_COLORS[d.data.show] || '#f97316')
+        .attr('stroke-width', 2).attr('cursor','pointer');
+
+      nodeSel.filter(d => d.type==='topic').append('circle')
+        .attr('r', 28)
+        .attr('fill', d => { const c = d3.color(TOPIC_COLORS[d.label]||'#0ea5e9'); c.opacity=0.15; return c+''; })
+        .attr('stroke', d => TOPIC_COLORS[d.label]||'#0ea5e9')
+        .attr('stroke-width', 2).attr('cursor','pointer');
+
+      nodeSel.filter(d => d.type==='topic').append('text')
+        .attr('text-anchor','middle').attr('dominant-baseline','middle')
+        .attr('font-size','8px').attr('font-weight','700').attr('pointer-events','none')
+        .attr('fill', d => TOPIC_COLORS[d.label]||'#0ea5e9')
+        .each(function(d) {
+          const words = d.label.split(' ');
+          const el = d3.select(this);
+          if (words.length <= 2) { el.text(d.label); return; }
+          const mid = Math.ceil(words.length/2);
+          el.append('tspan').attr('x',0).attr('dy','-0.6em').text(words.slice(0,mid).join(' '));
+          el.append('tspan').attr('x',0).attr('dy','1.2em').text(words.slice(mid).join(' '));
+        });
+
+      nodeSel.filter(d => d.type==='episode').append('text')
+        .attr('text-anchor','middle').attr('dy','26px')
+        .attr('font-size','8.5px').attr('fill','#94a3b8').attr('pointer-events','none')
+        .text(d => {
+          const n = d.data.name;
+          if (n.includes('&')) return n.split(' ')[0] + ' & ' + n.split('& ')[1].split(' ')[0];
+          const p = n.split(' ');
+          return p[0] + (p.length > 1 ? ' ' + p[1][0] + '.' : '');
+        });
+
+      sim.on('tick', () => {
+        linkSel.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+               .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+        nodeSel.attr('transform', d=>`translate(${d.x},${d.y})`);
+      });
+
+      const tooltip = document.getElementById('ud-tooltip');
+
+      nodeSel.filter(d=>d.type==='episode')
+        .on('mousemove', function(event, d) {
+          const r = wrap.getBoundingClientRect();
+          let x = event.clientX - r.left + 14, y = event.clientY - r.top - 10;
+          if (x + 260 > r.width) x -= 270;
+          tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:auto;max-width:260px;z-index:10;transition:opacity 0.15s;`;
+          const ts = d.data.timestamps || {};
+          const tagsHtml = d.data.topics.map(t => {
+            const tsUrl = ts[t];
+            const color = TOPIC_COLORS[t] || '#0ea5e9';
+            const style = `font-size:9px;padding:2px 7px;border-radius:10px;background:${d3.color(color)}22;color:${color};display:inline-block;margin:2px 2px 0 0;`;
+            return tsUrl
+              ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;cursor:pointer;" title="Jump to this topic">▶ ${t}</a>`
+              : `<span style="${style}">${t}</span>`;
+          }).join('');
+          const ytUrl = d.data.url || '';
+          const spUrl = d.data.spotify_url || '';
+          const platformHtml = (ytUrl || spUrl) ? `
+            <div style="display:flex;gap:6px;margin-top:7px;border-top:1px solid #2d3748;padding-top:7px;">
+              ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:10px;color:#ef4444;text-decoration:none;padding:2px 8px;border-radius:4px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
+              ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:2px 8px;border-radius:4px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
+            </div>` : '';
+          tooltip.innerHTML = `
+            <div class="t-name">${d.data.name}</div>
+            <div class="t-show">${d.data.show}${d.data.date ? ' &middot; ' + d.data.date : ''}</div>
+            <div class="t-role" style="margin-bottom:6px">${d.data.role}</div>
+            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics — click to jump</div>
+            <div class="t-tags">${tagsHtml}</div>
+            ${platformHtml}`;
+        })
+        .on('mouseleave', () => { setTimeout(() => { if (!tooltip.matches(':hover')) tooltip.style.opacity='0'; }, 300); });
+
+      nodeSel.filter(d=>d.type==='topic')
+        .on('click', (e,d) => { e.stopPropagation(); filterByTopic(d.label); })
+        .on('mousemove', function(event, d) {
+          const r = wrap.getBoundingClientRect();
+          tooltip.style.cssText = `left:${event.clientX-r.left+14}px;top:${event.clientY-r.top-10}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:none;z-index:10;`;
+          tooltip.innerHTML = `<div class="t-name">${d.label}</div><div class="t-role">${topicCounts[d.label]} episode${topicCounts[d.label]!==1?'s':''}</div>`;
+        })
+        .on('mouseleave', () => { tooltip.style.opacity='0'; });
+
+      svg.on('click', () => { activeTopics.clear(); buildSidebar(usedTopics, topicCounts); applyFilter(); });
+
+      function buildSidebar(usedTopics, topicCounts) {
+        const listEl = document.getElementById('ud-topic-list');
+        listEl.innerHTML = '';
+        usedTopics.forEach(t => {
+          const btn = document.createElement('button');
+          btn.className = 'ud-topic-btn' + (activeTopics.has(t) ? ' active' : '');
+          btn.innerHTML = `<span class="ud-topic-dot" style="background:${TOPIC_COLORS[t]||'#0ea5e9'}"></span>${t}<span class="ud-topic-count">${topicCounts[t]}</span>`;
+          btn.addEventListener('click', () => filterByTopic(t));
+          listEl.appendChild(btn);
+        });
+      }
+
+      function filterByTopic(topic) {
+        activeTopics.has(topic) ? activeTopics.delete(topic) : activeTopics.add(topic);
+        buildSidebar(usedTopics, topicCounts);
+        applyFilter();
+      }
+
+      function applyFilter() {
+        const matchCountEl = document.getElementById('ud-match-count');
+        if (activeTopics.size === 0) {
+          nodeSel.filter(d=>d.type==='episode').select('circle').attr('opacity',1).attr('stroke',d=>SHOW_COLORS[d.data.show]||'#f97316').attr('stroke-width',2);
+          nodeSel.filter(d=>d.type==='topic').select('circle').attr('opacity',1);
+          nodeSel.filter(d=>d.type==='topic').select('text').attr('opacity',1);
+          nodeSel.filter(d=>d.type==='episode').select('text').attr('opacity',1);
+          linkSel.attr('stroke-opacity',0.35);
+          matchCountEl.style.display='none';
+          return;
+        }
+        const matchEps    = new Set(visEps.filter(ep=>[...activeTopics].some(t=>ep.topics.includes(t))).map(ep=>ep.id));
+        const matchTopics = new Set([...activeTopics].map(t=>'topic_'+t));
+        matchCountEl.textContent = `${matchEps.size} episode${matchEps.size!==1?'s':''}`;
+        matchCountEl.style.display='block';
+        nodeSel.filter(d=>d.type==='episode').select('circle')
+          .attr('opacity', d=>matchEps.has(d.id)?1:0.08)
+          .attr('stroke', d=>{ if(!matchEps.has(d.id)) return '#374151'; const m=d.data.topics.find(t=>activeTopics.has(t)); return m?TOPIC_COLORS[m]:(SHOW_COLORS[d.data.show]||'#f97316'); })
+          .attr('stroke-width', d=>matchEps.has(d.id)?2.5:1);
+        nodeSel.filter(d=>d.type==='episode').select('text').attr('opacity',d=>matchEps.has(d.id)?1:0.1);
+        nodeSel.filter(d=>d.type==='topic').select('circle').attr('opacity',d=>matchTopics.has(d.id)?1:0.12);
+        nodeSel.filter(d=>d.type==='topic').select('text').attr('opacity',d=>matchTopics.has(d.id)?1:0.12);
+        linkSel.attr('stroke-opacity',d=>{ const id=typeof d.source==='object'?d.source.id:d.source; return matchEps.has(id)&&activeTopics.has(d.topic)?0.75:0.03; });
+      }
+
+      document.getElementById('ud-clear-btn').onclick = () => { activeTopics.clear(); buildSidebar(usedTopics, topicCounts); applyFilter(); };
+
+      buildSidebar(usedTopics, topicCounts);
+    } // end rebuildGraph
+
+    rebuildGraph();
+
+    window.addEventListener('resize', () => {
+      svg.attr('viewBox', `0 0 ${W()} ${H()}`);
+      if (sim) sim.force('center', d3.forceCenter(W()/2, H()/2)).alpha(0.1).restart();
+    });
+  }
+
+})();
+</script>
