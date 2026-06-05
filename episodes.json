@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-06-05T15:25:00.701206Z",
+    "generated": "2026-06-05T16:10:46.323272Z",
     "shows": [
       "PetroNoia",
       "Oil Field 360",
@@ -10,31 +10,18 @@
       "In Basin Observations"
     ],
     "topic_colors": {
-      "Carbon Capture & Storage": "#10b981",
-      "Climate Policy": "#14b8a6",
-      "Data Centers & AI": "#ec4899",
-      "Decarbonization": "#22c55e",
-      "Energy Advocacy": "#f43f5e",
-      "Energy Finance": "#6366f1",
-      "Energy Independence": "#fbbf24",
-      "Energy Legislation": "#fb923c",
-      "Energy Policy": "#f97316",
-      "Energy Storage": "#f59e0b",
-      "Energy Transition": "#06b6d4",
-      "Environmental Regulation": "#ef4444",
-      "ESG & Investing": "#10b981",
-      "Geothermal Energy": "#84cc16",
-      "Grid Reliability": "#a78bfa",
-      "Hydrogen": "#38bdf8",
-      "LNG & Export": "#0ea5e9",
-      "Natural Gas": "#3b82f6",
-      "Nuclear Energy": "#8b5cf6",
-      "Oil & Gas": "#a16207",
-      "Oilfield Technology": "#64748b",
-      "Permitting Reform": "#d97706",
-      "Renewable Energy": "#4ade80",
-      "Sustainability": "#22d3ee",
-      "US Energy Independence": "#fbbf24"
+      "Energy Policy": "#0ea5e9",
+      "Oil & Gas": "#0369a1",
+      "Energy Transition": "#22d3ee",
+      "Nuclear Energy": "#06b6d4",
+      "Natural Gas": "#0891b2",
+      "Data Centers & AI": "#38bdf8",
+      "Climate & Environment": "#0e7490",
+      "ESG & Finance": "#67e8f9",
+      "Geothermal & Storage": "#155e75",
+      "Energy Geopolitics": "#7dd3fc",
+      "Energy Economics": "#bae6fd",
+      "Industry & Technology": "#164e63"
     },
     "show_colors": {
       "PetroNoia": "#f97316",
@@ -47,22 +34,6 @@
   },
   "episodes": [
     {
-      "id": "ep_episode_network_setup_guide",
-      "show": "PetroNoia",
-      "name": "Not Provided",
-      "role": "Not Provided",
-      "date": "2026-06-05",
-      "file": "Episode-Network-Setup-Guide.docx",
-      "url": "",
-      "topics": [
-        "Network Setup Guide",
-        "Power Automate Automation",
-        "SharePoint List Configuration",
-        "Webflow Integration",
-        "Claude AI API Integration"
-      ]
-    },
-    {
       "id": "ep_ana_petronoia_audio__esv2_90p_bg_10p",
       "show": "PetroNoia",
       "name": "Ana Bluntzer",
@@ -71,42 +42,37 @@
       "file": "Ana petronoia audio -esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
-        "Energy Policy and Infrastructure",
-        "Geopolitics and International Relations",
-        "Data Centers and Power Demand",
-        "Oil and Gas Industry",
-        "Government and Private Sector Collaboration"
+        "Energy Policy",
+        "Energy Geopolitics",
+        "Industry & Technology"
       ]
     },
     {
       "id": "ep_drew_bond_c3_solutions",
       "show": "PetroNoia",
       "name": "Drew Bond",
-      "role": "Co-founder and Chairman of C3 Solutions, CEO of Powerfield Energy",
+      "role": "Co-founder and Chairman, C3 Solutions / CEO, Powerfield Energy",
       "date": "2026-06-05",
       "file": "Drew Bond_C3 Solutions.docx",
       "url": "",
       "topics": [
-        "Energy Independence",
-        "Clean Technology and Innovation",
         "Energy Policy",
-        "Pragmatic Energy Solutions",
-        "Technology Commercialization"
+        "Energy Transition",
+        "Energy Economics"
       ]
     },
     {
       "id": "ep_lindsey_merrill_feinberg",
       "show": "PetroNoia",
       "name": "Lindsey Merrill Feinberg",
-      "role": "Business Development, Government Relations, and Strategic Partnerships, Engine No. 1",
+      "role": "Business Development & Strategic Partnerships, Engine No. 1",
       "date": "2026-06-05",
       "file": "Lindsey Merrill Feinberg.docx",
       "url": "",
       "topics": [
-        "US Energy Policy",
-        "Geopolitics and Middle East Relations",
-        "Government and Private Sector Collaboration",
-        "Strategic Energy Partnerships"
+        "ESG & Finance",
+        "Energy Geopolitics",
+        "Energy Policy"
       ]
     },
     {
@@ -118,166 +84,152 @@
       "file": "PN - Marshall Dodson.docx",
       "url": "",
       "topics": [
-        "Energy Industry Leadership",
-        "Corporate Restructuring and Bankruptcy",
-        "Career Development in Energy Sector"
+        "Oil & Gas",
+        "Industry & Technology",
+        "Energy Economics"
       ]
     },
     {
       "id": "ep_pn_xgs___bhughes_v3",
       "show": "PetroNoia",
-      "name": "Ahmad Eldemerdash and Ghazal Izadi",
-      "role": "Ahmad Eldemerdash: Climate Technology Solution Leader, Baker Hughes; Ghazal Izadi: Entrepreneur and Co-founder, Next Generation Geothermal Company",
+      "name": "Ahmad Eldemerdash & Ghazal Izadi",
+      "role": "Baker Hughes / XGS Energy",
       "date": "2026-06-05",
       "file": "PN_XGS & BHughes_v3.docx",
       "url": "",
       "topics": [
-        "Low Carbon Energy Solutions",
-        "Geothermal Energy Technology",
-        "Energy Transition and Climate",
-        "Unconventional Energy Resources",
-        "Baker Hughes Energy Innovation"
+        "Geothermal & Storage",
+        "Energy Transition",
+        "Industry & Technology",
+        "Data Centers & AI"
       ]
     },
     {
       "id": "ep_petronoia_02_17_26_marcella",
       "show": "PetroNoia",
       "name": "Marcella Burke",
-      "role": "Founding Attorney, Burke Law Group",
-      "date": "2026-06-05",
+      "role": "Founder and Managing Attorney, Burke Law Group",
+      "date": "2026-06-17",
       "file": "PetroNoia_02_17_26_Marcella.docx",
       "url": "",
       "topics": [
-        "Environmental Regulation and EPA Law",
-        "Endangerment Finding and CO2 Regulation",
-        "Oil and Gas Compliance Litigation",
-        "Clean Air Act and Climate Policy",
-        "Administrative Law and Government Regulation"
+        "Climate & Environment",
+        "Energy Policy",
+        "Oil & Gas"
       ]
     },
     {
       "id": "ep_petronoia_allyson_anderson_book",
       "show": "PetroNoia",
-      "name": "Allyson Anderson",
+      "name": "Allyson Anderson Book",
       "role": "Chief Sustainability Officer, Baker Hughes",
       "date": "2026-06-05",
       "file": "PetroNoia_Allyson Anderson Book.docx",
       "url": "",
       "topics": [
-        "Energy Policy and Regulation",
-        "Oil and Gas Sustainability",
-        "Climate Science",
-        "Energy Independence"
+        "Energy Transition",
+        "Oil & Gas",
+        "Climate & Environment",
+        "Energy Policy"
       ]
     },
     {
       "id": "ep_petronoia_andrejka_bernatova_v2",
       "show": "PetroNoia",
       "name": "Andrejka Bernatova",
-      "role": "Founder, Managing Partner, Chairman, and CEO, Dynex",
+      "role": "Founder, Managing Partner & CEO, Dynex",
       "date": "2026-06-05",
       "file": "PetroNoia_Andrejka Bernatova_v2.docx",
       "url": "",
       "topics": [
-        "SPACs and IPO Market",
+        "ESG & Finance",
         "Energy Transition",
-        "Energy Finance",
-        "Entrepreneurship",
-        "Career Development in Energy Sector"
+        "Energy Economics"
       ]
     },
     {
       "id": "ep_petronoia_umbro_mike",
       "show": "PetroNoia",
       "name": "Mike Umbro",
-      "role": "Project Operator, Geologic Thermal Energy Storage (GeoTES)",
+      "role": "Project Operator, GeoTES (Geologic Thermal Energy Storage)",
       "date": "2026-06-05",
       "file": "PetroNoia_Umbro_mike.docx",
       "url": "",
       "topics": [
-        "Geologic Thermal Energy Storage",
-        "Energy Storage Technology",
-        "Oil and Gas Asset Repurposing",
-        "Grid Reliability and Peak Power",
-        "Energy Policy and Regulation"
+        "Geothermal & Storage",
+        "Oil & Gas",
+        "Energy Transition"
       ]
     },
     {
       "id": "ep_petronoia_ron___dan__esv2_90p_bg_10p",
       "show": "PetroNoia",
       "name": "Ron Vocon",
-      "role": "Senior Vice President of Data Center Cooling, SBL Data Center Cooling",
+      "role": "SVP of Data Center Cooling, SBL",
       "date": "2026-06-05",
       "file": "Petronoia Ron & Dan -esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
-        "Data Center Cooling Solutions",
-        "Nuclear Energy and SMRs",
-        "AI Power Consumption",
-        "Data Center Infrastructure",
-        "Energy Solutions for Tech Industry"
+        "Data Centers & AI",
+        "Nuclear Energy",
+        "Energy Policy"
       ]
     },
     {
       "id": "ep_petronoia_tarpley_2_esv2_90p_bg_10p__1_",
       "show": "PetroNoia",
       "name": "Tim Tarpley",
-      "role": "Policy/Legislative Expert (specific company not mentioned)",
+      "role": "Energy Policy & Legislative Expert",
       "date": "2026-06-05",
       "file": "Petronoia Tarpley 2-esv2-90p-bg-10p (1).docx",
       "url": "",
       "topics": [
-        "Legislative Process",
-        "Budget Reconciliation",
-        "Permitting Reform",
-        "Senate Rules and Procedures",
-        "The Big Beautiful Bill"
+        "Energy Policy",
+        "Energy Economics"
       ]
     },
     {
       "id": "ep_petronoia_chris",
       "show": "PetroNoia",
-      "name": "Chris Meshach",
+      "name": "Chris Micsak",
       "role": "Chief Strategy Officer, Caliche Development Partners",
       "date": "2026-06-05",
       "file": "Petronoia chris.docx",
       "url": "",
       "topics": [
-        "Natural Gas Storage",
-        "Energy Markets",
-        "Underground Storage Facilities"
+        "Natural Gas",
+        "Energy Economics",
+        "Oil & Gas"
       ]
     },
     {
       "id": "ep_bob_and_dan_audio_esv2_90p_bg_10p",
       "show": "PetroNoia",
       "name": "Bob Stout",
-      "role": "Former Vice President and Head of Regulatory Affairs and Policy, BP; Senior Fellow, Duke Nicolet Institute",
+      "role": "Former VP Regulatory Affairs, BP / Senior Fellow, Duke Nicolet Institute",
       "date": "2026-06-05",
       "file": "bob and dan audio-esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
-        "Energy Decarbonization",
-        "Methane Emissions and Detection",
-        "Oil and Gas Policy",
-        "Deepwater Horizon Oil Spill",
-        "Bridge Building and Stakeholder Dialogue"
+        "Climate & Environment",
+        "Oil & Gas",
+        "Energy Policy",
+        "ESG & Finance"
       ]
     },
     {
       "id": "ep_erik_petronoia_audio",
       "show": "PetroNoia",
       "name": "Eric Belts",
-      "role": "President, Engine Number One",
+      "role": "President, Engine No. 1",
       "date": "2026-06-05",
       "file": "erik petronoia audio.docx",
       "url": "",
       "topics": [
-        "AI Energy Infrastructure",
-        "Power Foundries and Data Centers",
-        "Reindustrialization of North America",
-        "Natural Resource Investing",
-        "Energy Transition and Critical Inputs"
+        "Data Centers & AI",
+        "Energy Transition",
+        "ESG & Finance",
+        "Energy Geopolitics"
       ]
     },
     {
@@ -289,11 +241,9 @@
       "file": "jessica petronoia-esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
-        "Science Policy",
-        "Climate Advocacy",
-        "Hurricane Risk Perception",
-        "Insurance Industry Regulation",
-        "Science and Politics"
+        "Climate & Environment",
+        "Energy Policy",
+        "ESG & Finance"
       ]
     },
     {
@@ -306,10 +256,8 @@
       "url": "",
       "topics": [
         "Nuclear Energy",
-        "Radiation Safety and Protection",
-        "Nuclear Non-Proliferation",
-        "Energy Density and Fission vs Fusion",
-        "AI and Power Generation"
+        "Data Centers & AI",
+        "Energy Policy"
       ]
     },
     {
@@ -322,26 +270,24 @@
       "url": "",
       "topics": [
         "Energy Transition",
-        "Decarbonization and Electrification",
-        "Energy Security and Reliability",
-        "Investment Strategy in Energy",
-        "Pragmatic Energy Policy"
+        "ESG & Finance",
+        "Energy Geopolitics",
+        "Energy Economics"
       ]
     },
     {
       "id": "ep_petronoia__esv2_90p_bg_10p",
       "show": "PetroNoia",
       "name": "Deb Ryan",
-      "role": "Founder/Managing Partner, Swan Mountain Advisory",
+      "role": "Founder/Principal, Swan Mountain Advisory",
       "date": "2026-06-05",
       "file": "petronoia -esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
+        "Oil & Gas",
         "Energy Transition",
-        "Oil and Gas Industry Reform",
-        "Carbon Emissions and Climate",
-        "Upstream Petroleum Engineering",
-        "Energy Policy and Regulation"
+        "Climate & Environment",
+        "ESG & Finance"
       ]
     },
     {
@@ -354,25 +300,23 @@
       "url": "",
       "topics": [
         "Nuclear Energy",
-        "Oil and Gas Industry",
-        "Energy Transition",
-        "Nuclear Advocacy"
+        "Oil & Gas",
+        "Energy Transition"
       ]
     },
     {
       "id": "ep_petronoia_scott_tinker__master_audoio_mi",
       "show": "PetroNoia",
       "name": "Scott Tinker",
-      "role": "Director, Bureau of Economic Geology at UT Austin; Professor",
+      "role": "Director, Bureau of Economic Geology, UT Austin",
       "date": "2026-06-05",
       "file": "petronoia Scott Tinker (Master Audoio Mix )10p.docx",
       "url": "",
       "topics": [
-        "Energy and Economy Integration",
-        "Oil and Gas Industry",
-        "Global Energy Perspective",
-        "Environmental Policy",
-        "Reservoir Geology and Computer Modeling"
+        "Energy Policy",
+        "Oil & Gas",
+        "Energy Geopolitics",
+        "Industry & Technology"
       ]
     },
     {
@@ -384,11 +328,9 @@
       "file": "petronoia bob smith audio.docx",
       "url": "",
       "topics": [
-        "ESG Investing",
-        "Decarbonization and Sustainability",
-        "Socially Responsible Investing (SRI)",
-        "Risk Management Framework",
-        "Corporate Governance"
+        "ESG & Finance",
+        "Climate & Environment",
+        "Energy Economics"
       ]
     }
   ]

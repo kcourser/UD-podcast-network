@@ -38,30 +38,30 @@ SHOW_COLORS = {
 }
 
 TOPIC_COLORS = {
-    "Carbon Capture & Storage": "#10b981",
-    "Climate Policy":           "#14b8a6",
-    "Data Centers & AI":        "#ec4899",
-    "Decarbonization":          "#22c55e",
-    "Energy Advocacy":          "#f43f5e",
-    "Energy Finance":           "#6366f1",
-    "Energy Independence":      "#fbbf24",
-    "Energy Legislation":       "#fb923c",
-    "Energy Policy":            "#f97316",
-    "Energy Storage":           "#f59e0b",
-    "Energy Transition":        "#06b6d4",
-    "Environmental Regulation": "#ef4444",
-    "ESG & Investing":          "#10b981",
-    "Geothermal Energy":        "#84cc16",
-    "Grid Reliability":         "#a78bfa",
-    "Hydrogen":                 "#38bdf8",
-    "LNG & Export":             "#0ea5e9",
-    "Natural Gas":              "#3b82f6",
-    "Nuclear Energy":           "#8b5cf6",
-    "Oil & Gas":                "#a16207",
-    "Oilfield Technology":      "#64748b",
-    "Permitting Reform":        "#d97706",
-    "Renewable Energy":         "#4ade80",
-    "Sustainability":           "#22d3ee",
+    "Carbon Capture & Storage": "#06b6d4",
+    "Climate Policy":           "#0891b2",
+    "Data Centers & AI":        "#22d3ee",
+    "Decarbonization":          "#67e8f9",
+    "Energy Advocacy":          "#0e7490",
+    "Energy Finance":           "#a5f3fc",
+    "Energy Independence":      "#cffafe",
+    "Energy Legislation":       "#155e75",
+    "Energy Policy":            "#0ea5e9",
+    "Energy Storage":           "#38bdf8",
+    "Energy Transition":        "#7dd3fc",
+    "Environmental Regulation": "#0284c7",
+    "ESG & Investing":          "#bae6fd",
+    "Geothermal Energy":        "#0369a1",
+    "Grid Reliability":         "#2dd4bf",
+    "Hydrogen":                 "#5eead4",
+    "LNG & Export":             "#99f6e4",
+    "Natural Gas":              "#14b8a6",
+    "Nuclear Energy":           "#0d9488",
+    "Oil & Gas":                "#0f766e",
+    "Oilfield Technology":      "#115e59",
+    "Permitting Reform":        "#164e63",
+    "Renewable Energy":         "#083344",
+    "Sustainability":           "#ecfeff",
     "US Energy Independence":   "#fbbf24",
 }
 
@@ -91,10 +91,24 @@ Guest hint: {guest_hint}
 Extract:
 1. The guest's full name
 2. Their professional role/title and company
-3. 3-5 topic tags that best describe what this episode covers
+3. 2-4 topic tags from the list below ONLY — do not invent new topics
+
+ALLOWED TOPICS (pick only from this list):
+- Energy Policy
+- Oil & Gas
+- Energy Transition
+- Nuclear Energy
+- Natural Gas
+- Data Centers & AI
+- Climate & Environment
+- ESG & Finance
+- Geothermal & Storage
+- Energy Geopolitics
+- Energy Economics
+- Industry & Technology
 
 Return JSON only, no markdown fences:
-{{"guest_name": "Full Name", "guest_role": "Title, Company", "topics": ["Topic 1", "Topic 2", "Topic 3"]}}
+{{"guest_name": "Full Name", "guest_role": "Title, Company", "topics": ["Topic 1", "Topic 2"]}}
 
 TRANSCRIPT (first 6000 chars):
 {transcript_text[:6000]}
