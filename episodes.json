@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-06-05T15:07:15.383843Z",
+    "generated": "2026-06-05T15:25:00.701206Z",
     "shows": [
       "PetroNoia",
       "Oil Field 360",
@@ -47,38 +47,6 @@
   },
   "episodes": [
     {
-      "id": "ep_ana_petronoia_audio__esv2_90p_bg_10p",
-      "show": "PetroNoia",
-      "name": "Ana Bluntzer",
-      "role": "Director, Ham Institute for American Energy, Oklahoma State University",
-      "date": "2026-06-05",
-      "file": "Ana petronoia audio -esv2-90p-bg-10p.docx",
-      "url": "",
-      "topics": [
-        "Energy Policy",
-        "Geopolitics and Agriculture",
-        "Data Centers and Power Infrastructure",
-        "Oil and Gas Industry",
-        "Government and Private Sector Collaboration"
-      ]
-    },
-    {
-      "id": "ep_drew_bond_c3_solutions",
-      "show": "PetroNoia",
-      "name": "Drew Bond",
-      "role": "Co-founder and Chairman of C3 Solutions, CEO of Powerfield Energy",
-      "date": "2026-06-05",
-      "file": "Drew Bond_C3 Solutions.docx",
-      "url": "",
-      "topics": [
-        "Energy Policy and Independence",
-        "Clean Technology and Innovation",
-        "Pragmatic Energy Solutions",
-        "Energy Commercialization",
-        "Optimism in Energy Sector"
-      ]
-    },
-    {
       "id": "ep_episode_network_setup_guide",
       "show": "PetroNoia",
       "name": "Not Provided",
@@ -95,6 +63,38 @@
       ]
     },
     {
+      "id": "ep_ana_petronoia_audio__esv2_90p_bg_10p",
+      "show": "PetroNoia",
+      "name": "Ana Bluntzer",
+      "role": "Director, Ham Institute for American Energy, Oklahoma State University",
+      "date": "2026-06-05",
+      "file": "Ana petronoia audio -esv2-90p-bg-10p.docx",
+      "url": "",
+      "topics": [
+        "Energy Policy and Infrastructure",
+        "Geopolitics and International Relations",
+        "Data Centers and Power Demand",
+        "Oil and Gas Industry",
+        "Government and Private Sector Collaboration"
+      ]
+    },
+    {
+      "id": "ep_drew_bond_c3_solutions",
+      "show": "PetroNoia",
+      "name": "Drew Bond",
+      "role": "Co-founder and Chairman of C3 Solutions, CEO of Powerfield Energy",
+      "date": "2026-06-05",
+      "file": "Drew Bond_C3 Solutions.docx",
+      "url": "",
+      "topics": [
+        "Energy Independence",
+        "Clean Technology and Innovation",
+        "Energy Policy",
+        "Pragmatic Energy Solutions",
+        "Technology Commercialization"
+      ]
+    },
+    {
       "id": "ep_lindsey_merrill_feinberg",
       "show": "PetroNoia",
       "name": "Lindsey Merrill Feinberg",
@@ -103,10 +103,10 @@
       "file": "Lindsey Merrill Feinberg.docx",
       "url": "",
       "topics": [
-        "U.S. Energy Policy",
+        "US Energy Policy",
         "Geopolitics and Middle East Relations",
-        "Government and Private Sector Partnerships",
-        "Strategic Energy Projects and Capital Formation"
+        "Government and Private Sector Collaboration",
+        "Strategic Energy Partnerships"
       ]
     },
     {
@@ -120,41 +120,39 @@
       "topics": [
         "Energy Industry Leadership",
         "Corporate Restructuring and Bankruptcy",
-        "Career Development in Energy",
-        "Cash Management and Financial Strategy",
-        "Energy Business Operations"
+        "Career Development in Energy Sector"
       ]
     },
     {
       "id": "ep_pn_xgs___bhughes_v3",
       "show": "PetroNoia",
       "name": "Ahmad Eldemerdash and Ghazal Izadi",
-      "role": "Ahmad Eldemerdash: Climate Technology Solutions Leader, Baker Hughes; Ghazal Izadi: Founder/CEO, Next Generation Geothermal Company",
+      "role": "Ahmad Eldemerdash: Climate Technology Solution Leader, Baker Hughes; Ghazal Izadi: Entrepreneur and Co-founder, Next Generation Geothermal Company",
       "date": "2026-06-05",
       "file": "PN_XGS & BHughes_v3.docx",
       "url": "",
       "topics": [
-        "Clean Energy Technology",
-        "Geothermal Energy",
-        "Energy Transition",
-        "Low-Carbon Solutions",
-        "Baker Hughes Innovation"
+        "Low Carbon Energy Solutions",
+        "Geothermal Energy Technology",
+        "Energy Transition and Climate",
+        "Unconventional Energy Resources",
+        "Baker Hughes Energy Innovation"
       ]
     },
     {
       "id": "ep_petronoia_02_17_26_marcella",
       "show": "PetroNoia",
       "name": "Marcella Burke",
-      "role": "Founder and Managing Attorney, Burke Law Group",
+      "role": "Founding Attorney, Burke Law Group",
       "date": "2026-06-05",
       "file": "PetroNoia_02_17_26_Marcella.docx",
       "url": "",
       "topics": [
-        "Environmental Regulation and EPA Compliance",
-        "Clean Air Act and Endangerment Findings",
-        "CO2 and Greenhouse Gas Regulation",
-        "Oil and Gas Litigation",
-        "Climate Policy and Legal Framework"
+        "Environmental Regulation and EPA Law",
+        "Endangerment Finding and CO2 Regulation",
+        "Oil and Gas Compliance Litigation",
+        "Clean Air Act and Climate Policy",
+        "Administrative Law and Government Regulation"
       ]
     },
     {
@@ -167,9 +165,8 @@
       "url": "",
       "topics": [
         "Energy Policy and Regulation",
-        "Oil and Gas Industry",
-        "Climate Science and Sustainability",
-        "Offshore Energy Development",
+        "Oil and Gas Sustainability",
+        "Climate Science",
         "Energy Independence"
       ]
     },
@@ -177,14 +174,16 @@
       "id": "ep_petronoia_andrejka_bernatova_v2",
       "show": "PetroNoia",
       "name": "Andrejka Bernatova",
-      "role": "Founder, Managing Partner, Chairman and CEO, Dynex",
+      "role": "Founder, Managing Partner, Chairman, and CEO, Dynex",
       "date": "2026-06-05",
       "file": "PetroNoia_Andrejka Bernatova_v2.docx",
       "url": "",
       "topics": [
-        "SPACs and IPO Markets",
-        "Energy Transition and Finance",
-        "Energy Independence and Policy"
+        "SPACs and IPO Market",
+        "Energy Transition",
+        "Energy Finance",
+        "Entrepreneurship",
+        "Career Development in Energy Sector"
       ]
     },
     {
@@ -197,10 +196,10 @@
       "url": "",
       "topics": [
         "Geologic Thermal Energy Storage",
+        "Energy Storage Technology",
         "Oil and Gas Asset Repurposing",
-        "Grid Energy Storage Solutions",
-        "California Energy Policy",
-        "Renewable Energy Transition"
+        "Grid Reliability and Peak Power",
+        "Energy Policy and Regulation"
       ]
     },
     {
@@ -214,25 +213,25 @@
       "topics": [
         "Data Center Cooling Solutions",
         "Nuclear Energy and SMRs",
-        "AI Power Requirements",
-        "Digital Infrastructure",
-        "Energy Policy and Innovation"
+        "AI Power Consumption",
+        "Data Center Infrastructure",
+        "Energy Solutions for Tech Industry"
       ]
     },
     {
       "id": "ep_petronoia_tarpley_2_esv2_90p_bg_10p__1_",
       "show": "PetroNoia",
       "name": "Tim Tarpley",
-      "role": "Policy Expert/Legislative Analyst",
+      "role": "Policy/Legislative Expert (specific company not mentioned)",
       "date": "2026-06-05",
       "file": "Petronoia Tarpley 2-esv2-90p-bg-10p (1).docx",
       "url": "",
       "topics": [
         "Legislative Process",
         "Budget Reconciliation",
-        "Senate Procedures",
         "Permitting Reform",
-        "Congressional Procedures"
+        "Senate Rules and Procedures",
+        "The Big Beautiful Bill"
       ]
     },
     {
@@ -259,10 +258,10 @@
       "url": "",
       "topics": [
         "Energy Decarbonization",
-        "Methane Emissions",
+        "Methane Emissions and Detection",
         "Oil and Gas Policy",
-        "Deepwater Horizon Crisis Management",
-        "Bridge Building and Stakeholder Engagement"
+        "Deepwater Horizon Oil Spill",
+        "Bridge Building and Stakeholder Dialogue"
       ]
     },
     {
@@ -274,11 +273,11 @@
       "file": "erik petronoia audio.docx",
       "url": "",
       "topics": [
-        "AI Infrastructure and Energy",
+        "AI Energy Infrastructure",
         "Power Foundries and Data Centers",
-        "North American Reindustrialization",
-        "Critical Commodities and Supply Chain",
-        "Energy Transition and Grid Modernization"
+        "Reindustrialization of North America",
+        "Natural Resource Investing",
+        "Energy Transition and Critical Inputs"
       ]
     },
     {
@@ -293,8 +292,8 @@
         "Science Policy",
         "Climate Advocacy",
         "Hurricane Risk Perception",
-        "Insurance and Regulatory Capture",
-        "Politics of Science"
+        "Insurance Industry Regulation",
+        "Science and Politics"
       ]
     },
     {
@@ -310,7 +309,7 @@
         "Radiation Safety and Protection",
         "Nuclear Non-Proliferation",
         "Energy Density and Fission vs Fusion",
-        "AI Power Demand Solutions"
+        "AI and Power Generation"
       ]
     },
     {
@@ -323,9 +322,9 @@
       "url": "",
       "topics": [
         "Energy Transition",
-        "Energy Security",
         "Decarbonization and Electrification",
-        "Investment Strategy in Energy Sector",
+        "Energy Security and Reliability",
+        "Investment Strategy in Energy",
         "Pragmatic Energy Policy"
       ]
     },
@@ -333,16 +332,16 @@
       "id": "ep_petronoia__esv2_90p_bg_10p",
       "show": "PetroNoia",
       "name": "Deb Ryan",
-      "role": "Founder/Principal, Swan Mountain Advisory",
+      "role": "Founder/Managing Partner, Swan Mountain Advisory",
       "date": "2026-06-05",
       "file": "petronoia -esv2-90p-bg-10p.docx",
       "url": "",
       "topics": [
         "Energy Transition",
         "Oil and Gas Industry Reform",
-        "Carbon Emissions and Intensity Analytics",
+        "Carbon Emissions and Climate",
         "Upstream Petroleum Engineering",
-        "ESG and Sustainability in Energy"
+        "Energy Policy and Regulation"
       ]
     },
     {
@@ -369,11 +368,11 @@
       "file": "petronoia Scott Tinker (Master Audoio Mix )10p.docx",
       "url": "",
       "topics": [
-        "Energy and Economics",
-        "Environmental Policy",
+        "Energy and Economy Integration",
         "Oil and Gas Industry",
-        "Global Energy Development",
-        "Geoscience and Reservoir Modeling"
+        "Global Energy Perspective",
+        "Environmental Policy",
+        "Reservoir Geology and Computer Modeling"
       ]
     },
     {
@@ -385,10 +384,10 @@
       "file": "petronoia bob smith audio.docx",
       "url": "",
       "topics": [
-        "ESG Investment Strategy",
-        "Sustainable Finance",
-        "Decarbonization and Net Zero",
-        "Risk Management",
+        "ESG Investing",
+        "Decarbonization and Sustainability",
+        "Socially Responsible Investing (SRI)",
+        "Risk Management Framework",
         "Corporate Governance"
       ]
     }
