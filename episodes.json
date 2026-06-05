@@ -45,7 +45,9 @@
         "Energy Policy",
         "Energy Geopolitics",
         "Industry & Technology"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_drew_bond_c3_solutions",
@@ -59,7 +61,9 @@
         "Energy Policy",
         "Energy Transition",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_lindsey_merrill_feinberg",
@@ -76,7 +80,7 @@
       ],
       "spotify_url": "",
       "timestamps": {
-        "ESG & Finance": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=22",
+        "ESG & Finance": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=180",
         "Energy Geopolitics": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=115",
         "Energy Policy": "https://www.youtube.com/watch?v=0ZKGSIX_YY8&t=91"
       }
@@ -93,7 +97,9 @@
         "Oil & Gas",
         "Industry & Technology",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_pn_xgs___bhughes_v3",
@@ -108,7 +114,9 @@
         "Energy Transition",
         "Industry & Technology",
         "Data Centers & AI"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_02_17_26_marcella",
@@ -122,7 +130,9 @@
         "Climate & Environment",
         "Energy Policy",
         "Oil & Gas"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_allyson_anderson_book",
@@ -137,7 +147,9 @@
         "Oil & Gas",
         "Climate & Environment",
         "Energy Policy"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_andrejka_bernatova_v2",
@@ -151,7 +163,9 @@
         "ESG & Finance",
         "Energy Transition",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_umbro_mike",
@@ -165,7 +179,9 @@
         "Geothermal & Storage",
         "Oil & Gas",
         "Energy Transition"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_ron___dan__esv2_90p_bg_10p",
@@ -179,7 +195,9 @@
         "Data Centers & AI",
         "Nuclear Energy",
         "Energy Policy"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_tarpley_2_esv2_90p_bg_10p__1_",
@@ -192,7 +210,9 @@
       "topics": [
         "Energy Policy",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_chris",
@@ -206,7 +226,9 @@
         "Natural Gas",
         "Energy Economics",
         "Oil & Gas"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_bob_and_dan_audio_esv2_90p_bg_10p",
@@ -221,7 +243,9 @@
         "Oil & Gas",
         "Energy Policy",
         "ESG & Finance"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_erik_petronoia_audio",
@@ -236,7 +260,9 @@
         "Energy Transition",
         "ESG & Finance",
         "Energy Geopolitics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_jessica_petronoia_esv2_90p_bg_10p",
@@ -250,7 +276,9 @@
         "Climate & Environment",
         "Energy Policy",
         "ESG & Finance"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronioa_june_11_esv2_90p_bg_10p",
@@ -264,7 +292,9 @@
         "Nuclear Energy",
         "Data Centers & AI",
         "Energy Policy"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia__maria_dreyfus",
@@ -279,7 +309,9 @@
         "ESG & Finance",
         "Energy Geopolitics",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia__esv2_90p_bg_10p",
@@ -294,7 +326,9 @@
         "Energy Transition",
         "Climate & Environment",
         "ESG & Finance"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_douglas__esv2_90p_bg_10p",
@@ -308,7 +342,9 @@
         "Nuclear Energy",
         "Oil & Gas",
         "Energy Transition"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_scott_tinker__master_audoio_mi",
@@ -323,7 +359,9 @@
         "Oil & Gas",
         "Energy Geopolitics",
         "Industry & Technology"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     },
     {
       "id": "ep_petronoia_bob_smith_audio",
@@ -337,7 +375,9 @@
         "ESG & Finance",
         "Climate & Environment",
         "Energy Economics"
-      ]
+      ],
+      "spotify_url": "",
+      "timestamps": {}
     }
   ]
 }

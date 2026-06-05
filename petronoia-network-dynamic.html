@@ -331,13 +331,17 @@
       });
 
       const tooltip = document.getElementById('ud-tooltip');
+      let tooltipTimer = null;
+      let tooltipHovered = false;
+      tooltip.addEventListener('mouseenter', () => { tooltipHovered = true; clearTimeout(tooltipTimer); });
+      tooltip.addEventListener('mouseleave', () => { tooltipHovered = false; tooltip.style.opacity='0'; tooltip.style.pointerEvents='none'; });
 
       nodeSel.filter(d=>d.type==='episode')
         .on('mousemove', function(event, d) {
           const r = wrap.getBoundingClientRect();
           let x = event.clientX - r.left + 14, y = event.clientY - r.top - 10;
           if (x + 260 > r.width) x -= 270;
-          tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:auto;max-width:260px;z-index:10;transition:opacity 0.15s;`;
+          tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:auto;max-width:260px;z-index:100;transition:opacity 0.3s;`;
           const ts = d.data.timestamps || {};
           const tagsHtml = d.data.topics.map(t => {
             const tsUrl = ts[t];
@@ -362,7 +366,11 @@
             <div class="t-tags">${tagsHtml}</div>
             ${platformHtml}`;
         })
-        .on('mouseleave', () => { setTimeout(() => { if (!tooltip.matches(':hover')) tooltip.style.opacity='0'; }, 300); });
+        .on('mouseleave', () => {
+          tooltipTimer = setTimeout(() => {
+            if (!tooltipHovered) { tooltip.style.opacity='0'; tooltip.style.pointerEvents='none'; }
+          }, 800);
+        });
 
       nodeSel.filter(d=>d.type==='topic')
         .on('click', (e,d) => { e.stopPropagation(); filterByTopic(d.label); })
