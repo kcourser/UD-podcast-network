@@ -25,12 +25,22 @@ jobs:
       - name: Install dependencies
         run: pip install anthropic python-docx
 
-      - name: Find new transcript
-        id: find
+      - name: Find and process transcripts
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          FILES=$(git diff --name-only HEAD~1 HEAD -- 'transcripts/**/*.docx' 2>/dev/null || git show --name-only HEAD | grep 'transcripts/.*\.docx')
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-          echo "Found: $FILES"
+          git diff --name-only HEAD~1 HEAD -- 'transcripts/**/*.docx' > /tmp/changed_files.txt 2>/dev/null || \
+          git show --name-only HEAD | grep 'transcripts/.*\.docx' > /tmp/changed_files.txt || true
+          
+          cat /tmp/changed_files.txt
+          
+          while IFS= read -r FILE; do
+            if [ -f "$FILE" ]; then
+              echo "Processing: $FILE"
+              SHOW=$(echo "$FILE" | cut -d'/' -f2)
+              python process_transcript.py "$FILE" "$SHOW"
+            fi
+          done < /tmp/changed_files.txt
 
       - name: Process transcript(s)
         env:
