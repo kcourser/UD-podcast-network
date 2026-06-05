@@ -1,6 +1,7 @@
 name: Process Podcast Transcript
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'transcripts/**/*.docx'
