@@ -29,29 +29,27 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          git diff --name-only HEAD~1 HEAD -- 'transcripts/**/*.docx' > /tmp/changed_files.txt 2>/dev/null || \
-          git show --name-only HEAD | grep 'transcripts/.*\.docx' > /tmp/changed_files.txt || true
-          
+          # Get .docx files changed in this push
+          git diff --name-only HEAD~1 HEAD | grep 'transcripts/.*\.docx' > /tmp/changed_files.txt || true
+
+          # Fallback: use files listed in the commit (first push with no parent)
+          if [ ! -s /tmp/changed_files.txt ]; then
+            git show --name-only --format="" HEAD | grep 'transcripts/.*\.docx' > /tmp/changed_files.txt || true
+          fi
+
+          echo "Files to process:"
           cat /tmp/changed_files.txt
-          
+
           while IFS= read -r FILE; do
+            [ -z "$FILE" ] && continue
             if [ -f "$FILE" ]; then
               echo "Processing: $FILE"
               SHOW=$(echo "$FILE" | cut -d'/' -f2)
               python process_transcript.py "$FILE" "$SHOW"
+            else
+              echo "Skipping (not found): $FILE"
             fi
           done < /tmp/changed_files.txt
-
-      - name: Process transcript(s)
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          for FILE in ${{ steps.find.outputs.files }}; do
-            if [ -f "$FILE" ]; then
-              SHOW=$(echo "$FILE" | cut -d'/' -f2)
-              python process_transcript.py "$FILE" "$SHOW"
-            fi
-          done
 
       - name: Commit updated episodes.json
         run: |
