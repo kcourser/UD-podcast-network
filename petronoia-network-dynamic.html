@@ -38,22 +38,99 @@
 
 #ud-header p { font-size: 11px; color: #64748b; }
 
-#ud-show-tabs { margin-left: auto; display: flex; gap: 6px; }
+/* ── Show filter dropdown ── */
+#ud-show-filter { margin-left: auto; position: relative; }
 
-.ud-show-tab {
-  padding: 4px 10px;
+#ud-shows-btn {
+  padding: 5px 12px;
   border-radius: 20px;
   border: 1px solid #2d3748;
   background: transparent;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 11px;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.15s;
+  white-space: nowrap;
 }
-.ud-show-tab:hover { border-color: #4b5563; color: #94a3b8; }
-.ud-show-tab.active { color: #fff; border-color: transparent; font-weight: 600; }
+#ud-shows-btn:hover, #ud-shows-btn.open {
+  border-color: #4b5563;
+  color: #e2e8f0;
+  background: #1e2330;
+}
 
+#ud-shows-panel {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #0d1020;
+  border: 1px solid #2d3748;
+  border-radius: 8px;
+  padding: 6px;
+  min-width: 210px;
+  z-index: 200;
+  box-shadow: 0 8px 24px #00000088;
+}
+#ud-shows-panel.open { display: block; }
+
+.ud-show-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #94a3b8;
+  transition: background 0.1s;
+  user-select: none;
+}
+.ud-show-check:hover { background: #1e2330; color: #e2e8f0; }
+
+.ud-check-box {
+  width: 13px; height: 13px;
+  border-radius: 3px;
+  border: 1.5px solid #4b5563;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+}
+.ud-check-box.checked {
+  border-color: transparent;
+}
+.ud-check-box.checked::after { content: '✓'; font-size: 9px; color: #fff; font-weight: 700; }
+
+.ud-show-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ud-shows-actions {
+  border-top: 1px solid #1e2330;
+  margin-top: 4px;
+  padding-top: 6px;
+  display: flex;
+  gap: 4px;
+}
+.ud-shows-action-btn {
+  flex: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #2d3748;
+  background: transparent;
+  color: #64748b;
+  font-size: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.ud-shows-action-btn:hover { background: #1e2330; color: #94a3b8; }
+
+/* ── Layout ── */
 #ud-layout { display: flex; flex: 1; overflow: hidden; }
 
 #ud-sidebar {
@@ -161,7 +238,16 @@
       <h2 id="ud-title">Episode Network</h2>
       <p>Filter by topic &middot; click nodes &middot; drag to explore</p>
     </div>
-    <div id="ud-show-tabs"></div>
+    <div id="ud-show-filter">
+      <button id="ud-shows-btn">All Shows ▾</button>
+      <div id="ud-shows-panel">
+        <div id="ud-shows-list"></div>
+        <div class="ud-shows-actions">
+          <button class="ud-shows-action-btn" id="ud-shows-all-btn">Select All</button>
+          <button class="ud-shows-action-btn" id="ud-shows-none-btn">Clear All</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="ud-layout">
     <div id="ud-sidebar">
@@ -213,32 +299,94 @@
       "The Energy Pipeline":   "#3b82f6",
       "In Basin Observations": "#10b981",
     }, meta.show_colors || {});
-    const allShows = [...new Set(episodes.map(e => e.show))];
+
+    const allShows = [...new Set(episodes.map(e => e.show))].sort();
+    // Default: all shows selected
+    const selectedShows = new Set(allShows);
+    let activeTopics = new Set();
 
     document.getElementById('ud-loading').style.display = 'none';
 
-    let activeShow   = null;
-    let activeTopics = new Set();
+    // ── Show filter dropdown ──────────────────────────────────────────────────
+    const showsBtn   = document.getElementById('ud-shows-btn');
+    const showsPanel = document.getElementById('ud-shows-panel');
+    const showsList  = document.getElementById('ud-shows-list');
 
-    // Show tabs
-    const tabsEl = document.getElementById('ud-show-tabs');
-    if (allShows.length > 1) {
+    function updateShowBtn() {
+      if (selectedShows.size === 0 || selectedShows.size === allShows.length) {
+        showsBtn.textContent = 'All Shows ▾';
+      } else {
+        showsBtn.textContent = `${selectedShows.size} Show${selectedShows.size > 1 ? 's' : ''} ▾`;
+      }
+    }
+
+    function buildShowsList() {
+      showsList.innerHTML = '';
       allShows.forEach(show => {
-        const btn = document.createElement('button');
-        btn.className = 'ud-show-tab';
-        btn.textContent = show;
-        btn.addEventListener('click', () => {
-          activeShow = activeShow === show ? null : show;
-          tabsEl.querySelectorAll('.ud-show-tab').forEach(b => {
-            b.classList.toggle('active', b.textContent === activeShow);
-            b.style.background = b.classList.contains('active') ? (SHOW_COLORS[b.textContent] || '#f97316') : '';
-          });
+        const row = document.createElement('div');
+        row.className = 'ud-show-check';
+
+        const box = document.createElement('div');
+        box.className = 'ud-check-box' + (selectedShows.has(show) ? ' checked' : '');
+        box.style.background = selectedShows.has(show) ? (SHOW_COLORS[show] || '#f97316') : 'transparent';
+
+        const dot = document.createElement('div');
+        dot.className = 'ud-show-dot';
+        dot.style.background = SHOW_COLORS[show] || '#f97316';
+
+        const label = document.createElement('span');
+        label.textContent = show;
+
+        row.appendChild(box);
+        row.appendChild(dot);
+        row.appendChild(label);
+
+        row.addEventListener('click', () => {
+          if (selectedShows.has(show)) {
+            if (selectedShows.size > 1) selectedShows.delete(show); // keep at least 1
+          } else {
+            selectedShows.add(show);
+          }
+          buildShowsList();
+          updateShowBtn();
+          activeTopics.clear();
           rebuildGraph();
         });
-        tabsEl.appendChild(btn);
+
+        showsList.appendChild(row);
       });
     }
 
+    showsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showsPanel.classList.toggle('open');
+      showsBtn.classList.toggle('open', showsPanel.classList.contains('open'));
+    });
+
+    document.getElementById('ud-shows-all-btn').addEventListener('click', () => {
+      allShows.forEach(s => selectedShows.add(s));
+      buildShowsList(); updateShowBtn(); activeTopics.clear(); rebuildGraph();
+    });
+
+    document.getElementById('ud-shows-none-btn').addEventListener('click', () => {
+      // Keep the first show so graph is never empty
+      selectedShows.clear();
+      selectedShows.add(allShows[0]);
+      buildShowsList(); updateShowBtn(); activeTopics.clear(); rebuildGraph();
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById('ud-show-filter').contains(e.target)) {
+        showsPanel.classList.remove('open');
+        showsBtn.classList.remove('open');
+      }
+    });
+
+    buildShowsList();
+    updateShowBtn();
+
+    // ── Graph ─────────────────────────────────────────────────────────────────
     const wrap = document.getElementById('ud-graph-wrap');
     const svg  = d3.select('#ud-graph');
     const W = () => wrap.clientWidth;
@@ -253,7 +401,11 @@
     let linkSel, nodeSel, sim;
 
     function rebuildGraph() {
-      const visEps = activeShow ? episodes.filter(e => e.show === activeShow) : episodes;
+      // Filter by selected shows
+      const visEps = (selectedShows.size === allShows.length)
+        ? episodes
+        : episodes.filter(e => selectedShows.has(e.show));
+
       const usedTopics = [...new Set(visEps.flatMap(e => e.topics))].sort();
       const topicCounts = {};
       usedTopics.forEach(t => { topicCounts[t] = visEps.filter(e => e.topics.includes(t)).length; });
@@ -358,9 +510,10 @@
               ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:10px;color:#ef4444;text-decoration:none;padding:2px 8px;border-radius:4px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
               ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:2px 8px;border-radius:4px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
             </div>` : '';
+          const showColor = SHOW_COLORS[d.data.show] || '#f97316';
           tooltip.innerHTML = `
             <div class="t-name">${d.data.name}</div>
-            <div class="t-show">${d.data.show}${d.data.date ? ' &middot; ' + d.data.date : ''}</div>
+            <div class="t-show" style="color:${showColor}">${d.data.show}${d.data.date ? ' &middot; ' + d.data.date : ''}</div>
             <div class="t-role" style="margin-bottom:6px">${d.data.role}</div>
             <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics — click to jump</div>
             <div class="t-tags">${tagsHtml}</div>
