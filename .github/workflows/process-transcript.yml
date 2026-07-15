@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install anthropic python-docx
+        run: pip install anthropic python-docx --break-system-packages
 
       - name: Find and process transcripts
         env:
