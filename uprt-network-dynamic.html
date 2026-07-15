@@ -196,7 +196,7 @@ input.ud-rng::-moz-range-thumb {
 #ud-clear-btn:hover { background: #1e2330; color: #94a3b8; }
 
 /* ── Graph ── */
-#ud-graph-wrap { flex: 1; position: relative; overflow: hidden; }
+#ud-graph-wrap { flex: 1; position: relative; overflow: hidden; background: #0f1117; }
 #ud-graph-wrap svg { width: 100%; height: 100%; display: block; }
 
 /* ── Tooltip ── */
@@ -499,6 +499,14 @@ input.ud-rng::-moz-range-thumb {
       return p[0] + (p.length > 1 ? ' ' + p[p.length - 1][0] + '.' : '');
     }
 
+    function fmtName(name) {
+      if (!name) return '—';
+      if (name.includes('&')) return name;
+      const p = name.trim().split(' ');
+      if (p.length === 1) return name;
+      return p[0][0] + '. ' + p[p.length - 1];
+    }
+
     function rebuildGraph() {
       // Filter by show + date range
       const visEps = episodes
@@ -572,7 +580,7 @@ input.ud-rng::-moz-range-thumb {
         .attr('stroke',           '#0f1117')
         .attr('stroke-width',     '3px')
         .attr('stroke-linejoin',  'round')
-        .text(d => truncName(d.data.name));
+        .text(d => fmtName(d.data.name));
 
       // ── Topic hubs ──
       nodeSel.filter(d => d.type === 'topic').append('circle')
@@ -620,6 +628,11 @@ input.ud-rng::-moz-range-thumb {
       });
 
       nodeSel.filter(d => d.type === 'episode')
+        .on('click', function (event, d) {
+          event.stopPropagation();
+          const url = d.data.url || d.data.spotify_url || '';
+          if (url) window.open(url, '_blank');
+        })
         .on('mousemove', function (event, d) {
           const r = wrap.getBoundingClientRect();
           let x = event.clientX - r.left + 14, y = event.clientY - r.top - 10;
@@ -648,11 +661,14 @@ input.ud-rng::-moz-range-thumb {
               ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
             </div>` : '';
 
+          const clickHint = ytUrl ? `<div style="font-size:9px;color:#475569;margin-bottom:7px">click node to open ▶ YouTube</div>` : '';
+
           tooltip.innerHTML = `
-            <div style="font-weight:700;color:#f1f5f9;font-size:13px;margin-bottom:3px">${d.data.name}</div>
+            <div style="font-weight:700;color:#f1f5f9;font-size:13px;margin-bottom:3px">${fmtName(d.data.name)}</div>
             <div style="font-size:10px;font-weight:600;color:${showColor};margin-bottom:3px">● ${d.data.show}${dateStr}</div>
-            <div style="color:#94a3b8;font-size:10px;margin-bottom:7px;line-height:1.4">${d.data.role}</div>
-            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${Object.keys(ts).length ? ' — click to jump' : ''}</div>
+            <div style="color:#94a3b8;font-size:10px;margin-bottom:5px;line-height:1.4">${d.data.role}</div>
+            ${clickHint}
+            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${Object.keys(ts).length ? ' — click tag to jump' : ''}</div>
             <div>${tagsHtml}</div>
             ${platformHtml}`;
         })
