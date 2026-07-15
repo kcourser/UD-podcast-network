@@ -200,9 +200,12 @@ TRANSCRIPT (first 6000 chars):
         messages=[{"role": "user", "content": prompt}]
     )
     raw = msg.content[0].text.strip()
-    raw = re.sub(r'^```[a-z]*\n?', '', raw)
-    raw = re.sub(r'\n?```$', '', raw)
-    return json.loads(raw.strip())
+    # Extract just the JSON object — Claude sometimes appends extra text
+    start = raw.find('{')
+    end   = raw.rfind('}')
+    if start == -1 or end == -1:
+        raise ValueError(f"No JSON object found in response: {raw[:200]}")
+    return json.loads(raw[start:end + 1])
 
 
 def load_data() -> dict:
