@@ -200,12 +200,13 @@ TRANSCRIPT (first 6000 chars):
         messages=[{"role": "user", "content": prompt}]
     )
     raw = msg.content[0].text.strip()
-    # Extract just the JSON object — Claude sometimes appends extra text
+    # Use raw_decode so we stop at the end of the first valid JSON object
+    # and ignore anything Claude appended after it (extra text, second object, etc.)
     start = raw.find('{')
-    end   = raw.rfind('}')
-    if start == -1 or end == -1:
+    if start == -1:
         raise ValueError(f"No JSON object found in response: {raw[:200]}")
-    return json.loads(raw[start:end + 1])
+    obj, _ = json.JSONDecoder().raw_decode(raw, start)
+    return obj
 
 
 def load_data() -> dict:
