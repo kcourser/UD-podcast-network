@@ -1,8 +1,7 @@
 <!-- ============================================================
      UPRT+ Network — Upright Digital Podcast Episode Network
      Dynamic embed for Webflow — paste into an Embed element
-     v2: filled show-color nodes, labels outside circles,
-     dual-handle month/year date slider, show legend, improved tooltip
+     v3: name search, shows in sidebar, readability improvements
      ============================================================ -->
 
 <style>
@@ -22,89 +21,50 @@
 
 /* ── Header ── */
 #ud-header {
-  padding: 14px 20px;
+  padding: 12px 18px;
   border-bottom: 1px solid #1e2330;
   background: #0d1020;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 #ud-header h2 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #f1f5f9;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 #ud-header p { font-size: 11px; color: #64748b; margin-top: 2px; }
 
-/* ── Show filter dropdown ── */
-#ud-show-filter { position: relative; }
-#ud-shows-btn {
+/* ── Name search ── */
+#ud-search {
+  margin-left: auto;
   padding: 5px 12px;
   border-radius: 20px;
   border: 1px solid #2d3748;
-  background: transparent;
-  color: #94a3b8;
-  font-size: 11px;
-  cursor: pointer;
+  background: #0f1117;
+  color: #e2e8f0;
+  font-size: 12px;
   font-family: inherit;
-  transition: all 0.15s;
-  white-space: nowrap;
+  width: 200px;
+  outline: none;
+  transition: border-color 0.15s;
 }
-#ud-shows-btn:hover, #ud-shows-btn.open { border-color: #4b5563; color: #e2e8f0; background: #1e2330; }
-#ud-shows-panel {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  background: #0d1020;
-  border: 1px solid #2d3748;
-  border-radius: 8px;
-  padding: 6px;
-  min-width: 210px;
-  z-index: 200;
-  box-shadow: 0 8px 24px #00000088;
-}
-#ud-shows-panel.open { display: block; }
-.ud-show-check {
-  display: flex; align-items: center; gap: 8px;
-  padding: 5px 8px; border-radius: 5px;
-  cursor: pointer; font-size: 11px; color: #94a3b8;
-  transition: background 0.1s; user-select: none;
-}
-.ud-show-check:hover { background: #1e2330; color: #e2e8f0; }
-.ud-check-box {
-  width: 13px; height: 13px; border-radius: 3px;
-  border: 1.5px solid #4b5563; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.1s;
-}
-.ud-check-box.checked { border-color: transparent; }
-.ud-check-box.checked::after { content: '✓'; font-size: 9px; color: #fff; font-weight: 700; }
-.ud-show-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.ud-shows-actions {
-  border-top: 1px solid #1e2330; margin-top: 4px; padding-top: 6px;
-  display: flex; gap: 4px;
-}
-.ud-shows-action-btn {
-  flex: 1; padding: 4px 6px; border-radius: 4px;
-  border: 1px solid #2d3748; background: transparent;
-  color: #64748b; font-size: 10px; cursor: pointer;
-  font-family: inherit; transition: all 0.15s;
-}
-.ud-shows-action-btn:hover { background: #1e2330; color: #94a3b8; }
+#ud-search::placeholder { color: #475569; }
+#ud-search:focus { border-color: #4b5563; }
 
 /* ── Date range bar ── */
 #ud-date-bar {
   background: #0d1020;
   border-bottom: 1px solid #1e2330;
-  padding: 9px 20px 10px;
+  padding: 8px 18px 10px;
   flex-shrink: 0;
 }
 #ud-date-bar-header {
-  display: flex; align-items: center; gap: 5px; margin-bottom: 9px;
+  display: flex; align-items: center; gap: 5px; margin-bottom: 8px;
 }
 #ud-date-bar-label {
   font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
@@ -116,7 +76,6 @@
 #ud-date-sep { font-size: 10px; color: #334155; }
 #ud-date-count { margin-left: auto; font-size: 10px; color: #475569; }
 
-/* Dual range slider */
 #ud-slider-wrap {
   position: relative; height: 20px;
   display: flex; align-items: center;
@@ -149,48 +108,69 @@ input.ud-rng::-moz-range-thumb {
 }
 #ud-slider-months {
   display: flex; justify-content: space-between;
-  margin-top: 5px; font-size: 8px; color: #334155;
-  letter-spacing: 0.03em;
+  margin-top: 5px; font-size: 8px; color: #334155; letter-spacing: 0.03em;
 }
 
 /* ── Body layout ── */
 #ud-layout { display: flex; flex: 1; overflow: hidden; }
 
+/* ── Sidebar ── */
 #ud-sidebar {
-  width: 200px; flex-shrink: 0;
+  width: 210px; flex-shrink: 0;
   background: #0d1020; border-right: 1px solid #1e2330;
   display: flex; flex-direction: column; overflow: hidden;
 }
-#ud-sidebar-title {
-  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #475569; padding: 12px 14px 6px; flex-shrink: 0;
+.ud-sidebar-section-title {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #475569;
+  padding: 11px 14px 5px; flex-shrink: 0;
 }
 #ud-match-count {
-  font-size: 12px; color: #60a5fa; padding: 4px 14px 0;
+  font-size: 11px; color: #60a5fa; padding: 2px 14px 4px;
   font-weight: 600; flex-shrink: 0; display: none;
 }
 #ud-topic-list {
-  overflow-y: auto; flex: 1; padding: 4px 6px;
+  overflow-y: auto; flex: 1; padding: 2px 6px;
   scrollbar-width: thin; scrollbar-color: #1e2330 transparent;
 }
 .ud-topic-btn {
   display: flex; align-items: center; gap: 7px; width: 100%;
   padding: 6px 8px; border: none; background: transparent;
-  color: #94a3b8; font-size: 11px; cursor: pointer; border-radius: 5px;
+  color: #94a3b8; font-size: 12px; cursor: pointer; border-radius: 5px;
   text-align: left; transition: background 0.15s, color 0.15s; font-family: inherit;
 }
 .ud-topic-btn:hover { background: #1e2330; color: #e2e8f0; }
 .ud-topic-btn.active { background: #1e2d45; color: #60a5fa; font-weight: 600; }
-.ud-topic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.ud-topic-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .ud-topic-count {
-  margin-left: auto; font-size: 9px; color: #475569;
-  background: #1e2330; padding: 1px 5px; border-radius: 10px;
+  margin-left: auto; font-size: 10px; color: #475569;
+  background: #1e2330; padding: 1px 6px; border-radius: 10px; flex-shrink: 0;
 }
 .ud-topic-btn.active .ud-topic-count { background: #1e3a5f; color: #93c5fd; }
+
+/* ── Shows section in sidebar ── */
+#ud-sidebar-divider {
+  height: 1px; background: #1e2330; margin: 4px 0; flex-shrink: 0;
+}
+#ud-shows-list {
+  padding: 2px 6px; flex-shrink: 0;
+}
+.ud-show-btn {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  padding: 5px 8px; border: none; background: transparent;
+  color: #94a3b8; font-size: 12px; cursor: pointer; border-radius: 5px;
+  text-align: left; transition: background 0.15s, color 0.15s; font-family: inherit;
+}
+.ud-show-btn:hover { background: #1e2330; color: #e2e8f0; }
+.ud-show-btn.inactive { opacity: 0.35; }
+.ud-show-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Clear button ── */
 #ud-clear-btn {
-  margin: 6px; padding: 6px; border: 1px solid #1e2330;
-  background: transparent; color: #64748b; font-size: 10px;
-  cursor: pointer; border-radius: 5px; transition: all 0.15s;
+  margin: 6px; padding: 7px;
+  border: 1px solid #1e2330; background: transparent;
+  color: #64748b; font-size: 11px; cursor: pointer;
+  border-radius: 5px; transition: all 0.15s;
   flex-shrink: 0; font-family: inherit;
 }
 #ud-clear-btn:hover { background: #1e2330; color: #94a3b8; }
@@ -202,26 +182,10 @@ input.ud-rng::-moz-range-thumb {
 /* ── Tooltip ── */
 #ud-tooltip {
   position: absolute; background: #1a2035; border: 1px solid #2d3748;
-  border-radius: 9px; padding: 10px 13px; font-size: 11px;
+  border-radius: 9px; padding: 10px 13px; font-size: 12px;
   pointer-events: none; opacity: 0; transition: opacity 0.15s;
-  max-width: 270px; z-index: 10;
+  max-width: 280px; z-index: 10;
 }
-
-/* ── Show legend ── */
-#ud-legend {
-  position: absolute; bottom: 12px; left: 10px;
-  background: #0d102099; border: 1px solid #1e2330;
-  border-radius: 7px; padding: 7px 10px; pointer-events: none;
-}
-.ud-legend-title {
-  font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #334155; margin-bottom: 5px;
-}
-.ud-legend-row {
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 3px; font-size: 9.5px; color: #64748b;
-}
-.ud-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
 /* ── Loading ── */
 #ud-loading {
@@ -242,21 +206,10 @@ input.ud-rng::-moz-range-thumb {
   <!-- Header -->
   <div id="ud-header">
     <div>
-      <h2 id="ud-title">UPRT<span style="color:#f97316">+</span> Network</h2>
-      <p>Upright Digital · 6 shows · filter by topic, show, or date · hover nodes · drag to explore</p>
+      <h2>UPRT<span style="color:#f97316">+</span> Network</h2>
+      <p>Upright Digital &middot; 6 shows &middot; filter by topic, show, or date &middot; click node to open episode</p>
     </div>
-    <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
-      <div id="ud-show-filter">
-        <button id="ud-shows-btn">All Shows ▾</button>
-        <div id="ud-shows-panel">
-          <div id="ud-shows-list"></div>
-          <div class="ud-shows-actions">
-            <button class="ud-shows-action-btn" id="ud-shows-all-btn">Select All</button>
-            <button class="ud-shows-action-btn" id="ud-shows-none-btn">Clear All</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <input type="text" id="ud-search" placeholder="Search guest name&hellip;">
   </div>
 
   <!-- Date range slider -->
@@ -269,9 +222,7 @@ input.ud-rng::-moz-range-thumb {
       <span id="ud-date-count"></span>
     </div>
     <div id="ud-slider-wrap">
-      <div id="ud-range-track">
-        <div id="ud-range-fill"></div>
-      </div>
+      <div id="ud-range-track"><div id="ud-range-fill"></div></div>
       <input type="range" class="ud-rng" id="ud-range-from" min="0" max="1" value="0" step="1">
       <input type="range" class="ud-rng" id="ud-range-to"   min="0" max="1" value="1" step="1">
     </div>
@@ -280,23 +231,31 @@ input.ud-rng::-moz-range-thumb {
 
   <!-- Body -->
   <div id="ud-layout">
+
+    <!-- Sidebar -->
     <div id="ud-sidebar">
-      <div id="ud-sidebar-title">Topics</div>
+      <div class="ud-sidebar-section-title">Topics</div>
       <div id="ud-match-count"></div>
       <div id="ud-topic-list"></div>
-      <button id="ud-clear-btn">Show all episodes</button>
+
+      <div id="ud-sidebar-divider"></div>
+      <div class="ud-sidebar-section-title">Shows</div>
+      <div id="ud-shows-list"></div>
+
+      <button id="ud-clear-btn">Clear filters</button>
     </div>
+
+    <!-- Graph -->
     <div id="ud-graph-wrap">
       <svg id="ud-graph"></svg>
       <div id="ud-tooltip"></div>
-      <div id="ud-legend"></div>
       <div id="ud-loading">
         <div id="ud-spinner"></div>
         <span>Loading episodes&hellip;</span>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -332,7 +291,7 @@ input.ud-rng::-moz-range-thumb {
       "In Basin Observations": "#10b981",
     }, meta.show_colors || {});
 
-    // ── Month helpers ─────────────────────────────────────────────────────────
+    // ── Helpers ───────────────────────────────────────────────────────────────
     const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
     function fmtMonthStr(str) {
@@ -340,20 +299,28 @@ input.ud-rng::-moz-range-thumb {
       const [y, m] = str.split('-');
       return MONTH_NAMES[parseInt(m, 10) - 1] + ' ' + y;
     }
-
     function fmtDate(dateStr) {
-      if (!dateStr) return '';
-      return fmtMonthStr(dateStr.slice(0, 7));
+      return dateStr ? fmtMonthStr(dateStr.slice(0, 7)) : '';
+    }
+    function fmtName(name) {
+      if (!name) return '—';
+      if (name.includes('&')) return name;
+      const p = name.trim().split(' ');
+      return p.length === 1 ? name : p[0][0] + '. ' + p[p.length - 1];
     }
 
-    // ── Date range setup ──────────────────────────────────────────────────────
+    // ── State ─────────────────────────────────────────────────────────────────
+    const allShows      = [...new Set(episodes.map(e => e.show))].sort();
+    const selectedShows = new Set(allShows);
+    let   activeTopics  = new Set();
+    let   searchQuery   = '';
+
+    // ── Date range ────────────────────────────────────────────────────────────
     const allMonths = [...new Set(
       episodes.map(e => e.date ? e.date.slice(0, 7) : null).filter(Boolean)
     )].sort();
-
     const N = Math.max(allMonths.length - 1, 1);
-    let dateFrom = 0;
-    let dateTo   = N;
+    let dateFrom = 0, dateTo = N;
 
     const rangeFrom = document.getElementById('ud-range-from');
     const rangeTo   = document.getElementById('ud-range-to');
@@ -363,24 +330,20 @@ input.ud-rng::-moz-range-thumb {
     const dateCount = document.getElementById('ud-date-count');
 
     rangeFrom.max = rangeTo.max = N;
-    rangeFrom.value = 0;
-    rangeTo.value   = N;
+    rangeFrom.value = 0; rangeTo.value = N;
 
     function updateSliderUI() {
       const from = parseInt(rangeFrom.value, 10);
       const to   = parseInt(rangeTo.value,   10);
-      const pctFrom = (from / N) * 100;
-      const pctTo   = (to   / N) * 100;
-      rangeFill.style.left  = pctFrom + '%';
-      rangeFill.style.right = (100 - pctTo) + '%';
+      rangeFill.style.left  = (from / N * 100) + '%';
+      rangeFill.style.right = ((1 - to / N) * 100) + '%';
       fromLabel.textContent = fmtMonthStr(allMonths[from] || allMonths[0]);
       toLabel.textContent   = fmtMonthStr(allMonths[to]   || allMonths[allMonths.length - 1]);
     }
 
-    // Tick labels — show up to 10 evenly spaced months
-    const monthsEl  = document.getElementById('ud-slider-months');
-    const tickStep  = Math.max(1, Math.floor(allMonths.length / 9));
-    const tickIdxs  = [];
+    const monthsEl = document.getElementById('ud-slider-months');
+    const tickStep = Math.max(1, Math.floor(allMonths.length / 9));
+    const tickIdxs = [];
     for (let i = 0; i < allMonths.length; i += tickStep) tickIdxs.push(i);
     if (tickIdxs[tickIdxs.length - 1] !== allMonths.length - 1) tickIdxs.push(allMonths.length - 1);
     tickIdxs.forEach(i => {
@@ -388,150 +351,158 @@ input.ud-rng::-moz-range-thumb {
       span.textContent = fmtMonthStr(allMonths[i]);
       monthsEl.appendChild(span);
     });
-
     updateSliderUI();
 
     rangeFrom.addEventListener('input', () => {
       if (parseInt(rangeFrom.value) > parseInt(rangeTo.value)) rangeFrom.value = rangeTo.value;
       dateFrom = parseInt(rangeFrom.value, 10);
-      updateSliderUI();
-      activeTopics.clear();
-      rebuildGraph();
+      updateSliderUI(); activeTopics.clear(); rebuildGraph();
     });
     rangeTo.addEventListener('input', () => {
       if (parseInt(rangeTo.value) < parseInt(rangeFrom.value)) rangeTo.value = rangeFrom.value;
       dateTo = parseInt(rangeTo.value, 10);
-      updateSliderUI();
-      activeTopics.clear();
-      rebuildGraph();
+      updateSliderUI(); activeTopics.clear(); rebuildGraph();
     });
-
-    // ── Show filter ───────────────────────────────────────────────────────────
-    const allShows      = [...new Set(episodes.map(e => e.show))].sort();
-    const selectedShows = new Set(allShows);
-    let   activeTopics  = new Set();
 
     document.getElementById('ud-loading').style.display = 'none';
 
-    // ── Show legend ───────────────────────────────────────────────────────────
-    const legendEl = document.getElementById('ud-legend');
-    legendEl.innerHTML = '<div class="ud-legend-title">Shows</div>' +
-      allShows.map(s =>
-        `<div class="ud-legend-row"><div class="ud-legend-dot" style="background:${SHOW_COLORS[s]||'#888'}"></div>${s}</div>`
-      ).join('');
-
-    // ── Show dropdown ─────────────────────────────────────────────────────────
-    const showsBtn   = document.getElementById('ud-shows-btn');
-    const showsPanel = document.getElementById('ud-shows-panel');
-    const showsList  = document.getElementById('ud-shows-list');
-
-    function updateShowBtn() {
-      showsBtn.textContent = (selectedShows.size === 0 || selectedShows.size === allShows.length)
-        ? 'All Shows ▾'
-        : `${selectedShows.size} Show${selectedShows.size > 1 ? 's' : ''} ▾`;
-    }
-
-    function buildShowsList() {
-      showsList.innerHTML = '';
-      allShows.forEach(show => {
-        const row = document.createElement('div');
-        row.className = 'ud-show-check';
-        const box = document.createElement('div');
-        box.className = 'ud-check-box' + (selectedShows.has(show) ? ' checked' : '');
-        box.style.background = selectedShows.has(show) ? (SHOW_COLORS[show] || '#f97316') : 'transparent';
-        const dot = document.createElement('div');
-        dot.className = 'ud-show-dot';
-        dot.style.background = SHOW_COLORS[show] || '#f97316';
-        const label = document.createElement('span');
-        label.textContent = show;
-        row.appendChild(box); row.appendChild(dot); row.appendChild(label);
-        row.addEventListener('click', () => {
-          if (selectedShows.has(show)) { if (selectedShows.size > 1) selectedShows.delete(show); }
-          else selectedShows.add(show);
-          buildShowsList(); updateShowBtn(); activeTopics.clear(); rebuildGraph();
+    // ── Shows sidebar ─────────────────────────────────────────────────────────
+    function buildShowsSidebar() {
+      const listEl = document.getElementById('ud-shows-list');
+      listEl.innerHTML = '';
+      allShows.forEach(s => {
+        const count = episodes.filter(e => e.show === s).length;
+        const btn = document.createElement('button');
+        btn.className = 'ud-show-btn' + (selectedShows.has(s) ? '' : ' inactive');
+        btn.innerHTML = `<span class="ud-show-dot" style="background:${SHOW_COLORS[s]||'#888'}"></span>${s}<span class="ud-topic-count">${count}</span>`;
+        btn.addEventListener('click', () => {
+          if (selectedShows.has(s)) {
+            if (selectedShows.size > 1) selectedShows.delete(s);
+          } else {
+            selectedShows.add(s);
+          }
+          activeTopics.clear(); searchQuery = '';
+          searchInput.value = '';
+          buildShowsSidebar(); rebuildGraph();
         });
-        showsList.appendChild(row);
+        listEl.appendChild(btn);
       });
     }
+    buildShowsSidebar();
 
-    showsBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      showsPanel.classList.toggle('open');
-      showsBtn.classList.toggle('open', showsPanel.classList.contains('open'));
-    });
-    document.getElementById('ud-shows-all-btn').addEventListener('click', () => {
-      allShows.forEach(s => selectedShows.add(s));
-      buildShowsList(); updateShowBtn(); activeTopics.clear(); rebuildGraph();
-    });
-    document.getElementById('ud-shows-none-btn').addEventListener('click', () => {
-      selectedShows.clear(); selectedShows.add(allShows[0]);
-      buildShowsList(); updateShowBtn(); activeTopics.clear(); rebuildGraph();
-    });
-    document.addEventListener('click', e => {
-      if (!document.getElementById('ud-show-filter').contains(e.target)) {
-        showsPanel.classList.remove('open'); showsBtn.classList.remove('open');
-      }
+    // ── Name search ───────────────────────────────────────────────────────────
+    const searchInput = document.getElementById('ud-search');
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      applyVisualFilter();
     });
 
-    buildShowsList(); updateShowBtn();
-
-    // ── Graph ─────────────────────────────────────────────────────────────────
+    // ── Graph setup ───────────────────────────────────────────────────────────
     const wrap = document.getElementById('ud-graph-wrap');
     const svg  = d3.select('#ud-graph');
     const W = () => wrap.clientWidth;
     const H = () => wrap.clientHeight;
+    const g  = svg.append('g');
 
-    const g    = svg.append('g');
     const zoom = d3.zoom().scaleExtent([0.15, 4])
       .on('zoom', e => g.attr('transform', e.transform));
     svg.call(zoom);
     svg.call(zoom.transform, d3.zoomIdentity.translate(W()/2, H()/2).scale(0.72).translate(-W()/2, -H()/2));
 
     let linkSel, nodeSel, sim;
+    let _usedTopics = [], _topicCounts = {}, _visEps = [];
 
-    function truncName(name) {
-      if (!name) return '—';
-      if (name.includes('&')) {
-        const parts = name.split('&');
-        return parts[0].trim().split(' ')[0] + ' & ' + parts[1].trim().split(' ')[0];
+    // ── Visual filter (topics + search, no re-simulation) ────────────────────
+    function applyVisualFilter() {
+      if (!nodeSel) return;
+      const matchCountEl = document.getElementById('ud-match-count');
+      const hasTopics = activeTopics.size > 0;
+      const hasSearch = searchQuery.length > 0;
+
+      if (!hasTopics && !hasSearch) {
+        nodeSel.filter(d => d.type === 'episode').select('circle')
+          .attr('fill', d => SHOW_COLORS[d.data.show] || '#f97316')
+          .attr('stroke', '#0f1117').attr('stroke-width', 1.5).attr('opacity', 1);
+        nodeSel.filter(d => d.type === 'episode').select('text').attr('opacity', 1);
+        nodeSel.filter(d => d.type === 'topic').select('circle').attr('opacity', 1);
+        nodeSel.filter(d => d.type === 'topic').select('text').attr('opacity', 1);
+        linkSel.attr('stroke-opacity', 0.28);
+        matchCountEl.style.display = 'none';
+        return;
       }
-      const p = name.split(' ');
-      return p[0] + (p.length > 1 ? ' ' + p[p.length - 1][0] + '.' : '');
+
+      // Determine matching episodes
+      let matchEps;
+      if (hasTopics && hasSearch) {
+        matchEps = new Set(_visEps.filter(ep =>
+          [...activeTopics].some(t => ep.topics.includes(t)) &&
+          ep.name.toLowerCase().includes(searchQuery)
+        ).map(ep => ep.id));
+      } else if (hasTopics) {
+        matchEps = new Set(_visEps.filter(ep =>
+          [...activeTopics].some(t => ep.topics.includes(t))
+        ).map(ep => ep.id));
+      } else {
+        matchEps = new Set(_visEps.filter(ep =>
+          ep.name.toLowerCase().includes(searchQuery)
+        ).map(ep => ep.id));
+      }
+
+      const matchTopics = new Set([...activeTopics].map(t => 'topic_' + t));
+      matchCountEl.textContent   = `${matchEps.size} episode${matchEps.size !== 1 ? 's' : ''}`;
+      matchCountEl.style.display = 'block';
+
+      nodeSel.filter(d => d.type === 'episode').select('circle')
+        .attr('fill',  d => matchEps.has(d.id) ? (SHOW_COLORS[d.data.show] || '#f97316') : '#1a2035')
+        .attr('stroke', d => matchEps.has(d.id) ? '#ffffff' : '#1e2330')
+        .attr('stroke-width', d => matchEps.has(d.id) ? 2 : 1)
+        .attr('opacity', d => matchEps.has(d.id) ? 1 : 0.15);
+      nodeSel.filter(d => d.type === 'episode').select('text')
+        .attr('opacity', d => matchEps.has(d.id) ? 1 : 0.08);
+
+      if (hasTopics) {
+        nodeSel.filter(d => d.type === 'topic').select('circle')
+          .attr('opacity', d => matchTopics.has(d.id) ? 1 : 0.12);
+        nodeSel.filter(d => d.type === 'topic').select('text')
+          .attr('opacity', d => matchTopics.has(d.id) ? 1 : 0.12);
+        linkSel.attr('stroke-opacity', d => {
+          const id = typeof d.source === 'object' ? d.source.id : d.source;
+          return matchEps.has(id) && activeTopics.has(d.topic) ? 0.75 : 0.03;
+        });
+      } else {
+        nodeSel.filter(d => d.type === 'topic').select('circle').attr('opacity', 0.35);
+        nodeSel.filter(d => d.type === 'topic').select('text').attr('opacity', 0.35);
+        linkSel.attr('stroke-opacity', d => {
+          const id = typeof d.source === 'object' ? d.source.id : d.source;
+          return matchEps.has(id) ? 0.4 : 0.03;
+        });
+      }
     }
 
-    function fmtName(name) {
-      if (!name) return '—';
-      if (name.includes('&')) return name;
-      const p = name.trim().split(' ');
-      if (p.length === 1) return name;
-      return p[0][0] + '. ' + p[p.length - 1];
-    }
-
+    // ── Rebuild graph (re-simulates) ──────────────────────────────────────────
     function rebuildGraph() {
-      // Filter by show + date range
-      const visEps = episodes
+      _visEps = episodes
         .filter(e => selectedShows.has(e.show))
         .filter(e => {
           if (!e.date || allMonths.length === 0) return true;
-          const ms = e.date.slice(0, 7);
-          const idx = allMonths.indexOf(ms);
+          const idx = allMonths.indexOf(e.date.slice(0, 7));
           if (idx < 0) return true;
           return idx >= dateFrom && idx <= dateTo;
         });
 
-      dateCount.textContent = `${visEps.length} episode${visEps.length !== 1 ? 's' : ''}`;
+      dateCount.textContent = `${_visEps.length} episode${_visEps.length !== 1 ? 's' : ''}`;
 
-      const usedTopics  = [...new Set(visEps.flatMap(e => e.topics))].sort();
-      const topicCounts = {};
-      usedTopics.forEach(t => { topicCounts[t] = visEps.filter(e => e.topics.includes(t)).length; });
+      _usedTopics  = [...new Set(_visEps.flatMap(e => e.topics))].sort();
+      _topicCounts = {};
+      _usedTopics.forEach(t => { _topicCounts[t] = _visEps.filter(e => e.topics.includes(t)).length; });
 
-      buildSidebar(usedTopics, topicCounts);
+      buildTopicSidebar();
 
       const nodes = [
-        ...visEps.map(ep => ({ id: ep.id, type: 'episode', data: ep })),
-        ...usedTopics.map(t => ({ id: 'topic_' + t, type: 'topic', label: t })),
+        ..._visEps.map(ep => ({ id: ep.id, type: 'episode', data: ep })),
+        ..._usedTopics.map(t => ({ id: 'topic_' + t, type: 'topic', label: t })),
       ];
-      const links = visEps.flatMap(ep =>
+      const links = _visEps.flatMap(ep =>
         ep.topics.map(t => ({ source: ep.id, target: 'topic_' + t, topic: t }))
       );
 
@@ -547,60 +518,47 @@ input.ud-rng::-moz-range-thumb {
         .force('center',    d3.forceCenter(W()/2, H()/2))
         .force('collision', d3.forceCollide(d => d.type === 'topic' ? 48 : 32));
 
-      // Links — colored by topic
       linkSel = g.append('g').selectAll('line').data(links).join('line')
         .attr('stroke',         d => TOPIC_COLORS[d.topic] || '#0ea5e9')
         .attr('stroke-width',   1.2)
         .attr('stroke-opacity', 0.28);
 
-      // Node groups with drag
       nodeSel = g.append('g').selectAll('g').data(nodes).join('g')
         .call(d3.drag()
           .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
           .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
           .on('end',   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-      // ── Episode nodes — filled with show color ──
+      // Episode nodes
       nodeSel.filter(d => d.type === 'episode').append('circle')
-        .attr('r',            16)
-        .attr('fill',         d => SHOW_COLORS[d.data.show] || '#f97316')
-        .attr('stroke',       '#0f1117')
-        .attr('stroke-width', 1.5)
-        .attr('cursor',       'pointer');
+        .attr('r', 16)
+        .attr('fill', d => SHOW_COLORS[d.data.show] || '#f97316')
+        .attr('stroke', '#0f1117').attr('stroke-width', 1.5).attr('cursor', 'pointer');
 
-      // Episode labels — below circle, colored, with dark outline for contrast
+      // Episode labels
       nodeSel.filter(d => d.type === 'episode').append('text')
-        .attr('text-anchor',      'middle')
-        .attr('dy',               '30px')
-        .attr('font-size',        '10px')
-        .attr('font-weight',      '500')
-        .attr('fill',             d => SHOW_COLORS[d.data.show] || '#f97316')
-        .attr('pointer-events',   'none')
-        .attr('paint-order',      'stroke')
-        .attr('stroke',           '#0f1117')
-        .attr('stroke-width',     '3px')
-        .attr('stroke-linejoin',  'round')
+        .attr('text-anchor', 'middle').attr('dy', '30px')
+        .attr('font-size', '11px').attr('font-weight', '500')
+        .attr('fill', d => SHOW_COLORS[d.data.show] || '#f97316')
+        .attr('pointer-events', 'none')
+        .attr('paint-order', 'stroke').attr('stroke', '#0f1117')
+        .attr('stroke-width', '3px').attr('stroke-linejoin', 'round')
         .text(d => fmtName(d.data.name));
 
-      // ── Topic hubs ──
+      // Topic hubs
       nodeSel.filter(d => d.type === 'topic').append('circle')
         .attr('r', 30)
         .attr('fill', d => {
           const c = d3.color(TOPIC_COLORS[d.label] || '#0ea5e9');
           return c ? c.copy({ opacity: 0.14 }) + '' : '#0ea5e920';
         })
-        .attr('stroke',       d => TOPIC_COLORS[d.label] || '#0ea5e9')
-        .attr('stroke-width', 1.5)
-        .attr('cursor',       'pointer');
+        .attr('stroke', d => TOPIC_COLORS[d.label] || '#0ea5e9')
+        .attr('stroke-width', 1.5).attr('cursor', 'pointer');
 
-      // Topic labels — two-line wrap
       nodeSel.filter(d => d.type === 'topic').append('text')
-        .attr('text-anchor',     'middle')
-        .attr('dominant-baseline','middle')
-        .attr('font-size',       '9px')
-        .attr('font-weight',     '700')
-        .attr('pointer-events',  'none')
-        .attr('fill',            d => TOPIC_COLORS[d.label] || '#0ea5e9')
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+        .attr('font-size', '10px').attr('font-weight', '700').attr('pointer-events', 'none')
+        .attr('fill', d => TOPIC_COLORS[d.label] || '#0ea5e9')
         .each(function (d) {
           const words = d.label.split(' ');
           const el = d3.select(this);
@@ -610,25 +568,22 @@ input.ud-rng::-moz-range-thumb {
           el.append('tspan').attr('x', 0).attr('dy', '1.2em').text(words.slice(mid).join(' '));
         });
 
-      // Tick
       sim.on('tick', () => {
-        linkSel
-          .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+        linkSel.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+               .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
         nodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
       });
 
       // ── Tooltip ──────────────────────────────────────────────────────────────
       const tooltip = document.getElementById('ud-tooltip');
-      let tooltipTimer  = null;
-      let tooltipHovered = false;
-      tooltip.addEventListener('mouseenter', () => { tooltipHovered = true; clearTimeout(tooltipTimer); });
+      let ttTimer = null, ttHovered = false;
+      tooltip.addEventListener('mouseenter', () => { ttHovered = true; clearTimeout(ttTimer); });
       tooltip.addEventListener('mouseleave', () => {
-        tooltipHovered = false; tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none';
+        ttHovered = false; tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none';
       });
 
       nodeSel.filter(d => d.type === 'episode')
-        .on('click', function (event, d) {
+        .on('click', (event, d) => {
           event.stopPropagation();
           const url = d.data.url || d.data.spotify_url || '';
           if (url) window.open(url, '_blank');
@@ -636,45 +591,43 @@ input.ud-rng::-moz-range-thumb {
         .on('mousemove', function (event, d) {
           const r = wrap.getBoundingClientRect();
           let x = event.clientX - r.left + 14, y = event.clientY - r.top - 10;
-          if (x + 280 > r.width) x -= 290;
-          tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:9px;padding:10px 13px;font-size:11px;pointer-events:auto;max-width:270px;z-index:100;transition:opacity 0.2s;`;
+          if (x + 290 > r.width) x -= 300;
+          tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:9px;padding:10px 13px;font-size:12px;pointer-events:auto;max-width:280px;z-index:100;transition:opacity 0.2s;`;
 
-          const ts        = d.data.timestamps || {};
+          const ts = d.data.timestamps || {};
           const showColor = SHOW_COLORS[d.data.show] || '#f97316';
           const dateStr   = d.data.date ? ' &middot; ' + fmtDate(d.data.date) : '';
+          const ytUrl = d.data.url || '', spUrl = d.data.spotify_url || '';
 
           const tagsHtml = d.data.topics.map(t => {
-            const color  = TOPIC_COLORS[t] || '#0ea5e9';
-            const tsUrl  = ts[t];
-            const bgHex  = color + '22';
-            const style  = `font-size:9px;padding:3px 8px;border-radius:10px;background:${bgHex};color:${color};display:inline-block;margin:2px 2px 0 0;font-weight:600;`;
+            const color = TOPIC_COLORS[t] || '#0ea5e9';
+            const tsUrl = ts[t];
+            const style = `font-size:10px;padding:3px 8px;border-radius:10px;background:${color}22;color:${color};display:inline-block;margin:2px 2px 0 0;font-weight:600;`;
             return tsUrl
               ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;" title="Jump to timestamp">▶ ${t}</a>`
               : `<span style="${style}">${t}</span>`;
           }).join('');
 
-          const ytUrl = d.data.url          || '';
-          const spUrl = d.data.spotify_url  || '';
           const platformHtml = (ytUrl || spUrl) ? `
             <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #2d3748;padding-top:8px;">
-              ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:10px;color:#ef4444;text-decoration:none;padding:3px 9px;border-radius:5px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
-              ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
+              ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:11px;color:#ef4444;text-decoration:none;padding:3px 9px;border-radius:5px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
+              ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:11px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
             </div>` : '';
 
-          const clickHint = ytUrl ? `<div style="font-size:9px;color:#475569;margin-bottom:7px">click node to open ▶ YouTube</div>` : '';
+          const clickHint = ytUrl ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ▶ YouTube</div>` : '';
 
           tooltip.innerHTML = `
-            <div style="font-weight:700;color:#f1f5f9;font-size:13px;margin-bottom:3px">${fmtName(d.data.name)}</div>
-            <div style="font-size:10px;font-weight:600;color:${showColor};margin-bottom:3px">● ${d.data.show}${dateStr}</div>
-            <div style="color:#94a3b8;font-size:10px;margin-bottom:5px;line-height:1.4">${d.data.role}</div>
+            <div style="font-weight:700;color:#f1f5f9;font-size:14px;margin-bottom:3px">${fmtName(d.data.name)}</div>
+            <div style="font-size:11px;font-weight:600;color:${showColor};margin-bottom:3px">● ${d.data.show}${dateStr}</div>
+            <div style="color:#94a3b8;font-size:11px;margin-bottom:6px;line-height:1.4">${d.data.role}</div>
             ${clickHint}
-            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${Object.keys(ts).length ? ' — click tag to jump' : ''}</div>
+            <div style="font-size:10px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${Object.keys(ts).length ? ' — click to jump' : ''}</div>
             <div>${tagsHtml}</div>
             ${platformHtml}`;
         })
         .on('mouseleave', () => {
-          tooltipTimer = setTimeout(() => {
-            if (!tooltipHovered) { tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none'; }
+          ttTimer = setTimeout(() => {
+            if (!ttHovered) { tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none'; }
           }, 800);
         });
 
@@ -682,78 +635,44 @@ input.ud-rng::-moz-range-thumb {
         .on('click', (e, d) => { e.stopPropagation(); filterByTopic(d.label); })
         .on('mousemove', function (event, d) {
           const r = wrap.getBoundingClientRect();
-          tooltip.style.cssText = `left:${event.clientX - r.left + 14}px;top:${event.clientY - r.top - 10}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:none;z-index:10;`;
-          tooltip.innerHTML = `<div style="font-weight:700;color:#f1f5f9">${d.label}</div><div style="color:#94a3b8;font-size:10px">${topicCounts[d.label]} episode${topicCounts[d.label] !== 1 ? 's' : ''}</div>`;
+          tooltip.style.cssText = `left:${event.clientX - r.left + 14}px;top:${event.clientY - r.top - 10}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;pointer-events:none;z-index:10;`;
+          tooltip.innerHTML = `<div style="font-weight:700;color:#f1f5f9;font-size:13px">${d.label}</div><div style="color:#94a3b8;font-size:11px">${_topicCounts[d.label]} episode${_topicCounts[d.label] !== 1 ? 's' : ''}</div>`;
         })
         .on('mouseleave', () => { tooltip.style.opacity = '0'; });
 
-      svg.on('click', () => { activeTopics.clear(); buildSidebar(usedTopics, topicCounts); applyFilter(); });
+      svg.on('click', () => { activeTopics.clear(); buildTopicSidebar(); applyVisualFilter(); });
 
-      // ── Sidebar ───────────────────────────────────────────────────────────────
-      function buildSidebar(topics, counts) {
-        const listEl = document.getElementById('ud-topic-list');
-        listEl.innerHTML = '';
-        topics.forEach(t => {
-          const btn = document.createElement('button');
-          btn.className = 'ud-topic-btn' + (activeTopics.has(t) ? ' active' : '');
-          btn.innerHTML = `<span class="ud-topic-dot" style="background:${TOPIC_COLORS[t]||'#0ea5e9'}"></span>${t}<span class="ud-topic-count">${counts[t]}</span>`;
-          btn.addEventListener('click', () => filterByTopic(t));
-          listEl.appendChild(btn);
-        });
-      }
+      // Re-apply any active search/topic filter after rebuild
+      applyVisualFilter();
+    }
 
-      function filterByTopic(topic) {
-        activeTopics.has(topic) ? activeTopics.delete(topic) : activeTopics.add(topic);
-        buildSidebar(usedTopics, topicCounts);
-        applyFilter();
-      }
+    // ── Topic sidebar ─────────────────────────────────────────────────────────
+    function buildTopicSidebar() {
+      const listEl = document.getElementById('ud-topic-list');
+      listEl.innerHTML = '';
+      _usedTopics.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'ud-topic-btn' + (activeTopics.has(t) ? ' active' : '');
+        btn.innerHTML = `<span class="ud-topic-dot" style="background:${TOPIC_COLORS[t]||'#0ea5e9'}"></span>${t}<span class="ud-topic-count">${_topicCounts[t]}</span>`;
+        btn.addEventListener('click', () => filterByTopic(t));
+        listEl.appendChild(btn);
+      });
+    }
 
-      function applyFilter() {
-        const matchCountEl = document.getElementById('ud-match-count');
-        if (activeTopics.size === 0) {
-          // Reset all
-          nodeSel.filter(d => d.type === 'episode').select('circle')
-            .attr('fill',         d => SHOW_COLORS[d.data.show] || '#f97316')
-            .attr('stroke',       '#0f1117')
-            .attr('stroke-width', 1.5)
-            .attr('opacity',      1);
-          nodeSel.filter(d => d.type === 'episode').select('text').attr('opacity', 1);
-          nodeSel.filter(d => d.type === 'topic').select('circle').attr('opacity', 1);
-          nodeSel.filter(d => d.type === 'topic').select('text').attr('opacity', 1);
-          linkSel.attr('stroke-opacity', 0.28);
-          matchCountEl.style.display = 'none';
-          return;
-        }
+    function filterByTopic(topic) {
+      activeTopics.has(topic) ? activeTopics.delete(topic) : activeTopics.add(topic);
+      buildTopicSidebar();
+      applyVisualFilter();
+    }
 
-        const matchEps    = new Set(visEps.filter(ep => [...activeTopics].some(t => ep.topics.includes(t))).map(ep => ep.id));
-        const matchTopics = new Set([...activeTopics].map(t => 'topic_' + t));
-
-        matchCountEl.textContent    = `${matchEps.size} episode${matchEps.size !== 1 ? 's' : ''}`;
-        matchCountEl.style.display  = 'block';
-
-        nodeSel.filter(d => d.type === 'episode').select('circle')
-          .attr('fill',         d => matchEps.has(d.id) ? (SHOW_COLORS[d.data.show] || '#f97316') : '#1a2035')
-          .attr('stroke',       d => matchEps.has(d.id) ? '#ffffff' : '#1e2330')
-          .attr('stroke-width', d => matchEps.has(d.id) ? 2 : 1)
-          .attr('opacity',      d => matchEps.has(d.id) ? 1 : 0.18);
-        nodeSel.filter(d => d.type === 'episode').select('text')
-          .attr('opacity', d => matchEps.has(d.id) ? 1 : 0.1);
-        nodeSel.filter(d => d.type === 'topic').select('circle')
-          .attr('opacity', d => matchTopics.has(d.id) ? 1 : 0.12);
-        nodeSel.filter(d => d.type === 'topic').select('text')
-          .attr('opacity', d => matchTopics.has(d.id) ? 1 : 0.12);
-        linkSel.attr('stroke-opacity', d => {
-          const id = typeof d.source === 'object' ? d.source.id : d.source;
-          return matchEps.has(id) && activeTopics.has(d.topic) ? 0.75 : 0.03;
-        });
-      }
-
-      document.getElementById('ud-clear-btn').onclick = () => {
-        activeTopics.clear(); buildSidebar(usedTopics, topicCounts); applyFilter();
-      };
-
-      buildSidebar(usedTopics, topicCounts);
-    } // end rebuildGraph
+    // ── Clear button ──────────────────────────────────────────────────────────
+    document.getElementById('ud-clear-btn').addEventListener('click', () => {
+      activeTopics.clear();
+      searchQuery = '';
+      searchInput.value = '';
+      buildTopicSidebar();
+      applyVisualFilter();
+    });
 
     rebuildGraph();
 
