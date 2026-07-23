@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-07-15T20:49:46.688754Z",
+    "generated": "2026-07-23T15:56:14.206288Z",
     "shows": [
       "PetroNoia",
       "Oil Field 360",
@@ -2152,6 +2152,26 @@
         "Industry & Technology"
       ],
       "timestamps": {}
+    },
+    {
+      "id": "ep_tep_07_20_stephen_preng",
+      "show": "The Energy Pipeline",
+      "name": "Stephen Preng",
+      "role": "Consultant and Practice Leader of Global Energy Services, Prange and Associates",
+      "date": "2026-07-23",
+      "file": "TEP-07-20 Stephen Preng.docx",
+      "url": "https://youtu.be/AYXEF143jLE",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Energy Economics",
+        "Industry & Technology"
+      ],
+      "timestamps": {
+        "Oil & Gas": "https://youtu.be/AYXEF143jLE&t=181",
+        "Energy Economics": "https://youtu.be/AYXEF143jLE&t=886",
+        "Industry & Technology": "https://youtu.be/AYXEF143jLE&t=1723"
+      }
     }
   ]
 }
