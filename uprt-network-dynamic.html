@@ -1,7 +1,7 @@
 <!-- ============================================================
      UPRT+ Network — Upright Digital Podcast Episode Network
      Dynamic embed for Webflow — paste into an Embed element
-     v3: name search, shows in sidebar, readability improvements
+     v4: fullscreen mode, ctrl+scroll zoom in inline mode
      ============================================================ -->
 
 <style>
@@ -38,6 +38,40 @@
   white-space: nowrap;
 }
 #ud-header p { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+/* ── Fullscreen button ── */
+#ud-fullscreen-btn {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid #2d3748;
+  background: transparent;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+#ud-fullscreen-btn:hover { background: #1e2330; color: #e2e8f0; border-color: #4b5563; }
+
+/* ── Fullscreen mode ── */
+#ud-network.ud-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  border-radius: 0 !important;
+  height: 100dvh !important;
+  width: 100vw !important;
+}
+
+/* ── Zoom hint (inline only) ── */
+#ud-zoom-hint {
+  position: absolute; bottom: 10px; right: 10px;
+  font-size: 10px; color: #1e2d45; pointer-events: none;
+  letter-spacing: 0.03em; user-select: none;
+}
+#ud-network.ud-fullscreen #ud-zoom-hint { display: none; }
 
 /* ── Name search ── */
 #ud-search {
@@ -210,6 +244,7 @@ input.ud-rng::-moz-range-thumb {
       <p>Upright Digital &middot; 6 shows &middot; filter by topic, show, or date &middot; click node to open episode</p>
     </div>
     <input type="text" id="ud-search" placeholder="Search guest name&hellip;">
+    <button id="ud-fullscreen-btn" title="Open fullscreen (scroll to zoom)">⛶</button>
   </div>
 
   <!-- Date range slider -->
@@ -249,6 +284,7 @@ input.ud-rng::-moz-range-thumb {
     <div id="ud-graph-wrap">
       <svg id="ud-graph"></svg>
       <div id="ud-tooltip"></div>
+      <div id="ud-zoom-hint">ctrl+scroll to zoom &middot; drag to pan</div>
       <div id="ud-loading">
         <div id="ud-spinner"></div>
         <span>Loading episodes&hellip;</span>
@@ -398,16 +434,54 @@ input.ud-rng::-moz-range-thumb {
     });
 
     // ── Graph setup ───────────────────────────────────────────────────────────
-    const wrap = document.getElementById('ud-graph-wrap');
-    const svg  = d3.select('#ud-graph');
+    const wrap    = document.getElementById('ud-graph-wrap');
+    const network = document.getElementById('ud-network');
+    const svg     = d3.select('#ud-graph');
     const W = () => wrap.clientWidth;
     const H = () => wrap.clientHeight;
-    const g  = svg.append('g');
+    const g = svg.append('g');
 
+    let isFullscreen = false;
+
+    // Scroll-zoom only allowed with ctrl/meta in inline mode; free in fullscreen
     const zoom = d3.zoom().scaleExtent([0.15, 4])
+      .filter(e => {
+        if (e.type === 'wheel') return isFullscreen || e.ctrlKey || e.metaKey;
+        return !e.button;
+      })
       .on('zoom', e => g.attr('transform', e.transform));
     svg.call(zoom);
     svg.call(zoom.transform, d3.zoomIdentity.translate(W()/2, H()/2).scale(0.72).translate(-W()/2, -H()/2));
+
+    // ── Fullscreen ────────────────────────────────────────────────────────────
+    const fsBtn = document.getElementById('ud-fullscreen-btn');
+
+    function enterFullscreen() {
+      isFullscreen = true;
+      network.classList.add('ud-fullscreen');
+      fsBtn.textContent = '✕';
+      fsBtn.title = 'Exit fullscreen (Esc)';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        svg.attr('viewBox', `0 0 ${W()} ${H()}`);
+        if (sim) sim.force('center', d3.forceCenter(W()/2, H()/2)).alpha(0.15).restart();
+      }, 60);
+    }
+
+    function exitFullscreen() {
+      isFullscreen = false;
+      network.classList.remove('ud-fullscreen');
+      fsBtn.textContent = '⛶';
+      fsBtn.title = 'Open fullscreen (scroll to zoom)';
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        svg.attr('viewBox', `0 0 ${W()} ${H()}`);
+        if (sim) sim.force('center', d3.forceCenter(W()/2, H()/2)).alpha(0.15).restart();
+      }, 60);
+    }
+
+    fsBtn.addEventListener('click', () => isFullscreen ? exitFullscreen() : enterFullscreen());
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && isFullscreen) exitFullscreen(); });
 
     let linkSel, nodeSel, sim;
     let _usedTopics = [], _topicCounts = {}, _visEps = [];
