@@ -9,8 +9,12 @@ Requirements:
 
 Usage:
   ANTHROPIC_API_KEY=sk-ant-... python3 bulk_process_all.py
-  ANTHROPIC_API_KEY=sk-ant-... python3 bulk_process_all.py --force      # reprocess everything
+  ANTHROPIC_API_KEY=sk-ant-... python3 bulk_process_all.py --force      # reprocess everything (Claude API)
   ANTHROPIC_API_KEY=sk-ant-... python3 bulk_process_all.py --dry-run    # preview only
+  python3 bulk_process_all.py --urls-only   # no API: refresh urls/timestamps from docx
+  python3 bulk_process_all.py --urls-only --prune-missing
+
+Safety: never deletes files under transcripts/. Only writes episodes.json.
 """
 
 import os
@@ -26,11 +30,7 @@ except ImportError:
     print("ERROR: python-docx not installed. Run: pip install python-docx")
     sys.exit(1)
 
-try:
-    import anthropic
-except ImportError:
-    print("ERROR: anthropic not installed. Run: pip install anthropic")
-    sys.exit(1)
+# anthropic imported lazily only when LLM path is used
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -75,7 +75,6 @@ TOPIC_KEYWORDS = {
     "Industry & Technology": ["technology", "innovation", "engineer", "oilfield", "service company", "Baker Hughes", "geoscience"],
 }
 
-# Maps filename prefix → canonical show name
 PREFIX_TO_SHOW = {
     "PN":    "PetroNoia",
     "OF360": "Oil Field 360",
@@ -85,7 +84,6 @@ PREFIX_TO_SHOW = {
     "IBO":   "In Basin Observations",
 }
 
-# Maps folder name → canonical show name (for fallback)
 FOLDER_TO_SHOW = {
     "petronoia":             "PetroNoia",
     "oilfield 360":          "Oil Field 360",
@@ -96,7 +94,6 @@ FOLDER_TO_SHOW = {
     "in basin observations": "In Basin Observations",
 }
 
-# Standard filename pattern: PREFIX-MM-YY-Guest Name.docx
 FILENAME_PATTERN = re.compile(
     r'^([A-Z0-9]+)-(\d{2})-(\d{2})-(.+)\.docx$', re.IGNORECASE
 )
@@ -116,7 +113,6 @@ def parse_filename(filename: str) -> dict:
     show = PREFIX_TO_SHOW.get(prefix)
     if not show:
         return {}
-    # Treat XX-XX as unknown date
     if month == 'XX' or year == 'XX':
         date = datetime.date.today().isoformat()
     else:
@@ -126,7 +122,6 @@ def parse_filename(filename: str) -> dict:
 
 
 def show_from_path(docx_path: Path) -> str:
-    """Determine show name from the top-level transcripts subfolder."""
     try:
         rel = docx_path.relative_to(TRANSCRIPTS)
         folder = rel.parts[0].lower()
@@ -170,6 +165,7 @@ def extract_timestamps(text: str, topics: list, base_yt_url: str) -> dict:
     if not base_yt_url:
         return {}
     base_url = re.sub(r'[&?]t=\d+', '', base_yt_url)
+    joiner = '&' if 'watch?v=' in base_url else ('&' if '?' in base_url else '?')
     segments = re.findall(r'\[(\d{2}:\d{2}:\d{2})\]\s*([^[]{0,300})', text)
     if not segments:
         return {}
@@ -181,12 +177,13 @@ def extract_timestamps(text: str, topics: list, base_yt_url: str) -> dict:
             if secs == 0:
                 continue
             if any(kw.lower() in snippet.lower() for kw in keywords):
-                timestamps[topic] = f"{base_url}&t={secs}"
+                timestamps[topic] = f"{base_url}{joiner}t={secs}"
                 break
     return timestamps
 
 
 def extract_topics_claude(text: str, guest_hint: str, show: str) -> dict:
+    import anthropic
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     prompt = f"""You are analyzing a podcast transcript from the show "{show}".
 Guest hint: {guest_hint}
@@ -251,43 +248,52 @@ def save_data(data: dict):
     data["meta"]["shows"]        = list(SHOW_COLORS.keys())
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
+        f.write("\n")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    force   = "--force"   in sys.argv
-    dry_run = "--dry-run" in sys.argv
+    global ANTHROPIC_API_KEY
+    force         = "--force" in sys.argv
+    dry_run       = "--dry-run" in sys.argv
+    urls_only     = "--urls-only" in sys.argv
+    prune_missing = "--prune-missing" in sys.argv
 
-    if not ANTHROPIC_API_KEY and not dry_run:
+    if urls_only and force:
+        print("NOTE: --urls-only re-reads every docx without LLM; --force LLM flag ignored")
+
+    if not urls_only and not ANTHROPIC_API_KEY and not dry_run:
         print("ERROR: Set ANTHROPIC_API_KEY environment variable")
         print("  export ANTHROPIC_API_KEY=sk-ant-...")
+        print("  Or run without API:  python3 bulk_process_all.py --urls-only")
         sys.exit(1)
 
     if not TRANSCRIPTS.exists():
         print(f"ERROR: transcripts/ folder not found at {TRANSCRIPTS}")
         sys.exit(1)
 
-    # Find all .docx files
+    # Never delete transcript files — this tool only reads docx and writes episodes.json
     all_docx = sorted(TRANSCRIPTS.rglob("*.docx"))
-    print(f"Found {len(all_docx)} transcript files\n")
+    print(f"Found {len(all_docx)} transcript files (read-only; nothing under transcripts/ will be deleted)\n")
 
     data = load_data()
-    existing_files = {ep.get("file") for ep in data["episodes"]}
+    by_file = {ep.get("file"): ep for ep in data["episodes"] if ep.get("file")}
+    existing_files = set(by_file)
 
     skipped = 0
     processed = 0
     errors = 0
+    created = 0
 
     for docx_path in all_docx:
         filename = docx_path.name
 
-        # Skip if already processed (unless --force)
-        if filename in existing_files and not force:
+        # Skip if already processed (unless --force or --urls-only)
+        if filename in existing_files and not force and not urls_only:
             skipped += 1
             continue
 
-        # Parse metadata from filename
         meta = parse_filename(filename)
         show       = meta.get("show") or show_from_path(docx_path)
         date       = meta.get("date") or datetime.date.today().isoformat()
@@ -297,7 +303,7 @@ def main():
         print(f"   Show: {show}  |  Date: {date}  |  Guest hint: {guest_hint}")
 
         if dry_run:
-            print("   [dry-run — skipping API call]")
+            print("   [dry-run — skipping writes/API]")
             processed += 1
             continue
 
@@ -311,21 +317,34 @@ def main():
             if urls['spotify_url']:
                 print(f"   Spotify: {urls['spotify_url']}")
 
-            result = extract_topics_claude(text, guest_hint, show)
-            guest_name = result.get("guest_name", guest_hint)
-            guest_role = result.get("guest_role", "")
-            topics     = result.get("topics", [])
-            print(f"   Guest: {guest_name}")
-            print(f"   Role:  {guest_role}")
-            print(f"   Topics: {', '.join(topics)}")
+            if urls_only:
+                prev = by_file.get(filename)
+                if prev:
+                    guest_name = prev.get("name") or guest_hint
+                    guest_role = prev.get("role") or ""
+                    topics     = prev.get("topics") or []
+                    ep_id      = prev.get("id") or ("ep_" + re.sub(r'[^a-z0-9]', '_', docx_path.stem.lower())[:40])
+                else:
+                    guest_name = guest_hint
+                    guest_role = ""
+                    topics     = []
+                    ep_id      = "ep_" + re.sub(r'[^a-z0-9]', '_', docx_path.stem.lower())[:40]
+                    created += 1
+                    print("   [urls-only] new file — stub name from filename (run full bulk later for topics)")
+            else:
+                result = extract_topics_claude(text, guest_hint, show)
+                guest_name = result.get("guest_name", guest_hint)
+                guest_role = result.get("guest_role", "")
+                topics     = result.get("topics", [])
+                ep_id = "ep_" + re.sub(r'[^a-z0-9]', '_', docx_path.stem.lower())[:40]
+                print(f"   Guest: {guest_name}")
+                print(f"   Role:  {guest_role}")
+                print(f"   Topics: {', '.join(topics)}")
 
             timestamps = extract_timestamps(text, topics, urls['url'])
             if timestamps:
                 print(f"   Timestamps: {list(timestamps.keys())}")
 
-            ep_id = "ep_" + re.sub(r'[^a-z0-9]', '_', docx_path.stem.lower())[:40]
-
-            # Remove old entry for this file if force-reprocessing
             data["episodes"] = [e for e in data["episodes"] if e.get("file") != filename]
 
             data["episodes"].append({
@@ -340,26 +359,40 @@ def main():
                 "topics":      topics,
                 "timestamps":  timestamps,
             })
+            by_file[filename] = data["episodes"][-1]
 
-            # Save after every episode so progress isn't lost on error
             save_data(data)
             processed += 1
             print(f"   ✅ Saved ({len(data['episodes'])} total)\n")
 
         except KeyboardInterrupt:
-            print("\n\nInterrupted — progress saved so far.")
+            print("\n\nInterrupted — progress saved so far. Transcripts untouched.")
             sys.exit(0)
         except Exception as e:
             print(f"   ❌ ERROR: {e}\n")
             errors += 1
 
+    if prune_missing and not dry_run:
+        disk_names = {p.name for p in all_docx}
+        before = len(data["episodes"])
+        data["episodes"] = [e for e in data["episodes"] if e.get("file") in disk_names]
+        removed = before - len(data["episodes"])
+        if removed:
+            save_data(data)
+            print(f"Pruned {removed} JSON rows with no matching .docx on disk (transcripts not deleted).")
+
     print(f"\n{'='*50}")
-    print(f"Done: {processed} processed, {skipped} skipped (already in JSON), {errors} errors")
+    mode = "urls-only" if urls_only else ("force" if force else "new-only")
+    print(f"Mode: {mode}")
+    print(f"Done: {processed} processed, {skipped} skipped (already in JSON), {created} new stubs, {errors} errors")
     print(f"Total episodes in episodes.json: {len(data['episodes'])}")
+    print(f"Transcript .docx still on disk: {len(all_docx)}")
     if dry_run:
         print("\n(Dry run — no changes written)")
     else:
-        print(f"\nNext step: commit episodes.json and push via GitHub Desktop")
+        print("\nNext step: commit episodes.json and push via GitHub Desktop")
+        if not urls_only:
+            print("Tip: while editing links in docx, use --urls-only (no API) between full --force runs.")
 
 
 if __name__ == "__main__":
