@@ -1,7 +1,9 @@
 <!-- ============================================================
      UPRT+ Network — Upright Digital Podcast Episode Network
      Dynamic embed for Webflow — paste into an Embed element
+     v5: link rule — YouTube if present, else Spotify only (never both)
      v4: fullscreen mode, ctrl+scroll zoom in inline mode
+     Owner: Hermes CTO (2026-07-27)
      ============================================================ -->
 
 <style>
@@ -656,10 +658,19 @@ input.ud-rng::-moz-range-thumb {
         ttHovered = false; tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none';
       });
 
+      // Primary listen link: YouTube wins if present; else Spotify. Never show both.
+      function primaryListen(d) {
+        const yt = d.data.url || '';
+        const sp = d.data.spotify_url || '';
+        if (yt) return { kind: 'youtube', url: yt };
+        if (sp) return { kind: 'spotify', url: sp };
+        return { kind: '', url: '' };
+      }
+
       nodeSel.filter(d => d.type === 'episode')
         .on('click', (event, d) => {
           event.stopPropagation();
-          const url = d.data.url || d.data.spotify_url || '';
+          const { url } = primaryListen(d);
           if (url) window.open(url, '_blank');
         })
         .on('mousemove', function (event, d) {
@@ -671,31 +682,43 @@ input.ud-rng::-moz-range-thumb {
           const ts = d.data.timestamps || {};
           const showColor = SHOW_COLORS[d.data.show] || '#f97316';
           const dateStr   = d.data.date ? ' &middot; ' + fmtDate(d.data.date) : '';
-          const ytUrl = d.data.url || '', spUrl = d.data.spotify_url || '';
+          const listen = primaryListen(d);
 
           const tagsHtml = d.data.topics.map(t => {
             const color = TOPIC_COLORS[t] || '#0ea5e9';
-            const tsUrl = ts[t];
+            // Topic jump links only make sense on YouTube timestamps
+            const tsUrl = listen.kind === 'youtube' ? ts[t] : null;
             const style = `font-size:10px;padding:3px 8px;border-radius:10px;background:${color}22;color:${color};display:inline-block;margin:2px 2px 0 0;font-weight:600;`;
             return tsUrl
               ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;" title="Jump to timestamp">▶ ${t}</a>`
               : `<span style="${style}">${t}</span>`;
           }).join('');
 
-          const platformHtml = (ytUrl || spUrl) ? `
+          let platformHtml = '';
+          if (listen.kind === 'youtube') {
+            platformHtml = `
             <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #2d3748;padding-top:8px;">
-              ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:11px;color:#ef4444;text-decoration:none;padding:3px 9px;border-radius:5px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
-              ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:11px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
-            </div>` : '';
+              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#ef4444;text-decoration:none;padding:3px 9px;border-radius:5px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>
+            </div>`;
+          } else if (listen.kind === 'spotify') {
+            platformHtml = `
+            <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #2d3748;padding-top:8px;">
+              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>
+            </div>`;
+          }
 
-          const clickHint = ytUrl ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ▶ YouTube</div>` : '';
+          const clickHint = listen.kind === 'youtube'
+            ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ▶ YouTube</div>`
+            : (listen.kind === 'spotify'
+              ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ♫ Spotify</div>`
+              : '');
 
           tooltip.innerHTML = `
             <div style="font-weight:700;color:#f1f5f9;font-size:14px;margin-bottom:3px">${fmtName(d.data.name)}</div>
             <div style="font-size:11px;font-weight:600;color:${showColor};margin-bottom:3px">● ${d.data.show}${dateStr}</div>
             <div style="color:#94a3b8;font-size:11px;margin-bottom:6px;line-height:1.4">${d.data.role}</div>
             ${clickHint}
-            <div style="font-size:10px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${Object.keys(ts).length ? ' — click to jump' : ''}</div>
+            <div style="font-size:10px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${listen.kind === 'youtube' && Object.keys(ts).length ? ' — click to jump' : ''}</div>
             <div>${tagsHtml}</div>
             ${platformHtml}`;
         })

@@ -495,27 +495,37 @@
           if (x + 260 > r.width) x -= 270;
           tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:9px 12px;font-size:11px;pointer-events:auto;max-width:260px;z-index:100;transition:opacity 0.3s;`;
           const ts = d.data.timestamps || {};
+          const ytUrl = d.data.url || '';
+          const spUrl = d.data.spotify_url || '';
+          // Link rule: YouTube if present, else Spotify only (never both)
+          const listenKind = ytUrl ? 'youtube' : (spUrl ? 'spotify' : '');
+          const listenUrl = ytUrl || spUrl || '';
           const tagsHtml = d.data.topics.map(t => {
-            const tsUrl = ts[t];
+            const tsUrl = listenKind === 'youtube' ? ts[t] : null;
             const color = TOPIC_COLORS[t] || '#0ea5e9';
             const style = `font-size:9px;padding:2px 7px;border-radius:10px;background:${d3.color(color)}22;color:${color};display:inline-block;margin:2px 2px 0 0;`;
             return tsUrl
               ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;cursor:pointer;" title="Jump to this topic">▶ ${t}</a>`
               : `<span style="${style}">${t}</span>`;
           }).join('');
-          const ytUrl = d.data.url || '';
-          const spUrl = d.data.spotify_url || '';
-          const platformHtml = (ytUrl || spUrl) ? `
+          let platformHtml = '';
+          if (listenKind === 'youtube') {
+            platformHtml = `
             <div style="display:flex;gap:6px;margin-top:7px;border-top:1px solid #2d3748;padding-top:7px;">
-              ${ytUrl ? `<a href="${ytUrl}" target="_blank" style="font-size:10px;color:#ef4444;text-decoration:none;padding:2px 8px;border-radius:4px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>` : ''}
-              ${spUrl ? `<a href="${spUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:2px 8px;border-radius:4px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>` : ''}
-            </div>` : '';
+              <a href="${listenUrl}" target="_blank" style="font-size:10px;color:#ef4444;text-decoration:none;padding:2px 8px;border-radius:4px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>
+            </div>`;
+          } else if (listenKind === 'spotify') {
+            platformHtml = `
+            <div style="display:flex;gap:6px;margin-top:7px;border-top:1px solid #2d3748;padding-top:7px;">
+              <a href="${listenUrl}" target="_blank" style="font-size:10px;color:#1db954;text-decoration:none;padding:2px 8px;border-radius:4px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>
+            </div>`;
+          }
           const showColor = SHOW_COLORS[d.data.show] || '#f97316';
           tooltip.innerHTML = `
             <div class="t-name">${d.data.name}</div>
             <div class="t-show" style="color:${showColor}">${d.data.show}${d.data.date ? ' &middot; ' + d.data.date : ''}</div>
             <div class="t-role" style="margin-bottom:6px">${d.data.role}</div>
-            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics — click to jump</div>
+            <div style="font-size:9px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${listenKind === 'youtube' && Object.keys(ts).length ? ' — click to jump' : ''}</div>
             <div class="t-tags">${tagsHtml}</div>
             ${platformHtml}`;
         })
