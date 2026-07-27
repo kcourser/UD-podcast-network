@@ -1,6 +1,7 @@
 <!-- ============================================================
      UPRT+ Network — Upright Digital Podcast Episode Network
      Dynamic embed for Webflow — paste into an Embed element
+     v6: readable search/UI contrast; tooltip always lists topics
      v5: link rule — YouTube if present, else Spotify only (never both)
      v4: fullscreen mode, ctrl+scroll zoom in inline mode
      Owner: Hermes CTO (2026-07-27)
@@ -39,15 +40,15 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-#ud-header p { font-size: 11px; color: #64748b; margin-top: 2px; }
+#ud-header p { font-size: 11px; color: #94a3b8; margin-top: 2px; }
 
 /* ── Fullscreen button ── */
 #ud-fullscreen-btn {
   flex-shrink: 0;
   padding: 5px 9px;
-  border: 1px solid #2d3748;
-  background: transparent;
-  color: #64748b;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: #e2e8f0;
   font-size: 15px;
   line-height: 1;
   cursor: pointer;
@@ -55,7 +56,7 @@
   transition: all 0.15s;
   font-family: inherit;
 }
-#ud-fullscreen-btn:hover { background: #1e2330; color: #e2e8f0; border-color: #4b5563; }
+#ud-fullscreen-btn:hover { background: #334155; color: #f8fafc; border-color: #94a3b8; }
 
 /* ── Fullscreen mode ── */
 #ud-network.ud-fullscreen {
@@ -70,7 +71,7 @@
 /* ── Zoom hint (inline only) ── */
 #ud-zoom-hint {
   position: absolute; bottom: 10px; right: 10px;
-  font-size: 10px; color: #1e2d45; pointer-events: none;
+  font-size: 10px; color: #64748b; pointer-events: none;
   letter-spacing: 0.03em; user-select: none;
 }
 #ud-network.ud-fullscreen #ud-zoom-hint { display: none; }
@@ -78,19 +79,26 @@
 /* ── Name search ── */
 #ud-search {
   margin-left: auto;
-  padding: 5px 12px;
+  padding: 7px 14px;
   border-radius: 20px;
-  border: 1px solid #2d3748;
-  background: #0f1117;
-  color: #e2e8f0;
-  font-size: 12px;
+  border: 1px solid #64748b;
+  background: #1e293b;
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 500;
   font-family: inherit;
-  width: 200px;
+  width: 220px;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-text-fill-color: #f8fafc;
+  caret-color: #f8fafc;
 }
-#ud-search::placeholder { color: #475569; }
-#ud-search:focus { border-color: #4b5563; }
+#ud-search::placeholder { color: #94a3b8; opacity: 1; -webkit-text-fill-color: #94a3b8; }
+#ud-search:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+  background: #0f172a;
+}
 
 /* ── Date range bar ── */
 #ud-date-bar {
@@ -104,13 +112,13 @@
 }
 #ud-date-bar-label {
   font-size: 9px; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #475569; margin-right: 4px;
+  text-transform: uppercase; color: #94a3b8; margin-right: 4px;
 }
 #ud-date-from-label, #ud-date-to-label {
-  font-size: 11px; font-weight: 600; color: #60a5fa;
+  font-size: 11px; font-weight: 600; color: #93c5fd;
 }
-#ud-date-sep { font-size: 10px; color: #334155; }
-#ud-date-count { margin-left: auto; font-size: 10px; color: #475569; }
+#ud-date-sep { font-size: 10px; color: #64748b; }
+#ud-date-count { margin-left: auto; font-size: 10px; color: #94a3b8; }
 
 #ud-slider-wrap {
   position: relative; height: 20px;
@@ -144,7 +152,7 @@ input.ud-rng::-moz-range-thumb {
 }
 #ud-slider-months {
   display: flex; justify-content: space-between;
-  margin-top: 5px; font-size: 8px; color: #334155; letter-spacing: 0.03em;
+  margin-top: 5px; font-size: 9px; color: #64748b; letter-spacing: 0.03em;
 }
 
 /* ── Body layout ── */
@@ -158,11 +166,11 @@ input.ud-rng::-moz-range-thumb {
 }
 .ud-sidebar-section-title {
   font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #475569;
+  text-transform: uppercase; color: #94a3b8;
   padding: 11px 14px 5px; flex-shrink: 0;
 }
 #ud-match-count {
-  font-size: 11px; color: #60a5fa; padding: 2px 14px 4px;
+  font-size: 11px; color: #93c5fd; padding: 2px 14px 4px;
   font-weight: 600; flex-shrink: 0; display: none;
 }
 #ud-topic-list {
@@ -172,17 +180,17 @@ input.ud-rng::-moz-range-thumb {
 .ud-topic-btn {
   display: flex; align-items: center; gap: 7px; width: 100%;
   padding: 6px 8px; border: none; background: transparent;
-  color: #94a3b8; font-size: 12px; cursor: pointer; border-radius: 5px;
+  color: #cbd5e1; font-size: 12px; cursor: pointer; border-radius: 5px;
   text-align: left; transition: background 0.15s, color 0.15s; font-family: inherit;
 }
-.ud-topic-btn:hover { background: #1e2330; color: #e2e8f0; }
-.ud-topic-btn.active { background: #1e2d45; color: #60a5fa; font-weight: 600; }
+.ud-topic-btn:hover { background: #1e2330; color: #f8fafc; }
+.ud-topic-btn.active { background: #1e2d45; color: #93c5fd; font-weight: 600; }
 .ud-topic-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .ud-topic-count {
-  margin-left: auto; font-size: 10px; color: #475569;
+  margin-left: auto; font-size: 10px; color: #94a3b8;
   background: #1e2330; padding: 1px 6px; border-radius: 10px; flex-shrink: 0;
 }
-.ud-topic-btn.active .ud-topic-count { background: #1e3a5f; color: #93c5fd; }
+.ud-topic-btn.active .ud-topic-count { background: #1e3a5f; color: #bfdbfe; }
 
 /* ── Shows section in sidebar ── */
 #ud-sidebar-divider {
@@ -194,22 +202,22 @@ input.ud-rng::-moz-range-thumb {
 .ud-show-btn {
   display: flex; align-items: center; gap: 7px; width: 100%;
   padding: 5px 8px; border: none; background: transparent;
-  color: #94a3b8; font-size: 12px; cursor: pointer; border-radius: 5px;
+  color: #cbd5e1; font-size: 12px; cursor: pointer; border-radius: 5px;
   text-align: left; transition: background 0.15s, color 0.15s; font-family: inherit;
 }
-.ud-show-btn:hover { background: #1e2330; color: #e2e8f0; }
-.ud-show-btn.inactive { opacity: 0.35; }
+.ud-show-btn:hover { background: #1e2330; color: #f8fafc; }
+.ud-show-btn.inactive { opacity: 0.4; }
 .ud-show-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 /* ── Clear button ── */
 #ud-clear-btn {
   margin: 6px; padding: 7px;
-  border: 1px solid #1e2330; background: transparent;
-  color: #64748b; font-size: 11px; cursor: pointer;
+  border: 1px solid #475569; background: #1e293b;
+  color: #e2e8f0; font-size: 11px; cursor: pointer;
   border-radius: 5px; transition: all 0.15s;
   flex-shrink: 0; font-family: inherit;
 }
-#ud-clear-btn:hover { background: #1e2330; color: #94a3b8; }
+#ud-clear-btn:hover { background: #334155; color: #f8fafc; }
 
 /* ── Graph ── */
 #ud-graph-wrap { flex: 1; position: relative; overflow: hidden; background: #0f1117; }
@@ -227,7 +235,7 @@ input.ud-rng::-moz-range-thumb {
 #ud-loading {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 10px; color: #475569; font-size: 13px;
+  flex-direction: column; gap: 10px; color: #94a3b8; font-size: 13px;
 }
 #ud-spinner {
   width: 28px; height: 28px; border: 3px solid #1e2330;
@@ -683,43 +691,50 @@ input.ud-rng::-moz-range-thumb {
           const showColor = SHOW_COLORS[d.data.show] || '#f97316';
           const dateStr   = d.data.date ? ' &middot; ' + fmtDate(d.data.date) : '';
           const listen = primaryListen(d);
+          const topics = Array.isArray(d.data.topics) ? d.data.topics.filter(Boolean) : [];
+          const hasTsJumps = listen.kind === 'youtube' && topics.some(t => ts[t]);
 
-          const tagsHtml = d.data.topics.map(t => {
-            const color = TOPIC_COLORS[t] || '#0ea5e9';
-            // Topic jump links only make sense on YouTube timestamps
-            const tsUrl = listen.kind === 'youtube' ? ts[t] : null;
-            const style = `font-size:10px;padding:3px 8px;border-radius:10px;background:${color}22;color:${color};display:inline-block;margin:2px 2px 0 0;font-weight:600;`;
-            return tsUrl
-              ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;" title="Jump to timestamp">▶ ${t}</a>`
-              : `<span style="${style}">${t}</span>`;
-          }).join('');
+          // Always list topics in the tooltip (jump link only when YT timestamp exists)
+          let tagsHtml;
+          if (topics.length) {
+            tagsHtml = topics.map(t => {
+              const color = TOPIC_COLORS[t] || '#38bdf8';
+              const tsUrl = listen.kind === 'youtube' ? ts[t] : null;
+              const style = `font-size:11px;padding:4px 9px;border-radius:10px;background:${color}33;color:${color};border:1px solid ${color}66;display:inline-block;margin:2px 3px 0 0;font-weight:600;line-height:1.2;`;
+              return tsUrl
+                ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;" title="Jump to this topic in the episode">▶ ${t}</a>`
+                : `<span style="${style}">${t}</span>`;
+            }).join('');
+          } else {
+            tagsHtml = `<span style="font-size:11px;color:#94a3b8;font-style:italic">No topics tagged</span>`;
+          }
 
           let platformHtml = '';
           if (listen.kind === 'youtube') {
             platformHtml = `
-            <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #2d3748;padding-top:8px;">
-              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#ef4444;text-decoration:none;padding:3px 9px;border-radius:5px;background:#ef444420;border:1px solid #ef444440">▶ YouTube</a>
+            <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #334155;padding-top:8px;">
+              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#fca5a5;text-decoration:none;padding:3px 9px;border-radius:5px;background:#7f1d1d55;border:1px solid #ef444480">▶ YouTube</a>
             </div>`;
           } else if (listen.kind === 'spotify') {
             platformHtml = `
-            <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #2d3748;padding-top:8px;">
-              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#1db954;text-decoration:none;padding:3px 9px;border-radius:5px;background:#1db95420;border:1px solid #1db95440">♫ Spotify</a>
+            <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #334155;padding-top:8px;">
+              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#6ee7b7;text-decoration:none;padding:3px 9px;border-radius:5px;background:#064e3b55;border:1px solid #1db95480">♫ Spotify</a>
             </div>`;
           }
 
           const clickHint = listen.kind === 'youtube'
-            ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ▶ YouTube</div>`
+            ? `<div style="font-size:10px;color:#94a3b8;margin-bottom:6px">click node to open ▶ YouTube</div>`
             : (listen.kind === 'spotify'
-              ? `<div style="font-size:10px;color:#475569;margin-bottom:6px">click node to open ♫ Spotify</div>`
-              : '');
+              ? `<div style="font-size:10px;color:#94a3b8;margin-bottom:6px">click node to open ♫ Spotify</div>`
+              : `<div style="font-size:10px;color:#94a3b8;margin-bottom:6px">no episode link yet</div>`);
 
           tooltip.innerHTML = `
-            <div style="font-weight:700;color:#f1f5f9;font-size:14px;margin-bottom:3px">${fmtName(d.data.name)}</div>
+            <div style="font-weight:700;color:#f8fafc;font-size:14px;margin-bottom:3px">${fmtName(d.data.name)}</div>
             <div style="font-size:11px;font-weight:600;color:${showColor};margin-bottom:3px">● ${d.data.show}${dateStr}</div>
-            <div style="color:#94a3b8;font-size:11px;margin-bottom:6px;line-height:1.4">${d.data.role}</div>
+            <div style="color:#cbd5e1;font-size:11px;margin-bottom:6px;line-height:1.4">${d.data.role || ''}</div>
             ${clickHint}
-            <div style="font-size:10px;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">Topics${listen.kind === 'youtube' && Object.keys(ts).length ? ' — click to jump' : ''}</div>
-            <div>${tagsHtml}</div>
+            <div style="font-size:10px;color:#cbd5e1;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600">Topics${hasTsJumps ? ' — click chip to jump' : ''}</div>
+            <div style="line-height:1.6">${tagsHtml}</div>
             ${platformHtml}`;
         })
         .on('mouseleave', () => {
