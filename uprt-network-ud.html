@@ -248,20 +248,23 @@ input.ud-rng::-moz-range-thumb {
 }
 @keyframes ud-spin { to { transform: rotate(360deg); } }
 
+
 /* ── Header brand logo ── */
 #ud-header-brand {
-  display: flex; align-items: center; gap: 10px; min-width: 0;
+  display: flex; align-items: center; gap: 12px; min-width: 0;
 }
 #ud-header-logo {
-  height: 36px; width: auto; display: block; flex-shrink: 0;
+  height: 44px; width: auto; display: block; flex-shrink: 0;
+  overflow: visible;
 }
 #ud-header-brand .ud-title-fallback {
   display: none;
   font-size: 14px; font-weight: 700; color: #f1f5f9;
   letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  margin: 0;
 }
-#ud-header-brand.logo-failed .ud-title-fallback { display: block; }
-#ud-header-brand.logo-failed #ud-header-logo { display: none; }
+#ud-header-brand > div { min-width: 0; }
+#ud-header-brand #ud-subline { margin-top: 2px; }
 .ud-show-btn.solo-active {
   background: #1e2d45; color: #93c5fd; font-weight: 600;
 }
@@ -278,17 +281,28 @@ input.ud-rng::-moz-range-thumb {
 #ud-all-shows-btn.active {
   border-style: solid; border-color: #64748b; color: #e2e8f0; background: #1e2330;
 }
+
 </style>
 
 <div id="ud-network">
 
   <!-- Header -->
   <div id="ud-header">
-    <div id="ud-header-brand">
-      <img id="ud-header-logo" src="data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201200%20534.95%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.cls-1%20%7B%0A%20%20%20%20%20%20%20%20opacity%3A%20.55%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-2%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%230071ce%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-3%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%23f2f7fd%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-4%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%234da9f0%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C/style%3E%0A%20%20%3C/defs%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M249.85%2C192.5v124.47c0%2C11.57%2C2.69%2C20.5%2C8.07%2C26.78%2C5.37%2C6.29%2C13.54%2C9.43%2C24.5%2C9.43s19.22-3.2%2C24.8-9.59c5.58-6.39%2C8.37-15.26%2C8.37-26.63v-124.47h59.65v124.47c0%2C19.68-4.16%2C36.47-12.48%2C50.37-8.32%2C13.9-19.63%2C24.35-33.93%2C31.35-14.3%2C7-30.18%2C10.5-47.63%2C10.5s-33.02-3.5-46.72-10.5c-13.69-7-24.45-17.39-32.26-31.19-7.81-13.79-11.72-30.63-11.72-50.52v-124.47h59.35Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M568.64%2C299.47c-5.98%2C10.65-15.02%2C19.17-27.08%2C25.56-12.07%2C6.39-26.83%2C9.59-44.28%2C9.59h-29.52v72.43h-59.65v-214.56h89.17c17.24%2C0%2C31.9%2C3.04%2C43.97%2C9.13%2C12.07%2C6.09%2C21.15%2C14.51%2C27.24%2C25.26%2C6.09%2C10.76%2C9.13%2C23.13%2C9.13%2C37.13%2C0%2C12.99-2.99%2C24.8-8.98%2C35.46ZM516.75%2C264.02c0-15.62-8.42-23.43-25.26-23.43h-23.74v46.56h23.74c16.84%2C0%2C25.26-7.71%2C25.26-23.13Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M710.3%2C407.05l-42.61-79.13h-6.39v79.13h-59.65v-214.56h94.04c17.24%2C0%2C31.85%2C3%2C43.82%2C8.98%2C11.97%2C5.99%2C21%2C14.2%2C27.09%2C24.65%2C6.09%2C10.45%2C9.13%2C22.17%2C9.13%2C35.15%2C0%2C14.61-4.01%2C27.44-12.02%2C38.5-8.02%2C11.06-19.74%2C18.92-35.15%2C23.59l48.39%2C83.69h-66.65ZM661.31%2C287.15h29.52c8.11%2C0%2C14.2-1.93%2C18.26-5.78%2C4.06-3.85%2C6.09-9.43%2C6.09-16.74%2C0-6.9-2.08-12.33-6.24-16.28-4.16-3.96-10.2-5.93-18.11-5.93h-29.52v44.74Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M964.42%2C192.5v47.48h-57.22v167.08h-59.65v-167.08h-56.61v-47.48h173.47Z%22/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cpolygon%20class%3D%22cls-4%22%20points%3D%221135.14%2064.86%201135.14%200%201079.42%200%201079.42%2064.86%201014.57%2064.86%201014.57%20120.58%201079.42%20120.58%201079.42%20185.43%201135.14%20185.43%201135.14%20120.58%201200%20120.58%201200%2064.86%201135.14%2064.86%22/%3E%0A%20%20%3Cg%20class%3D%22cls-1%22%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-2%22%20d%3D%22M1044.8%2C534.95H90.12c-49.69%2C0-90.12-40.25-90.12-89.72V154.83c0-49.47%2C40.43-89.72%2C90.12-89.72h882v55.94H90.12c-18.85%2C0-34.18%2C15.15-34.18%2C33.78v290.4c0%2C18.63%2C15.33%2C33.78%2C34.18%2C33.78h954.69c18.85%2C0%2C34.18-15.15%2C34.18-33.78v-218.44h55.94v218.44c0%2C49.47-40.43%2C89.72-90.12%2C89.72Z%22/%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E" alt="UPRT+" width="90" height="40" onerror="this.closest('#ud-header-brand').classList.add('logo-failed')">
+            <div id="ud-header-brand">
+      <svg id="ud-header-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 535" width="118" height="52" role="img" aria-label="UPRT+" focusable="false">
+  <title>UPRT+</title>
+  <g opacity="0.55">
+    <path fill="#0071CE" d="M1044.8,534.95H90.12c-49.69,0-90.12-40.25-90.12-89.72V154.83c0-49.47,40.43-89.72,90.12-89.72h882v55.94H90.12c-18.85,0-34.18,15.15-34.18,33.78v290.4c0,18.63,15.33,33.78,34.18,33.78h954.69c18.85,0,34.18-15.15,34.18-33.78v-218.44h55.94v218.44c0,49.47-40.43,89.72-90.12,89.72Z"/>
+  </g>
+  <path fill="#F2F7FD" d="M249.85,192.5v124.47c0,11.57,2.69,20.5,8.07,26.78,5.37,6.29,13.54,9.43,24.5,9.43s19.22-3.2,24.8-9.59c5.58-6.39,8.37-15.26,8.37-26.63v-124.47h59.65v124.47c0,19.68-4.16,36.47-12.48,50.37-8.32,13.9-19.63,24.35-33.93,31.35-14.3,7-30.18,10.5-47.63,10.5s-33.02-3.5-46.72-10.5c-13.69-7-24.45-17.39-32.26-31.19-7.81-13.79-11.72-30.63-11.72-50.52v-124.47h59.35Z"/>
+  <path fill="#F2F7FD" d="M568.64,299.47c-5.98,10.65-15.02,19.17-27.08,25.56-12.07,6.39-26.83,9.59-44.28,9.59h-29.52v72.43h-59.65v-214.56h89.17c17.24,0,31.9,3.04,43.97,9.13,12.07,6.09,21.15,14.51,27.24,25.26,6.09,10.76,9.13,23.13,9.13,37.13,0,12.99-2.99,24.8-8.98,35.46ZM516.75,264.02c0-15.62-8.42-23.43-25.26-23.43h-23.74v46.56h23.74c16.84,0,25.26-7.71,25.26-23.13Z"/>
+  <path fill="#F2F7FD" d="M710.3,407.05l-42.61-79.13h-6.39v79.13h-59.65v-214.56h94.04c17.24,0,31.85,3,43.82,8.98,11.97,5.99,21,14.2,27.09,24.65,6.09,10.45,9.13,22.17,9.13,35.15,0,14.61-4.01,27.44-12.02,38.5-8.02,11.06-19.74,18.92-35.15,23.59l48.39,83.69h-66.65ZM661.31,287.15h29.52c8.11,0,14.2-1.93,18.26-5.78,4.06-3.85,6.09-9.43,6.09-16.74,0-6.9-2.08-12.33-6.24-16.28-4.16-3.96-10.2-5.93-18.11-5.93h-29.52v44.74Z"/>
+  <path fill="#F2F7FD" d="M964.42,192.5v47.48h-57.22v167.08h-59.65v-167.08h-56.61v-47.48h173.47Z"/>
+  <polygon fill="#4DA9F0" points="1135.14 64.86 1135.14 0 1079.42 0 1079.42 64.86 1014.57 64.86 1014.57 120.58 1079.42 120.58 1079.42 185.43 1135.14 185.43 1135.14 120.58 1200 120.58 1200 64.86 1135.14 64.86"/>
+</svg>
       <div>
         <h2 class="ud-title-fallback">UPRT<span style="color:#4DA9F0">+</span> Network</h2>
-        <p id="ud-subline">Upright Digital &middot; 6 shows &middot; filter by topic, show, or date &middot; click a show to solo it</p>
+        <p id="ud-subline">Upright Digital &middot; 6 shows &middot; click a show to solo it &middot; click node to open episode</p>
       </div>
     </div>
     <input type="text" id="ud-search" placeholder="Search guest name&hellip;">
@@ -366,7 +380,7 @@ input.ud-rng::-moz-range-thumb {
   function buildGraph(data) {
     const { meta, episodes } = data;
     const TOPIC_COLORS = meta.topic_colors || {};
-        const SHOW_COLORS = Object.assign({
+                const SHOW_COLORS = Object.assign({
       "PetroNoia":             "#1A4AF0",
       "Oil Field 360":         "#C01020",
       "Energy Espresso":       "#00A020",
@@ -452,7 +466,7 @@ input.ud-rng::-moz-range-thumb {
 
     document.getElementById('ud-loading').style.display = 'none';
 
-    // ── Shows sidebar (solo model: click = only that show; re-click / All = restore)
+            // ── Shows sidebar (solo: click = only that show; re-click / All = restore) ─
     function selectAllShows() {
       selectedShows.clear();
       allShows.forEach(s => selectedShows.add(s));
@@ -471,9 +485,11 @@ input.ud-rng::-moz-range-thumb {
       allBtn.title = 'Show the full network';
       allBtn.addEventListener('click', () => {
         selectAllShows();
-        activeTopics.clear(); searchQuery = '';
+        activeTopics.clear();
+        searchQuery = '';
         searchInput.value = '';
-        buildShowsSidebar(); rebuildGraph();
+        buildShowsSidebar();
+        rebuildGraph();
       });
       listEl.appendChild(allBtn);
 
@@ -493,16 +509,18 @@ input.ud-rng::-moz-range-thumb {
             selectedShows.clear();
             selectedShows.add(s);
           }
-          activeTopics.clear(); searchQuery = '';
+          activeTopics.clear();
+          searchQuery = '';
           searchInput.value = '';
-          buildShowsSidebar(); rebuildGraph();
+          buildShowsSidebar();
+          rebuildGraph();
         });
         listEl.appendChild(btn);
       });
     }
     buildShowsSidebar();
 
-    // ── Name search ───────────────────────────────────────────────────────────
+// ── Name search ───────────────────────────────────────────────────────────
     const searchInput = document.getElementById('ud-search');
     searchInput.addEventListener('input', () => {
       searchQuery = searchInput.value.trim().toLowerCase();
@@ -844,7 +862,7 @@ input.ud-rng::-moz-range-thumb {
     }
 
     // ── Clear button ──────────────────────────────────────────────────────────
-    document.getElementById('ud-clear-btn').addEventListener('click', () => {
+        document.getElementById('ud-clear-btn').addEventListener('click', () => {
       activeTopics.clear();
       searchQuery = '';
       searchInput.value = '';
