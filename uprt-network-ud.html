@@ -3,6 +3,7 @@
      Dynamic embed for Webflow — paste into an Embed element
      v7-UD: restyled to UD 2026 brand tokens (navy scale, on-dark accents,
           Poppins, magenta-blue beam accents); dynamic show/episode count
+     v8: UPRT+ logo header; brand show colors; solo-show sidebar
      v6: readable search/UI contrast; tooltip always lists topics
      v5: link rule — YouTube if present, else Spotify only (never both)
      v4: fullscreen mode, ctrl+scroll zoom in inline mode
@@ -246,15 +247,49 @@ input.ud-rng::-moz-range-thumb {
   animation: ud-spin 0.8s linear infinite;
 }
 @keyframes ud-spin { to { transform: rotate(360deg); } }
+
+/* ── Header brand logo ── */
+#ud-header-brand {
+  display: flex; align-items: center; gap: 10px; min-width: 0;
+}
+#ud-header-logo {
+  height: 36px; width: auto; display: block; flex-shrink: 0;
+}
+#ud-header-brand .ud-title-fallback {
+  display: none;
+  font-size: 14px; font-weight: 700; color: #f1f5f9;
+  letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+}
+#ud-header-brand.logo-failed .ud-title-fallback { display: block; }
+#ud-header-brand.logo-failed #ud-header-logo { display: none; }
+.ud-show-btn.solo-active {
+  background: #1e2d45; color: #93c5fd; font-weight: 600;
+}
+.ud-show-btn.solo-active .ud-topic-count { background: #1e3a5f; color: #bfdbfe; }
+#ud-all-shows-btn {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  padding: 5px 8px; border: 1px dashed #475569; background: transparent;
+  color: #94a3b8; font-size: 11px; cursor: pointer; border-radius: 5px;
+  text-align: left; transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit; margin-bottom: 4px; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+#ud-all-shows-btn:hover { background: #1e2330; color: #f8fafc; border-color: #94a3b8; }
+#ud-all-shows-btn.active {
+  border-style: solid; border-color: #64748b; color: #e2e8f0; background: #1e2330;
+}
 </style>
 
 <div id="ud-network">
 
   <!-- Header -->
   <div id="ud-header">
-    <div>
-      <h2>UPRT<span style="color:#4DA9F0">+</span> Network</h2>
-      <p id="ud-subline">Upright Digital &middot; filter by topic, show, or date &middot; click a node to open the episode</p>
+    <div id="ud-header-brand">
+      <img id="ud-header-logo" src="data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201200%20534.95%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.cls-1%20%7B%0A%20%20%20%20%20%20%20%20opacity%3A%20.55%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-2%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%230071ce%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-3%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%23f2f7fd%3B%0A%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20.cls-4%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%234da9f0%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C/style%3E%0A%20%20%3C/defs%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M249.85%2C192.5v124.47c0%2C11.57%2C2.69%2C20.5%2C8.07%2C26.78%2C5.37%2C6.29%2C13.54%2C9.43%2C24.5%2C9.43s19.22-3.2%2C24.8-9.59c5.58-6.39%2C8.37-15.26%2C8.37-26.63v-124.47h59.65v124.47c0%2C19.68-4.16%2C36.47-12.48%2C50.37-8.32%2C13.9-19.63%2C24.35-33.93%2C31.35-14.3%2C7-30.18%2C10.5-47.63%2C10.5s-33.02-3.5-46.72-10.5c-13.69-7-24.45-17.39-32.26-31.19-7.81-13.79-11.72-30.63-11.72-50.52v-124.47h59.35Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M568.64%2C299.47c-5.98%2C10.65-15.02%2C19.17-27.08%2C25.56-12.07%2C6.39-26.83%2C9.59-44.28%2C9.59h-29.52v72.43h-59.65v-214.56h89.17c17.24%2C0%2C31.9%2C3.04%2C43.97%2C9.13%2C12.07%2C6.09%2C21.15%2C14.51%2C27.24%2C25.26%2C6.09%2C10.76%2C9.13%2C23.13%2C9.13%2C37.13%2C0%2C12.99-2.99%2C24.8-8.98%2C35.46ZM516.75%2C264.02c0-15.62-8.42-23.43-25.26-23.43h-23.74v46.56h23.74c16.84%2C0%2C25.26-7.71%2C25.26-23.13Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M710.3%2C407.05l-42.61-79.13h-6.39v79.13h-59.65v-214.56h94.04c17.24%2C0%2C31.85%2C3%2C43.82%2C8.98%2C11.97%2C5.99%2C21%2C14.2%2C27.09%2C24.65%2C6.09%2C10.45%2C9.13%2C22.17%2C9.13%2C35.15%2C0%2C14.61-4.01%2C27.44-12.02%2C38.5-8.02%2C11.06-19.74%2C18.92-35.15%2C23.59l48.39%2C83.69h-66.65ZM661.31%2C287.15h29.52c8.11%2C0%2C14.2-1.93%2C18.26-5.78%2C4.06-3.85%2C6.09-9.43%2C6.09-16.74%2C0-6.9-2.08-12.33-6.24-16.28-4.16-3.96-10.2-5.93-18.11-5.93h-29.52v44.74Z%22/%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-3%22%20d%3D%22M964.42%2C192.5v47.48h-57.22v167.08h-59.65v-167.08h-56.61v-47.48h173.47Z%22/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cpolygon%20class%3D%22cls-4%22%20points%3D%221135.14%2064.86%201135.14%200%201079.42%200%201079.42%2064.86%201014.57%2064.86%201014.57%20120.58%201079.42%20120.58%201079.42%20185.43%201135.14%20185.43%201135.14%20120.58%201200%20120.58%201200%2064.86%201135.14%2064.86%22/%3E%0A%20%20%3Cg%20class%3D%22cls-1%22%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-2%22%20d%3D%22M1044.8%2C534.95H90.12c-49.69%2C0-90.12-40.25-90.12-89.72V154.83c0-49.47%2C40.43-89.72%2C90.12-89.72h882v55.94H90.12c-18.85%2C0-34.18%2C15.15-34.18%2C33.78v290.4c0%2C18.63%2C15.33%2C33.78%2C34.18%2C33.78h954.69c18.85%2C0%2C34.18-15.15%2C34.18-33.78v-218.44h55.94v218.44c0%2C49.47-40.43%2C89.72-90.12%2C89.72Z%22/%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E" alt="UPRT+" width="90" height="40" onerror="this.closest('#ud-header-brand').classList.add('logo-failed')">
+      <div>
+        <h2 class="ud-title-fallback">UPRT<span style="color:#4DA9F0">+</span> Network</h2>
+        <p id="ud-subline">Upright Digital &middot; 6 shows &middot; filter by topic, show, or date &middot; click a show to solo it</p>
+      </div>
     </div>
     <input type="text" id="ud-search" placeholder="Search guest name&hellip;">
     <button id="ud-fullscreen-btn" title="Open fullscreen (scroll to zoom)">⛶</button>
@@ -331,13 +366,13 @@ input.ud-rng::-moz-range-thumb {
   function buildGraph(data) {
     const { meta, episodes } = data;
     const TOPIC_COLORS = meta.topic_colors || {};
-    const SHOW_COLORS = Object.assign({
-      "PetroNoia":             "#FFA940",
-      "Oil Field 360":         "#FFB65B",
-      "Energy Espresso":       "#FF3DB0",
-      "The IT Crowd":          "#4DA9F0",
-      "The Energy Pipeline":   "#A8E0FF",
-      "In Basin Observations": "#00D954",
+        const SHOW_COLORS = Object.assign({
+      "PetroNoia":             "#1A4AF0",
+      "Oil Field 360":         "#C01020",
+      "Energy Espresso":       "#00A020",
+      "The IT Crowd":          "#00A0F0",
+      "The Energy Pipeline":   "#F0B010",
+      "In Basin Observations": "#105080",
     }, meta.show_colors || {});
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -417,19 +452,45 @@ input.ud-rng::-moz-range-thumb {
 
     document.getElementById('ud-loading').style.display = 'none';
 
-    // ── Shows sidebar ─────────────────────────────────────────────────────────
+    // ── Shows sidebar (solo model: click = only that show; re-click / All = restore)
+    function selectAllShows() {
+      selectedShows.clear();
+      allShows.forEach(s => selectedShows.add(s));
+    }
+    function isSoloMode() {
+      return selectedShows.size === 1;
+    }
     function buildShowsSidebar() {
       const listEl = document.getElementById('ud-shows-list');
       listEl.innerHTML = '';
+      const allBtn = document.createElement('button');
+      allBtn.id = 'ud-all-shows-btn';
+      allBtn.type = 'button';
+      allBtn.className = isSoloMode() ? '' : 'active';
+      allBtn.textContent = 'All shows';
+      allBtn.title = 'Show the full network';
+      allBtn.addEventListener('click', () => {
+        selectAllShows();
+        activeTopics.clear(); searchQuery = '';
+        searchInput.value = '';
+        buildShowsSidebar(); rebuildGraph();
+      });
+      listEl.appendChild(allBtn);
+
       allShows.forEach(s => {
         const count = episodes.filter(e => e.show === s).length;
         const btn = document.createElement('button');
-        btn.className = 'ud-show-btn' + (selectedShows.has(s) ? '' : ' inactive');
+        const on = selectedShows.has(s);
+        const solo = isSoloMode() && on;
+        btn.className = 'ud-show-btn' + (on ? '' : ' inactive') + (solo ? ' solo-active' : '');
+        btn.type = 'button';
+        btn.title = solo ? 'Click again to show all shows' : 'Show only this show';
         btn.innerHTML = `<span class="ud-show-dot" style="background:${SHOW_COLORS[s]||'#888'}"></span>${s}<span class="ud-topic-count">${count}</span>`;
         btn.addEventListener('click', () => {
-          if (selectedShows.has(s)) {
-            if (selectedShows.size > 1) selectedShows.delete(s);
+          if (isSoloMode() && selectedShows.has(s)) {
+            selectAllShows();
           } else {
+            selectedShows.clear();
             selectedShows.add(s);
           }
           activeTopics.clear(); searchQuery = '';
@@ -510,7 +571,7 @@ input.ud-rng::-moz-range-thumb {
 
       if (!hasTopics && !hasSearch) {
         nodeSel.filter(d => d.type === 'episode').select('circle')
-          .attr('fill', d => SHOW_COLORS[d.data.show] || '#FFA940')
+          .attr('fill', d => SHOW_COLORS[d.data.show] || '#1A4AF0')
           .attr('stroke', '#01060F').attr('stroke-width', 1.5).attr('opacity', 1);
         nodeSel.filter(d => d.type === 'episode').select('text').attr('opacity', 1);
         nodeSel.filter(d => d.type === 'topic').select('circle').attr('opacity', 1);
@@ -542,7 +603,7 @@ input.ud-rng::-moz-range-thumb {
       matchCountEl.style.display = 'block';
 
       nodeSel.filter(d => d.type === 'episode').select('circle')
-        .attr('fill',  d => matchEps.has(d.id) ? (SHOW_COLORS[d.data.show] || '#FFA940') : '#0F1B35')
+        .attr('fill',  d => matchEps.has(d.id) ? (SHOW_COLORS[d.data.show] || '#1A4AF0') : '#0F1B35')
         .attr('stroke', d => matchEps.has(d.id) ? '#ffffff' : '#1E2A4A')
         .attr('stroke-width', d => matchEps.has(d.id) ? 2 : 1)
         .attr('opacity', d => matchEps.has(d.id) ? 1 : 0.15);
@@ -621,14 +682,14 @@ input.ud-rng::-moz-range-thumb {
       // Episode nodes
       nodeSel.filter(d => d.type === 'episode').append('circle')
         .attr('r', 16)
-        .attr('fill', d => SHOW_COLORS[d.data.show] || '#FFA940')
+        .attr('fill', d => SHOW_COLORS[d.data.show] || '#1A4AF0')
         .attr('stroke', '#01060F').attr('stroke-width', 1.5).attr('cursor', 'pointer');
 
       // Episode labels
       nodeSel.filter(d => d.type === 'episode').append('text')
         .attr('text-anchor', 'middle').attr('dy', '30px')
         .attr('font-size', '11px').attr('font-weight', '500')
-        .attr('fill', d => SHOW_COLORS[d.data.show] || '#FFA940')
+        .attr('fill', d => SHOW_COLORS[d.data.show] || '#1A4AF0')
         .attr('pointer-events', 'none')
         .attr('paint-order', 'stroke').attr('stroke', '#01060F')
         .attr('stroke-width', '3px').attr('stroke-linejoin', 'round')
@@ -693,7 +754,7 @@ input.ud-rng::-moz-range-thumb {
           tooltip.style.cssText = `left:${x}px;top:${y}px;opacity:1;position:absolute;background:#0F1B35;border:1px solid #1E2A4A;border-radius:9px;padding:10px 13px;font-size:12px;pointer-events:auto;max-width:280px;z-index:100;transition:opacity 0.2s;`;
 
           const ts = d.data.timestamps || {};
-          const showColor = SHOW_COLORS[d.data.show] || '#FFA940';
+          const showColor = SHOW_COLORS[d.data.show] || '#1A4AF0';
           const dateStr   = d.data.date ? ' &middot; ' + fmtDate(d.data.date) : '';
           const listen = primaryListen(d);
           const topics = Array.isArray(d.data.topics) ? d.data.topics.filter(Boolean) : [];
@@ -787,8 +848,10 @@ input.ud-rng::-moz-range-thumb {
       activeTopics.clear();
       searchQuery = '';
       searchInput.value = '';
+      selectAllShows();
+      buildShowsSidebar();
       buildTopicSidebar();
-      applyVisualFilter();
+      rebuildGraph();
     });
 
     rebuildGraph();

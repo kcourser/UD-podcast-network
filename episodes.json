@@ -24,13 +24,14 @@
       "Industry & Technology": "#164e63"
     },
     "show_colors": {
-      "PetroNoia": "#f97316",
-      "Oil Field 360": "#f59e0b",
-      "Energy Espresso": "#a16207",
-      "The IT Crowd": "#06b6d4",
-      "The Energy Pipeline": "#3b82f6",
-      "In Basin Observations": "#10b981"
-    }
+      "PetroNoia": "#1A4AF0",
+      "Oil Field 360": "#C01020",
+      "Energy Espresso": "#00A020",
+      "The IT Crowd": "#00A0F0",
+      "The Energy Pipeline": "#F0B010",
+      "In Basin Observations": "#105080"
+    },
+    "show_colors_updated": "2026-10-22"
   },
   "episodes": [
     {
