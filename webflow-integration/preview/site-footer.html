@@ -1,0 +1,73 @@
+<script>
+(function () {
+  function init() {
+    var m = document.getElementById('podcastGraphModal') || document.getElementById('episodeMapModal');
+    if (!m) return;
+    var useClass = m.id === 'podcastGraphModal';
+    function relayout() { window.dispatchEvent(new Event('resize')); }
+    function openMap(e) {
+      if (e) e.preventDefault();
+      if (useClass) { m.classList.add('active'); } else { m.style.display = 'block'; }
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () { relayout(); setTimeout(relayout, 150); setTimeout(relayout, 500); });
+    }
+    function closeMap() {
+      if (useClass) { m.classList.remove('active'); } else { m.style.display = 'none'; }
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('a,button').forEach(function (el) {
+      if (/open the episode map/i.test(el.textContent)) {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', openMap);
+      }
+    });
+    m.addEventListener('click', function (e) { if (e.target === m) closeMap(); });
+    var cb = m.querySelector('.close-btn');
+    if (cb) cb.addEventListener('click', closeMap);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMap(); });
+    /* UD 2026: podcast pages link to /media#episode-map; open the map on arrival */
+    if (location.hash === '#episode-map') openMap();
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+<script>
+/* UD 2026: GA4 contact form conversion */
+(function () {
+  function fire(formName) {
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'generate_lead', {
+      event_category: 'form',
+      event_label: formName || 'Contact',
+      form_name: formName || 'Contact',
+      send_to: 'G-56LGZ7E9CD'
+    });
+    gtag('event', 'contact_form_submit', {
+      event_category: 'form',
+      event_label: formName || 'Contact'
+    });
+  }
+  function bind() {
+    document.addEventListener('submit', function (e) {
+      var f = e.target;
+      if (!f || f.tagName !== 'FORM') return;
+      var name = (f.getAttribute('data-name') || f.getAttribute('name') || '').trim();
+      if (/contact/i.test(name) || /contact/i.test(location.pathname)) {
+        fire(name || 'Contact');
+      }
+    }, true);
+    var obs = new MutationObserver(function () {
+      document.querySelectorAll('.w-form-done').forEach(function (el) {
+        if (el.dataset.udGaFired) return;
+        if (getComputedStyle(el).display === 'none') return;
+        el.dataset.udGaFired = '1';
+        var form = el.closest('.w-form');
+        var fname = form && form.querySelector('form') ? (form.querySelector('form').getAttribute('data-name') || 'Contact') : 'Contact';
+        if (/contact/i.test(fname) || /contact/i.test(location.pathname)) fire(fname);
+      });
+    });
+    if (document.body) obs.observe(document.body, { attributes: true, childList: true, subtree: true, attributeFilter: ['style', 'class'] });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind); else bind();
+})();
+</script>

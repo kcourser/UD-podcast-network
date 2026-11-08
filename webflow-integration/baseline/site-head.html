@@ -1,0 +1,199 @@
+<!-- Keep this css code to improve the font quality-->
+<style>
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -o-font-smoothing: antialiased;
+  }
+</style>
+
+<!-- UD 2026: beam velocity motif -->
+<style>
+  .ud-veloc div {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #a8e0ff 30%, #0071ce 70%, transparent);
+    opacity: 0.7;
+    animation: ud-shoot 3.4s linear infinite;
+  }
+  .ud-veloc div:nth-child(1) {
+    top: 18%;
+    left: -40%;
+    width: 70%;
+  }
+  .ud-veloc div:nth-child(2) {
+    top: 34%;
+    left: -60%;
+    width: 90%;
+    animation-delay: 1.1s;
+  }
+  .ud-veloc div:nth-child(3) {
+    top: 52%;
+    left: -50%;
+    width: 60%;
+    animation-delay: 2.2s;
+  }
+  .ud-veloc div:nth-child(4) {
+    top: 70%;
+    left: -70%;
+    width: 100%;
+    animation-delay: 0.6s;
+    opacity: 0.35;
+  }
+  .ud-hero .ud-container {
+    position: relative;
+    z-index: 1;
+  }
+  .ud-hero-inner .ud-container,
+  .ud-hero-media .ud-container,
+  .ud-hero-pod .ud-container,
+  .ud-hero-ges .ud-container,
+  .ud-hero-events .ud-container,
+  .ud-band-network .ud-container,
+  .ud-band-dep .ud-container,
+  .ud-room-ges .ud-container,
+  .ud-band-espresso .ud-container,
+  .ud-band-mkt .ud-container {
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes ud-shoot {
+    to {
+      transform: translateX(220%);
+    }
+  }
+</style>
+
+<!-- UD 2026: band tagline (static - no marquee repeat) -->
+<style>
+  .ud-band {
+    display: block;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+  }
+  .ud-band .ud-band-text {
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    padding-right: 0;
+    animation: none;
+    transform: none !important;
+  }
+  .ud-band .ud-band-text[aria-hidden] {
+    display: none;
+  }
+</style>
+
+<!-- UD 2026: journey trajectory connector -->
+<style>
+  .ud-journey::before {
+    content: '';
+    position: absolute;
+    left: 1%;
+    right: 1%;
+    top: 0.75rem;
+    height: 2px;
+    background: linear-gradient(90deg, #ff3db0, #4da9f0 55%, #a8e0ff);
+  }
+  .ud-journey::after {
+    content: '';
+    position: absolute;
+    right: calc(1% - 4px);
+    top: calc(0.75rem - 4px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffb65b;
+    box-shadow: 0 0 12px rgba(255, 182, 91, 0.8);
+  }
+  .ud-journey > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42%;
+    height: 3px;
+    background: linear-gradient(90deg, #ffb65b, transparent);
+  }
+  @media (max-width: 991px) {
+    .ud-journey::before,
+    .ud-journey::after {
+      display: none;
+    }
+  }
+</style>
+
+<!-- UD 2026: reduced motion -->
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .ud-veloc div {
+      animation: none;
+      opacity: 0.25;
+      left: 0 !important;
+    }
+    .ud-band .ud-band-text {
+      animation: none;
+    }
+    .ud-band .ud-band-text[aria-hidden] {
+      display: none;
+    }
+  }
+</style>
+
+<!-- UD 2026: footer legibility on anchor background -->
+<style>
+  .ud-footer-shell,
+  .ud-footer-shell a,
+  .ud-footer-shell div,
+  .ud-footer-shell p {
+    color: #eaf2fb;
+  }
+  .ud-footer-shell a:hover {
+    color: #4da9f0;
+  }
+</style>
+
+<!-- UD 2026: nav dropdown legibility (beats .w-dropdown-link #222) -->
+<style>
+  .w-dropdown-link.ud-nav-drop,
+  a.ud-nav-drop.w-dropdown-link,
+  .ud-nav-drop-list a.ud-nav-drop,
+  .w-dropdown-list a.ud-nav-drop {
+    color: #eaf2fb !important;
+    opacity: 1 !important;
+    background-color: transparent;
+    font-style: normal;
+  }
+  .w-dropdown-link.ud-nav-drop:hover,
+  a.ud-nav-drop.w-dropdown-link:hover {
+    color: #4da9f0 !important;
+    background-color: rgba(77, 169, 240, 0.12);
+  }
+  .ud-nav-drop-list,
+  .w-dropdown-list.ud-nav-drop-list {
+    background-color: #071525 !important;
+    border: 1px solid rgba(234, 242, 251, 0.18);
+  }
+  @media screen and (max-width: 991px) {
+    .w-dropdown-list.ud-nav-drop-list,
+    .ud-nav-drop-list {
+      background-color: #071525 !important;
+      width: 100%;
+    }
+    .w-dropdown-link.ud-nav-drop,
+    a.ud-nav-drop.w-dropdown-link {
+      color: #eaf2fb !important;
+    }
+  }
+</style>
+
+<!-- UD 2026: GA4 (same property as live www) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-56LGZ7E9CD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-56LGZ7E9CD');
+</script>

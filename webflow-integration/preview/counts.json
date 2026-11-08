@@ -1,0 +1,17 @@
+{
+  "gaBlock": 298,
+  "bridge": 1065,
+  "runtime": 13708,
+  "bundle": 14774,
+  "registerInlineMax": 2000,
+  "bundleExceedsRegisterInline": true,
+  "baselineHead": 4483,
+  "baselineFooter": 3158,
+  "hostedHead": 4859,
+  "inlineHead": 18979,
+  "headReplacement": 674,
+  "integrity": "sha384-Oi4t63Zz5qpyL1RD14Z7f3+DGO3XvGUbijg5OG83dqjGl3Gi78TTYmJezJErGbC2",
+  "baselineHeadContainsGaOnce": true,
+  "hostedHeadContainsAsyncGtag": false,
+  "inlineHeadContainsGtagString": true
+}
