@@ -1,0 +1,9 @@
+<!-- UD 2026: first-party analytics consent. Replaces the ungated GA4 loader.
+     Do not keep the gtag snippet and do not add a second one.
+     privacyHref and termsHref stay empty until those pages are published.
+     Replace COMMIT_SHA with the full commit that contains this file. Do not use @main.
+     This snippet is a preview. It is not installed. -->
+<script>
+window.UDConsentConfig = { privacyHref: "", termsHref: "" };
+</script>
+<script src="https://cdn.jsdelivr.net/gh/kcourser/UD-podcast-network@COMMIT_SHA/webflow-integration/ud-consent.js" integrity="sha384-Oi4t63Zz5qpyL1RD14Z7f3+DGO3XvGUbijg5OG83dqjGl3Gi78TTYmJezJErGbC2" crossorigin="anonymous"></script>
