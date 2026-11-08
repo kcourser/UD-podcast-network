@@ -1,7 +1,9 @@
 /* ============================================================
-   UPRT+ Network — Webflow loader (v8.1-UD)
-   https://cdn.jsdelivr.net/gh/kcourser/UD-podcast-network@main/uprt-network-ud.js
+   UPRT+ Network — Webflow loader (v8.2-UD)
    Owner: Hermes CTO
+   Live /media embed is pinned to an immutable jsDelivr commit.
+   Pushing this file does not change that pin.
+   v8.2: optional window.UDAnalytics graph events (no gtag or loader)
    v8.1: inline UPRT+ SVG logo; brand show colors; solo-show sidebar
    ============================================================ */
 (function () {
@@ -10,7 +12,9 @@
 
   function boot() {
     var mount = document.getElementById('uprt-network-mount');
-    if (!mount) return;
+    // A second script evaluation must not stack document listeners or the graph.
+    if (!mount || mount.getAttribute('data-ud-network-boot') === '1') return;
+    mount.setAttribute('data-ud-network-boot', '1');
     var s = document.createElement('style');
     s.textContent = CSS;
     document.head.appendChild(s);
@@ -119,6 +123,98 @@
     });
     updateSliderUI();
 
+    // Analytics state. Events describe committed UI changes only.
+    // Date uses action "select" because the v0.1 allowlist has no separate date action.
+    const searchInput = document.getElementById('ud-search');
+    let searchTimer = null;
+    let searchTracked = '';
+    let dateTracked = { from: dateFrom, to: dateTo };
+    let _visEps = [];
+    const SEARCH_QUIET_MS = 750;
+
+    function udTrack(name, data) {
+      try {
+        var api = window.UDAnalytics;
+        if (!api || typeof api.track !== 'function') return;
+        api.track(name, data);
+      } catch (err) { /* missing or broken analytics must not break the graph */ }
+    }
+
+    function filterSnapshot() {
+      return {
+        shows: allShows.filter(s => selectedShows.has(s)).join('\0'),
+        topics: [...activeTopics].sort().join('\0'),
+        search: searchQuery
+      };
+    }
+
+    function filtersDiffer(before, after) {
+      return before.shows !== after.shows || before.topics !== after.topics || before.search !== after.search;
+    }
+
+    function queryLengthBucket(len) {
+      if (len <= 0) return '0';
+      if (len <= 3) return '1_3';
+      if (len <= 10) return '4_10';
+      return '11_plus';
+    }
+
+    function resultBucket(n) {
+      if (n <= 0) return '0';
+      if (n <= 5) return '1_5';
+      if (n <= 20) return '6_20';
+      return '21_plus';
+    }
+
+    function countFilteredEpisodes(query) {
+      const hasTopics = activeTopics.size > 0;
+      const hasSearch = query.length > 0;
+      let n = 0;
+      for (let i = 0; i < _visEps.length; i++) {
+        const ep = _visEps[i];
+        const topicOk = !hasTopics || (ep.topics || []).some(t => activeTopics.has(t));
+        const searchOk = !hasSearch || String(ep.name || '').toLowerCase().includes(query);
+        if (topicOk && searchOk) n++;
+      }
+      return n;
+    }
+
+    function cancelSearchTimer() {
+      if (searchTimer !== null) {
+        clearTimeout(searchTimer);
+        searchTimer = null;
+      }
+    }
+
+    // Programmatic search clears (show solo/all, clear filters) are not searches.
+    function silenceSearchReset() {
+      cancelSearchTimer();
+      searchQuery = '';
+      if (searchInput) searchInput.value = '';
+      searchTracked = '';
+    }
+
+    function scheduleSearchTrack() {
+      cancelSearchTimer();
+      const pending = searchQuery;
+      if (pending === searchTracked) return;
+      searchTimer = setTimeout(() => {
+        searchTimer = null;
+        if (searchQuery !== pending || pending === searchTracked) return;
+        searchTracked = pending;
+        udTrack('podcast_graph_search', {
+          query_length_bucket: queryLengthBucket(pending.length),
+          result_bucket: resultBucket(countFilteredEpisodes(pending))
+        });
+      }, SEARCH_QUIET_MS);
+    }
+
+    function commitDateFilter() {
+      if (dateFrom === dateTracked.from && dateTo === dateTracked.to) return;
+      dateTracked = { from: dateFrom, to: dateTo };
+      udTrack('podcast_graph_filter', { filter_type: 'date', action: 'select' });
+    }
+
     rangeFrom.addEventListener('input', () => {
       if (parseInt(rangeFrom.value) > parseInt(rangeTo.value)) rangeFrom.value = rangeTo.value;
       dateFrom = parseInt(rangeFrom.value, 10);
@@ -129,6 +225,10 @@
       dateTo = parseInt(rangeTo.value, 10);
       updateSliderUI(); activeTopics.clear(); rebuildGraph();
     });
+    rangeFrom.addEventListener('change', commitDateFilter);
+    rangeTo.addEventListener('change', commitDateFilter);
+    rangeFrom.addEventListener('keyup', commitDateFilter);
+    rangeTo.addEventListener('keyup', commitDateFilter);
 
     document.getElementById('ud-loading').style.display = 'none';
 
@@ -150,12 +250,15 @@
       allBtn.textContent = 'All shows';
       allBtn.title = 'Show the full network';
       allBtn.addEventListener('click', () => {
+        const before = filterSnapshot();
         selectAllShows();
         activeTopics.clear();
-        searchQuery = '';
-        searchInput.value = '';
+        silenceSearchReset();
         buildShowsSidebar();
         rebuildGraph();
+        if (filtersDiffer(before, filterSnapshot())) {
+          udTrack('podcast_graph_filter', { filter_type: 'show', action: 'all' });
+        }
       });
       listEl.appendChild(allBtn);
 
@@ -169,17 +272,21 @@
         btn.title = solo ? 'Click again to show all shows' : 'Show only this show';
         btn.innerHTML = `<span class="ud-show-dot" style="background:${SHOW_COLORS[s]||'#888'}"></span>${s}<span class="ud-topic-count">${count}</span>`;
         btn.addEventListener('click', () => {
-          if (isSoloMode() && selectedShows.has(s)) {
+          const before = filterSnapshot();
+          const restoreAll = isSoloMode() && selectedShows.has(s);
+          if (restoreAll) {
             selectAllShows();
           } else {
             selectedShows.clear();
             selectedShows.add(s);
           }
           activeTopics.clear();
-          searchQuery = '';
-          searchInput.value = '';
+          silenceSearchReset();
           buildShowsSidebar();
           rebuildGraph();
+          if (filtersDiffer(before, filterSnapshot())) {
+            udTrack('podcast_graph_filter', { filter_type: 'show', action: restoreAll ? 'all' : 'solo' });
+          }
         });
         listEl.appendChild(btn);
       });
@@ -187,10 +294,10 @@
     buildShowsSidebar();
 
 // ── Name search ───────────────────────────────────────────────────────────
-    const searchInput = document.getElementById('ud-search');
     searchInput.addEventListener('input', () => {
       searchQuery = searchInput.value.trim().toLowerCase();
       applyVisualFilter();
+      scheduleSearchTrack();
     });
 
     // ── Graph setup ───────────────────────────────────────────────────────────
@@ -217,6 +324,7 @@
     const fsBtn = document.getElementById('ud-fullscreen-btn');
 
     function enterFullscreen() {
+      const wasFullscreen = isFullscreen;
       isFullscreen = true;
       network.classList.add('ud-fullscreen');
       fsBtn.textContent = '✕';
@@ -226,9 +334,11 @@
         svg.attr('viewBox', `0 0 ${W()} ${H()}`);
         if (sim) sim.force('center', d3.forceCenter(W()/2, H()/2)).alpha(0.15).restart();
       }, 60);
+      if (!wasFullscreen) udTrack('podcast_graph_fullscreen', { action: 'enter' });
     }
 
     function exitFullscreen() {
+      const wasFullscreen = isFullscreen;
       isFullscreen = false;
       network.classList.remove('ud-fullscreen');
       fsBtn.textContent = '⛶';
@@ -238,13 +348,38 @@
         svg.attr('viewBox', `0 0 ${W()} ${H()}`);
         if (sim) sim.force('center', d3.forceCenter(W()/2, H()/2)).alpha(0.15).restart();
       }, 60);
+      if (wasFullscreen) udTrack('podcast_graph_fullscreen', { action: 'exit' });
     }
 
     fsBtn.addEventListener('click', () => isFullscreen ? exitFullscreen() : enterFullscreen());
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && isFullscreen) exitFullscreen(); });
 
+    // Tooltip survives rebuildGraph. Bind hover and outbound analytics once.
+    const tooltip = document.getElementById('ud-tooltip');
+    let ttTimer = null, ttHovered = false;
+    if (tooltip && tooltip.getAttribute('data-ud-outbound-bound') !== '1') {
+      tooltip.setAttribute('data-ud-outbound-bound', '1');
+      tooltip.addEventListener('mouseenter', () => { ttHovered = true; clearTimeout(ttTimer); });
+      tooltip.addEventListener('mouseleave', () => {
+        ttHovered = false; tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none';
+      });
+      tooltip.addEventListener('click', (event) => {
+        const raw = event.target;
+        const el = raw && raw.nodeType === 1 ? raw : (raw && raw.parentElement);
+        const link = el && el.closest ? el.closest('a') : null;
+        if (!link || !tooltip.contains(link)) return;
+        const kind = link.getAttribute('data-ud-track');
+        const platform = link.getAttribute('data-ud-platform');
+        if (kind === 'topic' && platform === 'youtube') {
+          udTrack('podcast_topic_jump', { source: 'tooltip', platform: 'youtube' });
+        } else if (kind === 'episode' && (platform === 'youtube' || platform === 'spotify')) {
+          udTrack('podcast_episode_open', { source: 'tooltip', platform: platform });
+        }
+      });
+    }
+
     let linkSel, nodeSel, sim;
-    let _usedTopics = [], _topicCounts = {}, _visEps = [];
+    let _usedTopics = [], _topicCounts = {};
 
     // ── Visual filter (topics + search, no re-simulation) ────────────────────
     function applyVisualFilter() {
@@ -408,14 +543,7 @@
         nodeSel.attr('transform', d => `translate(${d.x},${d.y})`);
       });
 
-      // ── Tooltip ──────────────────────────────────────────────────────────────
-      const tooltip = document.getElementById('ud-tooltip');
-      let ttTimer = null, ttHovered = false;
-      tooltip.addEventListener('mouseenter', () => { ttHovered = true; clearTimeout(ttTimer); });
-      tooltip.addEventListener('mouseleave', () => {
-        ttHovered = false; tooltip.style.opacity = '0'; tooltip.style.pointerEvents = 'none';
-      });
-
+      // ── Tooltip content (listeners are bound once, outside rebuildGraph) ──
       // Primary listen link: YouTube wins if present; else Spotify. Never show both.
       function primaryListen(d) {
         const yt = d.data.url || '';
@@ -428,8 +556,10 @@
       nodeSel.filter(d => d.type === 'episode')
         .on('click', (event, d) => {
           event.stopPropagation();
-          const { url } = primaryListen(d);
-          if (url) window.open(url, '_blank');
+          const listen = primaryListen(d);
+          if (!listen.url) return;
+          udTrack('podcast_episode_open', { source: 'node', platform: listen.kind });
+          window.open(listen.url, '_blank');
         })
         .on('mousemove', function (event, d) {
           const r = wrap.getBoundingClientRect();
@@ -452,7 +582,7 @@
               const tsUrl = listen.kind === 'youtube' ? ts[t] : null;
               const style = `font-size:11px;padding:4px 9px;border-radius:10px;background:${color}33;color:${color};border:1px solid ${color}66;display:inline-block;margin:2px 3px 0 0;font-weight:600;line-height:1.2;`;
               return tsUrl
-                ? `<a href="${tsUrl}" target="_blank" style="${style};text-decoration:none;" title="Jump to this topic in the episode">▶ ${t}</a>`
+                ? `<a href="${tsUrl}" target="_blank" data-ud-track="topic" data-ud-platform="youtube" style="${style};text-decoration:none;" title="Jump to this topic in the episode">▶ ${t}</a>`
                 : `<span style="${style}">${t}</span>`;
             }).join('');
           } else {
@@ -463,12 +593,12 @@
           if (listen.kind === 'youtube') {
             platformHtml = `
             <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #1E2A4A;padding-top:8px;">
-              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#fca5a5;text-decoration:none;padding:3px 9px;border-radius:5px;background:#7f1d1d55;border:1px solid #ef444480">▶ YouTube</a>
+              <a href="${listen.url}" target="_blank" data-ud-track="episode" data-ud-platform="youtube" style="font-size:11px;color:#fca5a5;text-decoration:none;padding:3px 9px;border-radius:5px;background:#7f1d1d55;border:1px solid #ef444480">▶ YouTube</a>
             </div>`;
           } else if (listen.kind === 'spotify') {
             platformHtml = `
             <div style="display:flex;gap:6px;margin-top:8px;border-top:1px solid #1E2A4A;padding-top:8px;">
-              <a href="${listen.url}" target="_blank" style="font-size:11px;color:#6ee7b7;text-decoration:none;padding:3px 9px;border-radius:5px;background:#064e3b55;border:1px solid #1db95480">♫ Spotify</a>
+              <a href="${listen.url}" target="_blank" data-ud-track="episode" data-ud-platform="spotify" style="font-size:11px;color:#6ee7b7;text-decoration:none;padding:3px 9px;border-radius:5px;background:#064e3b55;border:1px solid #1db95480">♫ Spotify</a>
             </div>`;
           }
 
@@ -502,7 +632,13 @@
         })
         .on('mouseleave', () => { tooltip.style.opacity = '0'; });
 
-      svg.on('click', () => { activeTopics.clear(); buildTopicSidebar(); applyVisualFilter(); });
+      svg.on('click', () => {
+        const changed = activeTopics.size > 0;
+        activeTopics.clear();
+        buildTopicSidebar();
+        applyVisualFilter();
+        if (changed) udTrack('podcast_graph_filter', { filter_type: 'background', action: 'clear' });
+      });
 
       // Re-apply any active search/topic filter after rebuild
       applyVisualFilter();
@@ -522,20 +658,26 @@
     }
 
     function filterByTopic(topic) {
-      activeTopics.has(topic) ? activeTopics.delete(topic) : activeTopics.add(topic);
+      const removing = activeTopics.has(topic);
+      if (removing) activeTopics.delete(topic);
+      else activeTopics.add(topic);
       buildTopicSidebar();
       applyVisualFilter();
+      udTrack('podcast_graph_filter', { filter_type: 'topic', action: removing ? 'deselect' : 'select' });
     }
 
     // ── Clear button ──────────────────────────────────────────────────────────
         document.getElementById('ud-clear-btn').addEventListener('click', () => {
+      const before = filterSnapshot();
       activeTopics.clear();
-      searchQuery = '';
-      searchInput.value = '';
+      silenceSearchReset();
       selectAllShows();
       buildShowsSidebar();
       buildTopicSidebar();
       rebuildGraph();
+      if (filtersDiffer(before, filterSnapshot())) {
+        udTrack('podcast_graph_filter', { filter_type: 'clear', action: 'clear' });
+      }
     });
 
     rebuildGraph();
