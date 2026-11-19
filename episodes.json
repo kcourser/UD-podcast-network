@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated": "2026-11-19T22:33:25.146780Z",
+    "generated": "2026-11-19T22:52:17.866004Z",
     "shows": [
       "PetroNoia",
       "Oil Field 360",
@@ -269,7 +269,7 @@
       "id": "ep_eep_03_26_jan_stuart",
       "show": "Energy Espresso",
       "name": "Jan Stuart",
-      "role": "Energy Analyst, Piper Sandler",
+      "role": "Energy Price Analyst, Piper",
       "date": "2026-03-01",
       "file": "EEP-03-26-Jan Stuart.docx",
       "url": "https://youtu.be/dwqlY2zuOWs",
@@ -309,7 +309,7 @@
       "id": "ep_eep_04_25_george_jackson",
       "show": "Energy Espresso",
       "name": "George Jackson",
-      "role": "Leadership role, Revolution Power Solutions / Waukesha (Indeo Group)",
+      "role": "Executive, Revolution Power Solutions (backed by EEO Group and Waukesha/Ine\u014d)",
       "date": "2025-04-01",
       "file": "EEP-04-25-George Jackson.docx",
       "url": "",
@@ -350,7 +350,8 @@
       "spotify_url": "https://open.spotify.com/episode/6mRlAboaGOIrEdfEm5m2Qu?si=377a0a34fda54ea9",
       "topics": [
         "Energy Transition",
-        "Energy Economics"
+        "Energy Economics",
+        "Oil & Gas"
       ],
       "timestamps": {}
     },
@@ -383,11 +384,11 @@
       "spotify_url": "",
       "topics": [
         "Energy Transition",
-        "Energy Policy"
+        "Energy Economics"
       ],
       "timestamps": {
         "Energy Transition": "https://youtu.be/gLUG2ZFvboY&t=360",
-        "Energy Policy": "https://youtu.be/gLUG2ZFvboY&t=98"
+        "Energy Economics": "https://youtu.be/gLUG2ZFvboY&t=396"
       }
     },
     {
@@ -438,11 +439,11 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Transition"
+        "Energy Economics"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/MJSRlhKMTpQ&t=240",
-        "Energy Transition": "https://youtu.be/MJSRlhKMTpQ&t=391"
+        "Energy Economics": "https://youtu.be/MJSRlhKMTpQ&t=300"
       }
     },
     {
@@ -482,27 +483,25 @@
       "id": "ep_eep_09_25_del_hilber",
       "show": "Energy Espresso",
       "name": "Del Hilber",
-      "role": "Founder/Consultant, Tis (formerly involved with C Power and Constellation Energy)",
+      "role": "Founder/Consultant, Tis (formerly involved with Constellation Energy and demand response/demand side management)",
       "date": "2025-09-01",
       "file": "EEP-09-25-Del Hilber.docx",
       "url": "https://youtu.be/R4lKlQuBBjQ",
       "spotify_url": "",
       "topics": [
         "Energy Economics",
-        "Energy Policy",
-        "Data Centers & AI"
+        "Energy Policy"
       ],
       "timestamps": {
         "Energy Economics": "https://youtu.be/R4lKlQuBBjQ&t=378",
-        "Energy Policy": "https://youtu.be/R4lKlQuBBjQ&t=1594",
-        "Data Centers & AI": "https://youtu.be/R4lKlQuBBjQ&t=180"
+        "Energy Policy": "https://youtu.be/R4lKlQuBBjQ&t=1594"
       }
     },
     {
       "id": "ep_eep_09_25_peter_cook",
       "show": "Energy Espresso",
       "name": "Peter Cook",
-      "role": "Founder/Organizer, Permian Power Connection",
+      "role": "Founder, Permian Power Connection",
       "date": "2025-09-01",
       "file": "EEP-09-25-Peter Cook.docx",
       "url": "https://youtu.be/pjv0Ag-RUys",
@@ -522,7 +521,7 @@
       "id": "ep_eep_12_25_josh_jones",
       "show": "Energy Espresso",
       "name": "Josh Jones",
-      "role": "Executive, Apex (APEX)",
+      "role": "Leadership (Apex)",
       "date": "2025-12-01",
       "file": "EEP-12-25-Josh Jones.docx",
       "url": "",
@@ -586,7 +585,37 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
+        "Energy Economics"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_ibo_09_26_richard_rodriguez",
+      "show": "In Basin Observations",
+      "name": "Richard Rodriguez",
+      "role": "Founder and CEO, ClearSync Solutions",
+      "date": "2026-09-01",
+      "file": "IBO-09-26-Richard Rodriguez.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
         "Industry & Technology"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_ibo_11_26_ch_robinson_ryan_hammett",
+      "show": "In Basin Observations",
+      "name": "Ryan Hammett",
+      "role": "Director of Market Intelligence, C.H. Robinson",
+      "date": "2026-11-01",
+      "file": "IBO-11-26-CH Robinson_Ryan Hammett.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Energy Economics",
+        "Energy Geopolitics"
       ],
       "timestamps": {}
     },
@@ -612,7 +641,7 @@
       "id": "ep_of360_02_26_amerino_gatti",
       "show": "Oil Field 360",
       "name": "Amerino Gatti",
-      "role": "Executive President of Baker Hughes Oilfield Services, Baker Hughes",
+      "role": "Executive President of Oilfield Services, Baker Hughes",
       "date": "2026-02-01",
       "file": "OF360-02-26-Amerino Gatti.docx",
       "url": "https://youtu.be/rP_ppcp_Tjs",
@@ -720,18 +749,18 @@
       "id": "ep_of360_03_26_tim_latimer",
       "show": "Oil Field 360",
       "name": "Tim Latimer",
-      "role": "CEO and Co-Founder, Fervo Energy",
+      "role": "CEO and Co-founder, Fervo Energy",
       "date": "2026-03-01",
       "file": "OF360-03-26-Tim Latimer.docx",
       "url": "https://youtu.be/yvbxn4ZvPGk",
       "spotify_url": "",
       "topics": [
         "Energy Transition",
-        "Industry & Technology"
+        "Geothermal & Storage"
       ],
       "timestamps": {
         "Energy Transition": "https://youtu.be/yvbxn4ZvPGk&t=2460",
-        "Industry & Technology": "https://youtu.be/yvbxn4ZvPGk&t=140"
+        "Geothermal & Storage": "https://youtu.be/yvbxn4ZvPGk&t=321"
       }
     },
     {
@@ -789,18 +818,18 @@
       "id": "ep_of360_04_26_john_schmitz",
       "show": "Oil Field 360",
       "name": "John Schmitz",
-      "role": "Chairman and CEO, Select Water Solutions; Managing Partner, B29 Investments",
+      "role": "Chairman and CEO, Select Water Solutions; Managing Partner, B 29 Investments",
       "date": "2026-04-01",
       "file": "OF360-04-26-John Schmitz.docx",
       "url": "https://youtu.be/sauikeWiAOw",
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Economics"
+        "Industry & Technology"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/sauikeWiAOw&t=25",
-        "Energy Economics": "https://youtu.be/sauikeWiAOw&t=83"
+        "Industry & Technology": "https://youtu.be/sauikeWiAOw&t=2467"
       }
     },
     {
@@ -822,7 +851,7 @@
       "id": "ep_of360_05_25_lucas_gjovig",
       "show": "Oil Field 360",
       "name": "Lucas Gjovig",
-      "role": "President & CEO, GO Wireline",
+      "role": "President & CEO, Go Wireline",
       "date": "2025-05-01",
       "file": "OF360-05-25-Lucas Gjovig.docx",
       "url": "",
@@ -996,7 +1025,7 @@
       "id": "ep_of360_07_25_james_stewart",
       "show": "Oil Field 360",
       "name": "James Stewart",
-      "role": "CEO, One X Completion Services",
+      "role": "CEO, ONE X Completion Services",
       "date": "2025-07-01",
       "file": "OF360-07-25-James Stewart.docx",
       "url": "https://youtu.be/dDKWwSTWHJI",
@@ -1128,10 +1157,12 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
+        "Energy Economics",
         "Industry & Technology"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/5NyIw7UPKJU&t=275",
+        "Energy Economics": "https://youtu.be/5NyIw7UPKJU&t=490",
         "Industry & Technology": "https://youtu.be/5NyIw7UPKJU&t=490"
       }
     },
@@ -1147,6 +1178,21 @@
       "topics": [
         "Oil & Gas",
         "Natural Gas"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_of360_09_26_samir_ali",
+      "show": "Oil Field 360",
+      "name": "Samir Ali",
+      "role": "CEO, Seadrill",
+      "date": "2026-09-01",
+      "file": "OF360-09-26-Samir Ali.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Energy Economics"
       ],
       "timestamps": {}
     },
@@ -1176,11 +1222,11 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Industry & Technology"
+        "Energy Economics"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/QITl8fp2FA0&t=146",
-        "Industry & Technology": "https://youtu.be/QITl8fp2FA0&t=146"
+        "Energy Economics": "https://youtu.be/QITl8fp2FA0&t=420"
       }
     },
     {
@@ -1223,7 +1269,7 @@
       "id": "ep_of360_11_26_andrejka_bernatova",
       "show": "Oil Field 360",
       "name": "Andrejka Bernatova",
-      "role": "Unknown (not specified in transcript)",
+      "role": "Not specified in transcript",
       "date": "2026-11-01",
       "file": "OF360-11-26-Andrejka Bernatova.docx",
       "url": "",
@@ -1289,7 +1335,7 @@
       "id": "ep_of360_12_25_rick_perry",
       "show": "Oil Field 360",
       "name": "Rick Perry",
-      "role": "Former Governor of Texas",
+      "role": "Governor, State of Texas",
       "date": "2025-12-01",
       "file": "OF360-12-25-Rick Perry.docx",
       "url": "https://youtu.be/2HrWINsObTU",
@@ -1307,7 +1353,7 @@
       "id": "ep_of360_12_25_steve_glanville",
       "show": "Oil Field 360",
       "name": "Steve Glanville",
-      "role": "CEO, STEP Energy Services",
+      "role": "CEO, Step Energy Services",
       "date": "2025-12-01",
       "file": "OF360-12-25-Steve Glanville.docx",
       "url": "https://youtu.be/zGC7LNZECx8",
@@ -1325,7 +1371,7 @@
       "id": "ep_pn_02_26_marcella_burke",
       "show": "PetroNoia",
       "name": "Marcella Burke",
-      "role": "Founder and Attorney, Burke Law Group",
+      "role": "Founder & Attorney, Burke Law Group",
       "date": "2026-02-01",
       "file": "PN-02-26-Marcella Burke.docx",
       "url": "https://youtu.be/nLDtgFU2uFg",
@@ -1370,13 +1416,11 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Economics",
-        "Industry & Technology"
+        "Energy Economics"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/sZbB_baJWvg&t=73",
-        "Energy Economics": "https://youtu.be/sZbB_baJWvg&t=180",
-        "Industry & Technology": "https://youtu.be/sZbB_baJWvg&t=60"
+        "Energy Economics": "https://youtu.be/sZbB_baJWvg&t=180"
       }
     },
     {
@@ -1413,7 +1457,7 @@
       "topics": [
         "Energy Policy",
         "ESG & Finance",
-        "Energy Transition"
+        "Energy Economics"
       ],
       "timestamps": {}
     },
@@ -1460,13 +1504,11 @@
       "spotify_url": "",
       "topics": [
         "Energy Policy",
-        "Energy Economics",
-        "Oil & Gas"
+        "Energy Economics"
       ],
       "timestamps": {
         "Energy Policy": "https://youtu.be/ooAE5PmmsPc&t=60",
-        "Energy Economics": "https://youtu.be/ooAE5PmmsPc&t=54",
-        "Oil & Gas": "https://youtu.be/ooAE5PmmsPc&t=1290"
+        "Energy Economics": "https://youtu.be/ooAE5PmmsPc&t=54"
       }
     },
     {
@@ -1563,35 +1605,33 @@
       "spotify_url": "",
       "topics": [
         "Energy Transition",
-        "ESG & Finance",
-        "Energy Economics"
+        "ESG & Finance"
       ],
       "timestamps": {
         "Energy Transition": "https://youtu.be/hfZxHMxN7NI&t=60",
-        "ESG & Finance": "https://youtu.be/hfZxHMxN7NI&t=125",
-        "Energy Economics": "https://youtu.be/hfZxHMxN7NI&t=473"
+        "ESG & Finance": "https://youtu.be/hfZxHMxN7NI&t=125"
       }
     },
     {
       "id": "ep_pn_05_26_xgs_and_baker_hughes",
       "show": "PetroNoia",
       "name": "Ahmad Eldemerdash and Ghazal Izadi",
-      "role": "Ahmad Eldemerdash: Leader of Climate Technology Solution, Baker Hughes; Ghazal Izadi: Founder/Entrepreneur, Next Generation Geothermal Company (formerly Baker Hughes)",
+      "role": "Ahmad Eldemerdash: Leader of Climate Technology Solutions, Baker Hughes; Ghazal Izadi: Entrepreneur/Founder, Next Generation Geothermal Company (formerly Baker Hughes)",
       "date": "2026-05-01",
       "file": "PN-05-26-XGS and Baker Hughes.docx",
       "url": "https://youtu.be/ky55qJ3uFcM",
       "spotify_url": "",
       "topics": [
+        "Oil & Gas",
         "Energy Transition",
         "Geothermal & Storage",
-        "Data Centers & AI",
-        "Oil & Gas"
+        "Data Centers & AI"
       ],
       "timestamps": {
+        "Oil & Gas": "https://youtu.be/ky55qJ3uFcM&t=97",
         "Energy Transition": "https://youtu.be/ky55qJ3uFcM&t=156",
         "Geothermal & Storage": "https://youtu.be/ky55qJ3uFcM&t=183",
-        "Data Centers & AI": "https://youtu.be/ky55qJ3uFcM&t=224",
-        "Oil & Gas": "https://youtu.be/ky55qJ3uFcM&t=97"
+        "Data Centers & AI": "https://youtu.be/ky55qJ3uFcM&t=224"
       }
     },
     {
@@ -1638,45 +1678,45 @@
       "id": "ep_pn_06_25_robert_hayes",
       "show": "PetroNoia",
       "name": "Robert Hayes",
-      "role": "Professor of Health Physics and Nuclear Engineering, NC State University",
+      "role": "Professor of Health Physics, NC State University",
       "date": "2025-06-01",
       "file": "PN-06-25-Robert Hayes.docx",
       "url": "https://youtu.be/eBHm2Fqf8TA",
       "spotify_url": "",
       "topics": [
         "Nuclear Energy",
-        "Energy Economics"
+        "Energy Economics",
+        "Data Centers & AI"
       ],
       "timestamps": {
         "Nuclear Energy": "https://youtu.be/eBHm2Fqf8TA&t=23",
-        "Energy Economics": "https://youtu.be/eBHm2Fqf8TA&t=199"
+        "Energy Economics": "https://youtu.be/eBHm2Fqf8TA&t=199",
+        "Data Centers & AI": "https://youtu.be/eBHm2Fqf8TA&t=3720"
       }
     },
     {
       "id": "ep_pn_06_25_ron_vokoun",
       "show": "PetroNoia",
       "name": "Ron Vokoun",
-      "role": "Senior Vice President of Data Center Cooling, SBL Data Center Cooling",
+      "role": "Senior Vice President of Data Center Cooling, SBL",
       "date": "2025-06-01",
       "file": "PN-06-25-Ron Vokoun.docx",
       "url": "https://youtu.be/PLg3ilo31Ms",
       "spotify_url": "",
       "topics": [
         "Data Centers & AI",
-        "Nuclear Energy",
-        "Natural Gas"
+        "Nuclear Energy"
       ],
       "timestamps": {
         "Data Centers & AI": "https://youtu.be/PLg3ilo31Ms&t=22",
-        "Nuclear Energy": "https://youtu.be/PLg3ilo31Ms&t=155",
-        "Natural Gas": "https://youtu.be/PLg3ilo31Ms&t=236"
+        "Nuclear Energy": "https://youtu.be/PLg3ilo31Ms&t=155"
       }
     },
     {
       "id": "ep_pn_06_25_scott_tinker",
       "show": "PetroNoia",
       "name": "Scott Tinker",
-      "role": "Director, Bureau of Economic Geology at UT Austin",
+      "role": "Director, Bureau of Economic Geology, University of Texas at Austin",
       "date": "2025-06-01",
       "file": "PN-06-25-Scott Tinker.docx",
       "url": "https://youtu.be/AjKDyFkHvK0",
@@ -1684,14 +1724,14 @@
       "topics": [
         "Energy Policy",
         "Oil & Gas",
-        "Energy Economics",
-        "Climate & Environment"
+        "Energy Transition",
+        "Energy Economics"
       ],
       "timestamps": {
         "Energy Policy": "https://youtu.be/AjKDyFkHvK0&t=540",
         "Oil & Gas": "https://youtu.be/AjKDyFkHvK0&t=120",
-        "Energy Economics": "https://youtu.be/AjKDyFkHvK0&t=180",
-        "Climate & Environment": "https://youtu.be/AjKDyFkHvK0&t=180"
+        "Energy Transition": "https://youtu.be/AjKDyFkHvK0&t=780",
+        "Energy Economics": "https://youtu.be/AjKDyFkHvK0&t=180"
       }
     },
     {
@@ -1764,12 +1804,12 @@
       "topics": [
         "Oil & Gas",
         "Nuclear Energy",
-        "Energy Economics"
+        "Energy Transition"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/6N9nIQJ3gm8&t=38",
         "Nuclear Energy": "https://youtu.be/6N9nIQJ3gm8&t=142",
-        "Energy Economics": "https://youtu.be/6N9nIQJ3gm8&t=1081"
+        "Energy Transition": "https://youtu.be/6N9nIQJ3gm8&t=360"
       }
     },
     {
@@ -1796,7 +1836,7 @@
       "id": "ep_pn_08_25_lindsey_merrill",
       "show": "PetroNoia",
       "name": "Lindsey Merrill Feinberg",
-      "role": "Business Development & Government Relations, Engine No. 1",
+      "role": "Business Development, Government Relations, Strategic Partnerships, Engine No. 1",
       "date": "2025-08-01",
       "file": "PN-08-25-Lindsey Merrill.docx",
       "url": "https://youtu.be/0ZKGSIX_YY8",
@@ -1804,19 +1844,19 @@
       "topics": [
         "Energy Policy",
         "Energy Geopolitics",
-        "Energy Economics"
+        "Oil & Gas"
       ],
       "timestamps": {
         "Energy Policy": "https://youtu.be/0ZKGSIX_YY8&t=91",
         "Energy Geopolitics": "https://youtu.be/0ZKGSIX_YY8&t=91",
-        "Energy Economics": "https://youtu.be/0ZKGSIX_YY8&t=288"
+        "Oil & Gas": "https://youtu.be/0ZKGSIX_YY8&t=304"
       }
     },
     {
       "id": "ep_pn_08_26_mike_umbro",
       "show": "PetroNoia",
       "name": "Mike Umbro",
-      "role": "Finance and Development Professional, Geothermal/Oil & Gas Project Developer",
+      "role": "Finance and Development Professional, Geothermal Project Developer",
       "date": "2026-11-19",
       "file": "PN-08-26 Mike Umbro.docx",
       "url": "",
@@ -1894,15 +1934,15 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Economics",
+        "Energy Transition",
         "Climate & Environment",
-        "Energy Policy"
+        "Energy Economics"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/HEIQI6Sbhf8&t=91",
-        "Energy Economics": "https://youtu.be/HEIQI6Sbhf8&t=300",
+        "Energy Transition": "https://youtu.be/HEIQI6Sbhf8&t=572",
         "Climate & Environment": "https://youtu.be/HEIQI6Sbhf8&t=68",
-        "Energy Policy": "https://youtu.be/HEIQI6Sbhf8&t=196"
+        "Energy Economics": "https://youtu.be/HEIQI6Sbhf8&t=300"
       }
     },
     {
@@ -1916,24 +1956,23 @@
       "spotify_url": "https://open.spotify.com/episode/1jkRtj03PtZH60XfOCDxzs?si=b243f2970ff44659",
       "topics": [
         "Energy Transition",
-        "Energy Geopolitics",
-        "ESG & Finance"
+        "Energy Economics",
+        "Energy Geopolitics"
       ],
       "timestamps": {}
     },
     {
       "id": "ep_pn_11_26__marcella___anne",
       "show": "PetroNoia",
-      "name": "Marcella Burke and Anne Idso Austin",
-      "role": "Managing Partner, Burke Law Group and Senior Advisor on Law and Policy, Burke Law Group",
+      "name": "Marcella Burke and Anne Austin",
+      "role": "Managing Partner and Senior Advisor on Law and Policy, Burke Law Group",
       "date": "2026-11-01",
       "file": "PN-11-26- Marcella & Anne.docx",
       "url": "",
       "spotify_url": "",
       "topics": [
         "Energy Policy",
-        "Energy Geopolitics",
-        "Oil & Gas"
+        "Energy Geopolitics"
       ],
       "timestamps": {}
     },
@@ -1949,14 +1988,12 @@
       "topics": [
         "Energy Policy",
         "Oil & Gas",
-        "Energy Transition",
-        "Data Centers & AI"
+        "Energy Economics"
       ],
       "timestamps": {
         "Energy Policy": "https://youtu.be/wRfIgxuabqs&t=20",
         "Oil & Gas": "https://youtu.be/wRfIgxuabqs&t=133",
-        "Energy Transition": "https://youtu.be/wRfIgxuabqs&t=1380",
-        "Data Centers & AI": "https://youtu.be/wRfIgxuabqs&t=300"
+        "Energy Economics": "https://youtu.be/wRfIgxuabqs&t=212"
       }
     },
     {
@@ -1970,13 +2007,13 @@
       "spotify_url": "",
       "topics": [
         "Geothermal & Storage",
-        "Energy Transition",
-        "Energy Policy"
+        "Energy Policy",
+        "Energy Transition"
       ],
       "timestamps": {
         "Geothermal & Storage": "https://youtu.be/oj0TP94y19I&t=733",
-        "Energy Transition": "https://youtu.be/oj0TP94y19I&t=285",
-        "Energy Policy": "https://youtu.be/oj0TP94y19I&t=20"
+        "Energy Policy": "https://youtu.be/oj0TP94y19I&t=20",
+        "Energy Transition": "https://youtu.be/oj0TP94y19I&t=285"
       }
     },
     {
@@ -2022,8 +2059,8 @@
       "url": "",
       "spotify_url": "",
       "topics": [
-        "Energy Economics",
         "Energy Transition",
+        "Energy Economics",
         "Data Centers & AI"
       ],
       "timestamps": {}
@@ -2075,12 +2112,12 @@
       "topics": [
         "Oil & Gas",
         "Data Centers & AI",
-        "Energy Transition"
+        "Energy Economics"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/tR6lYh9-9FE&t=24",
         "Data Centers & AI": "https://youtu.be/tR6lYh9-9FE&t=140",
-        "Energy Transition": "https://youtu.be/tR6lYh9-9FE&t=1384"
+        "Energy Economics": "https://youtu.be/tR6lYh9-9FE&t=140"
       }
     },
     {
@@ -2147,11 +2184,10 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Economics"
+        "Energy Technology"
       ],
       "timestamps": {
-        "Oil & Gas": "https://youtu.be/bJkLhnGliLs&t=19",
-        "Energy Economics": "https://youtu.be/bJkLhnGliLs&t=328"
+        "Oil & Gas": "https://youtu.be/bJkLhnGliLs&t=19"
       }
     },
     {
@@ -2176,7 +2212,7 @@
       "id": "ep_tep_06_26_molly_determan_and_tim_tarpley",
       "show": "The Energy Pipeline",
       "name": "Molly Determan and Tim Tarpley",
-      "role": "Co-CEOs, Energy Workforce Technology Council",
+      "role": "Co-CEOs, Energy Workforce Technology Council (EWTC)",
       "date": "2026-06-01",
       "file": "TEP-06-26-Molly Determan and Tim Tarpley.docx",
       "url": "https://youtu.be/o36WUdsP3WI",
@@ -2218,7 +2254,6 @@
       "url": "",
       "spotify_url": "",
       "topics": [
-        "Energy Policy",
         "Oil & Gas",
         "Energy Economics"
       ],
@@ -2266,7 +2301,39 @@
       "spotify_url": "",
       "topics": [
         "Energy Transition",
-        "Industry & Technology"
+        "Climate & Environment"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_tep_10_26_dennis_jol",
+      "show": "The Energy Pipeline",
+      "name": "Dennis Jol",
+      "role": "CEO, AIQ",
+      "date": "2026-10-01",
+      "file": "TEP-10-26-Dennis Jol.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Data Centers & AI",
+        "Energy Technology"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_tep_10_26_erik_milito",
+      "show": "The Energy Pipeline",
+      "name": "Erik Milito",
+      "role": "President, National Ocean Industries Association (NOIA)",
+      "date": "2026-10-01",
+      "file": "TEP-10-26-Erik Milito.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Energy Policy",
+        "Oil & Gas",
+        "Energy Geopolitics"
       ],
       "timestamps": {}
     },
@@ -2283,6 +2350,37 @@
         "Oil & Gas",
         "Energy Economics",
         "Industry & Technology"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_tep_10_26_wayne_richards",
+      "show": "The Energy Pipeline",
+      "name": "Wayne Richards",
+      "role": "President and CEO, GR Energy Services",
+      "date": "2026-10-01",
+      "file": "TEP-10-26-Wayne Richards.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Industry & Technology",
+        "Energy Economics"
+      ],
+      "timestamps": {}
+    },
+    {
+      "id": "ep_tep_11_26_dan_shute",
+      "show": "The Energy Pipeline",
+      "name": "Dan Shute",
+      "role": "President and CEO, Co-founder, Volant Products",
+      "date": "2026-11-01",
+      "file": "TEP-11-26-Dan Shute.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Energy Economics"
       ],
       "timestamps": {}
     },
@@ -2327,7 +2425,7 @@
       "spotify_url": "https://open.spotify.com/episode/4kHTL3aDAXq1cQMWUDepf7?si=8e24fb7db5f54d5d",
       "topics": [
         "Oil & Gas",
-        "Energy Transition"
+        "Energy Economics"
       ],
       "timestamps": {}
     },
@@ -2398,12 +2496,14 @@
       "url": "https://youtu.be/EBhkNGB7oZ0",
       "spotify_url": "",
       "topics": [
-        "Energy Transition",
-        "Natural Gas"
+        "Energy Economics",
+        "Oil & Gas",
+        "Energy Transition"
       ],
       "timestamps": {
-        "Energy Transition": "https://youtu.be/EBhkNGB7oZ0&t=389",
-        "Natural Gas": "https://youtu.be/EBhkNGB7oZ0&t=201"
+        "Energy Economics": "https://youtu.be/EBhkNGB7oZ0&t=592",
+        "Oil & Gas": "https://youtu.be/EBhkNGB7oZ0&t=109",
+        "Energy Transition": "https://youtu.be/EBhkNGB7oZ0&t=389"
       }
     },
     {
@@ -2436,11 +2536,15 @@
       "spotify_url": "",
       "topics": [
         "Oil & Gas",
-        "Energy Transition"
+        "Energy Technology",
+        "Data Centers & AI",
+        "Industry & Technology"
       ],
       "timestamps": {
         "Oil & Gas": "https://youtu.be/nMadJB2CchQ&t=82",
-        "Energy Transition": "https://youtu.be/nMadJB2CchQ&t=2040"
+        "Energy Technology": "https://youtu.be/nMadJB2CchQ&t=266",
+        "Data Centers & AI": "https://youtu.be/nMadJB2CchQ&t=452",
+        "Industry & Technology": "https://youtu.be/nMadJB2CchQ&t=29"
       }
     },
     {
@@ -2485,28 +2589,30 @@
       "url": "https://youtu.be/OdHXMlxIQ-w",
       "spotify_url": "",
       "topics": [
-        "ESG & Finance"
+        "ESG & Finance",
+        "Energy Economics"
       ],
       "timestamps": {
-        "ESG & Finance": "https://youtu.be/OdHXMlxIQ-w&t=82"
+        "ESG & Finance": "https://youtu.be/OdHXMlxIQ-w&t=82",
+        "Energy Economics": "https://youtu.be/OdHXMlxIQ-w&t=82"
       }
     },
     {
       "id": "ep_tic_10_15_j_slaughter",
       "show": "The IT Crowd",
       "name": "J Slaughter",
-      "role": "CIO, Tokyo Marine",
+      "role": "Former CIO, Tokyo Marine",
       "date": "2015-10-01",
       "file": "TIC-10-15-J Slaughter.docx",
       "url": "https://youtu.be/_CWMvj93MW8",
       "spotify_url": "",
       "topics": [
         "Data Centers & AI",
-        "Energy Economics"
+        "ESG & Finance"
       ],
       "timestamps": {
         "Data Centers & AI": "https://youtu.be/_CWMvj93MW8&t=241",
-        "Energy Economics": "https://youtu.be/_CWMvj93MW8&t=161"
+        "ESG & Finance": "https://youtu.be/_CWMvj93MW8&t=444"
       }
     },
     {
@@ -2524,6 +2630,22 @@
       "timestamps": {
         "Data Centers & AI": "https://youtu.be/cV0udGC8MDo&t=71"
       }
+    },
+    {
+      "id": "ep_tic_10_26_collin_greer",
+      "show": "The IT Crowd",
+      "name": "Collin Greer",
+      "role": "National Sales Manager, Epic.io",
+      "date": "2026-10-01",
+      "file": "TIC-10-26-Collin Greer.docx",
+      "url": "",
+      "spotify_url": "",
+      "topics": [
+        "Oil & Gas",
+        "Energy Technology",
+        "Industry & Technology"
+      ],
+      "timestamps": {}
     },
     {
       "id": "ep_tic_11_24_corva",
@@ -2549,7 +2671,7 @@
       "id": "ep_tic_12_25_roopa_misra",
       "show": "The IT Crowd",
       "name": "Roopa Misra",
-      "role": "SVP, Account Management, Geo Force",
+      "role": "SVP, Account Management, GeoForce",
       "date": "2025-12-01",
       "file": "TIC-12-25-Roopa Misra.docx",
       "url": "https://youtu.be/ncX-6jYkABU",
