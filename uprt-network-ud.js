@@ -119,14 +119,42 @@
     });
     updateSliderUI();
 
+    function raiseThumb(active, other) {
+      active.style.zIndex = '4';
+      other.style.zIndex = '2';
+    }
     rangeFrom.addEventListener('input', () => {
-      if (parseInt(rangeFrom.value) > parseInt(rangeTo.value)) rangeFrom.value = rangeTo.value;
-      dateFrom = parseInt(rangeFrom.value, 10);
+      let from = parseInt(rangeFrom.value, 10);
+      let to   = parseInt(rangeTo.value, 10);
+      if (from > to) {
+        // Dragging start past end: widen the end instead
+        rangeTo.value = String(from);
+        rangeFrom.value = String(to);
+        dateFrom = to;
+        dateTo = from;
+        raiseThumb(rangeTo, rangeFrom);
+      } else {
+        dateFrom = from;
+        dateTo = to;
+        raiseThumb(rangeFrom, rangeTo);
+      }
       updateSliderUI(); activeTopics.clear(); rebuildGraph();
     });
     rangeTo.addEventListener('input', () => {
-      if (parseInt(rangeTo.value) < parseInt(rangeFrom.value)) rangeTo.value = rangeFrom.value;
-      dateTo = parseInt(rangeTo.value, 10);
+      let from = parseInt(rangeFrom.value, 10);
+      let to   = parseInt(rangeTo.value, 10);
+      if (to < from) {
+        // Dragging end past start: widen the start instead
+        rangeFrom.value = String(to);
+        rangeTo.value = String(from);
+        dateFrom = to;
+        dateTo = from;
+        raiseThumb(rangeFrom, rangeTo);
+      } else {
+        dateFrom = from;
+        dateTo = to;
+        raiseThumb(rangeTo, rangeFrom);
+      }
       updateSliderUI(); activeTopics.clear(); rebuildGraph();
     });
 
@@ -533,6 +561,11 @@
       searchQuery = '';
       searchInput.value = '';
       selectAllShows();
+      dateFrom = 0;
+      dateTo = N;
+      rangeFrom.value = 0;
+      rangeTo.value = N;
+      updateSliderUI();
       buildShowsSidebar();
       buildTopicSidebar();
       rebuildGraph();
