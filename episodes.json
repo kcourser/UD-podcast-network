@@ -576,21 +576,6 @@
       "timestamps": {}
     },
     {
-      "id": "ep_ibo_09_2026_richard_rodriguez",
-      "show": "In Basin Observations",
-      "name": "Richard Rodriguez",
-      "role": "Founder and CEO, ClearSync Solutions",
-      "date": "2026-11-19",
-      "file": "IBO-09-2026-Richard Rodriguez.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Industry & Technology",
-        "Energy Economics"
-      ],
-      "timestamps": {}
-    },
-    {
       "id": "ep_ibo_09_26_david_patterson",
       "show": "In Basin Observations",
       "name": "David Patterson",
@@ -602,36 +587,6 @@
       "topics": [
         "Oil & Gas",
         "Industry & Technology"
-      ],
-      "timestamps": {}
-    },
-    {
-      "id": "ep_ibo_10_26__ch_robinson_ryan_hammett",
-      "show": "In Basin Observations",
-      "name": "Ryan Hammett",
-      "role": "Director of Market Intelligence, C.H. Robinson",
-      "date": "2026-10-01",
-      "file": "IBO-10-26- CH Robinson_Ryan Hammett.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Energy Economics",
-        "Energy Geopolitics"
-      ],
-      "timestamps": {}
-    },
-    {
-      "id": "ep_f3360_09_26_samir_ali",
-      "show": "Oil Field 360",
-      "name": "Samir Ali",
-      "role": "CEO, Seadrill",
-      "date": "2026-11-19",
-      "file": "F3360-09-26-Samir Ali.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Oil & Gas",
-        "Energy Economics"
       ],
       "timestamps": {}
     },
@@ -2286,22 +2241,6 @@
       "timestamps": {}
     },
     {
-      "id": "ep_tep_09_26_dennis_jol",
-      "show": "The Energy Pipeline",
-      "name": "Dennis Jol",
-      "role": "CEO, AIQ",
-      "date": "2026-09-01",
-      "file": "TEP-09-26-Dennis Jol.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Oil & Gas",
-        "Data Centers & AI",
-        "Energy Technology"
-      ],
-      "timestamps": {}
-    },
-    {
       "id": "ep_tep_09_26_kasey_hohl",
       "show": "The Energy Pipeline",
       "name": "Kasey Hohl",
@@ -2332,37 +2271,6 @@
       "timestamps": {}
     },
     {
-      "id": "ep_tep_09_26_wayne_richards",
-      "show": "The Energy Pipeline",
-      "name": "Wayne Richards",
-      "role": "President and CEO, GR Energy Services",
-      "date": "2026-09-01",
-      "file": "TEP-09-26-Wayne Richards.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Oil & Gas",
-        "Industry & Technology",
-        "Energy Economics"
-      ],
-      "timestamps": {}
-    },
-    {
-      "id": "ep_tep_10_26___dan_shute",
-      "show": "The Energy Pipeline",
-      "name": "Dan Shute",
-      "role": "President and CEO, Co-founder, Volant Products",
-      "date": "2026-11-19",
-      "file": "TEP-10-26 - Dan Shute.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Oil & Gas",
-        "Energy Economics"
-      ],
-      "timestamps": {}
-    },
-    {
       "id": "ep_tep_10_26_keith_chomesky",
       "show": "The Energy Pipeline",
       "name": "Keith Chomesky",
@@ -2388,22 +2296,6 @@
       "url": "",
       "spotify_url": "",
       "topics": [
-        "Oil & Gas",
-        "Energy Economics"
-      ],
-      "timestamps": {}
-    },
-    {
-      "id": "ep_tep_noia_erik_milito",
-      "show": "The Energy Pipeline",
-      "name": "Erik Milito",
-      "role": "President, National Ocean Industries Association (NOIA)",
-      "date": "2026-11-19",
-      "file": "TEP-NOIA-Erik Milito.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Energy Policy",
         "Oil & Gas",
         "Energy Economics"
       ],
@@ -2632,21 +2524,6 @@
       "timestamps": {
         "Data Centers & AI": "https://youtu.be/cV0udGC8MDo&t=71"
       }
-    },
-    {
-      "id": "ep_tic_10_26_collin_greer",
-      "show": "The IT Crowd",
-      "name": "Collin Greer",
-      "role": "National Sales Manager, Epic.io",
-      "date": "2026-11-19",
-      "file": "TIC-10-26 Collin Greer.docx",
-      "url": "",
-      "spotify_url": "",
-      "topics": [
-        "Oil & Gas",
-        "Energy Transition"
-      ],
-      "timestamps": {}
     },
     {
       "id": "ep_tic_11_24_corva",
